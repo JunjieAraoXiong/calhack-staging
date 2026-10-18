@@ -176,3 +176,19 @@ The [past-project review](13-past-cal-hacks-projects.md) contains 13 selected ca
 | [Duck Duck Goose comparison code](https://raw.githubusercontent.com/KevinL10/applovin-query/main/benchmark/run.py) | Direct inspection of numeric normalization and set-based row comparison | Adequacy depends on the task's output semantics; this is not evidence of an erroneous judging result |
 
 Project pages can be updated after an event. The review separates recorded awards, current author descriptions, and our inferences, and does not treat any of them as proof of our novelty, user demand, or chance of winning.
+
+## 11. Personal-agent ecosystem extension — October 18, 2026
+
+The [system comparison](14-personal-agent-system-variations.md) and [persistent runtime extension](15-persistent-agent-runtime-design.md) draw on three separately assigned source reviews:
+
+| Review | Sources and evidence boundary |
+|---|---|
+| [Commerce and protocols](research/personal-agents-commerce-and-protocols.md) | Stripe/Link and Sierra/PAP announcements, operational guides, and a pinned PAP draft; distinguishes documented contracts from actual enrollment and conformance |
+| [Harness and experience](research/personal-agents-harness-and-experience.md) | Decagon/PACT, Profound's observational article, and their public docs; consumer-agent observations do not establish private implementation details |
+| [Social and reference architecture](research/personal-agents-social-and-reference-architecture.md) | Exact supplied X posts, qualified retrieval evidence, and the supplied image; reverse engineering and a diagram are not an official implementation specification |
+
+Important new source boundaries: [PAP Operations](https://personalagentprotocol.org/docs/extensions/operations) overlaps with previously discussed operation lifecycle features; [PACT](https://openpactprotocol.org/spec) is a separate protocol, not another name for PAP; [Link](https://docs.stripe.com/agentic-commerce/agents/link-agent-wallet) has its own access and payment-approval requirements. The detailed notes contain the supporting links and version/access qualifications.
+
+The [E2B lifecycle](https://docs.e2b.dev/sandbox) and [persistence](https://docs.e2b.dev/sandbox/persistence) docs support considering a leased execution environment. They do not establish our task durability, external-effect guarantees, or Instinct's internal deployment. Current [Convex scheduling](https://docs.convex.dev/scheduling/scheduled-functions) and [Workflow](https://docs.convex.dev/agents/workflows) documentation was also checked for the persistent extension.
+
+This remains literature and design research. No model benchmark, wallet transaction, protocol conformance test, sandbox integration, messaging setup, or new sponsor eligibility verification was performed.

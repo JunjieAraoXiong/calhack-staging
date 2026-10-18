@@ -26,6 +26,10 @@ This record distinguishes the user's stated direction from technical recommendat
 | Implementation language | Recommendation, not implementation | TypeScript for web/WebMCP/Convex; optional pure Rust/WASM kernel; native worker only for justified workloads; Python remains natural for DataPatch. See [12](12-typescript-rust-convex-webmcp.md) |
 | Prebuilt implementation eligibility | Unconfirmed and in tension with published rules | Do not treat the user's preferred product schedule as an exception to the event rules |
 | Performance superiority | Unproven | Requires the experiments in [06](06-evaluation-and-experiments.md) |
+| Persistent assistant lifecycle | New recommendation, not implementation approval | Put versioned task specs, wake-up admission, bounded runs, and delivery state around the mission core; see [15](15-persistent-agent-runtime-design.md) |
+| Protocol and wallet integrations | Optional, access unverified | Compare PAP, PACT, Link, and browser adapters without assuming interchangeability, production access, or sponsorship |
+| Product configuration | Open scope discussion | Prefer persistent assistant plus the incremental-repair experiment; browser copilot, protocol concierge, commerce specialist, and delegation platform remain alternatives in [14](14-personal-agent-system-variations.md) |
+| Operation-lifecycle novelty | Corrected by new prior art | PAP Operations already specifies operation identity, revision-bound approval, and recovery; evaluate mission-level behavior above the shared substrate |
 
 ## 2. Architecture decision records
 
@@ -96,6 +100,8 @@ ADRs 01–08 were developed for the personal-agent runtime. Their principles can
 **Consequence:** freeze fixtures, budgets, and thresholds; preserve failures; separate live calls from replay; track event exposure and quality gaps. No measured result exists yet.
 
 ## 3. Open questions and how to resolve them
+
+October 18 scope questions: consumer mission service versus business-facing interoperability; one concrete recurring task; supported execution environment; task revision/missed-run policy; memory correction and retention; useful delivery policy; and actual access to any chosen PAP/PACT/Link counterpart. The [six-variation comparison](14-personal-agent-system-variations.md) gives deciding experiments. No final product choice was made by adding that research.
 
 Owners below are responsibilities to assign, not named people or work already delegated to a team member.
 

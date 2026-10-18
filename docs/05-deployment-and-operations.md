@@ -1,5 +1,7 @@
 # Deployment and operations
 
+For the October 18 persistent-assistant expansion, read [15 — Persistent runtime design](15-persistent-agent-runtime-design.md). Hosted execution, credential brokers, and company-agent adapters there are options to validate, not deployments already completed.
+
 **Status:** deployment design and acceptance checklist as of 2026-10-17. No services have been provisioned, no application has been deployed, and no native-browser smoke test or benchmark is claimed. Documented platform behavior is cited; product behavior remains to be implemented and tested. Delivery proceeds by evidence gates, not a fixed 36-hour cap.
 
 This document operationalizes [the architecture alternatives](02-system-design-alternatives.md), [runtime contracts](03-personal-agent-runtime.md), and [model layer](04-model-and-decision-layer.md). Start with a React personal workspace, one controlled store, two missions sharing resources, and one active write executor per user. The store uses seeded test products and clearly labeled simulated purchases.

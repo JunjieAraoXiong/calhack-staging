@@ -1,5 +1,7 @@
 # Evaluation and Experiments
 
+The October 18 [persistent-runtime failure matrix](15-persistent-agent-runtime-design.md#11-failure-driven-evaluation-extensions) proposes separate wake-up, memory, adapter, and delivery experiments. It does not silently expand the primary protocol or imply completed runs.
+
 **Scope:** this protocol evaluates the original personal-agent runtime. The [expanded portfolio](11-experiment-portfolio.md) reuses its fairness principles but defines separate domain fixtures, baselines, metrics, and run counts for each product.
 
 Status: proposed protocol, 2026-10-17. No product implementation, benchmark execution, or measured improvement is established by this document. Every run count below is planned, and every performance hypothesis remains untested.

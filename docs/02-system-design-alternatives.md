@@ -2,6 +2,8 @@
 
 **Scope:** these alternatives concern the original personal-agent runtime. The [product portfolio](11-experiment-portfolio.md) compares six additional products and links to their product-specific architecture alternatives.
 
+The October 18 [system variations](14-personal-agent-system-variations.md) add an independent comparison of task lifecycle, execution environment, and business interfaces. Its recommendation places the planning policies below inside a persistent task service; it does not treat a cloud browser or protocol adapter as a new planning algorithm.
+
 **Status:** proposed architecture, reviewed against primary documentation on 2026-10-17. No application, browser integration, benchmark result, or production deployment is verified by this document. The recommendation is conditional on measured results, not an assertion that incremental planning is superior.
 
 Read [the product and research thesis](01-product-and-research-thesis.md) first. Detailed contracts belong in [the runtime](03-personal-agent-runtime.md), model interfaces in [the decision layer](04-model-and-decision-layer.md), and comparisons in [the evaluation protocol](06-evaluation-and-experiments.md). The earlier system design supersedes its older two-store example: start with **one controlled store, a personal workspace, two missions, and one write executor**. Add the second store after the shared-resource and recovery tests pass.

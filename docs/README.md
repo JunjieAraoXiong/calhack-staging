@@ -6,6 +6,8 @@ This folder consolidates the project discussions into an English design package.
 
 **Evidence review date:** October 17, 2026, America/Los_Angeles.
 
+**October 18 extension:** [14 — Personal-agent system variations](14-personal-agent-system-variations.md) compares six product/runtime configurations using the newly supplied sources. [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) specifies the task, wake-up, memory, execution, and delivery lifecycle. Their source notes have their own review dates; this addition does not silently reverify every older source.
+
 ## Current exploration
 
 The latest discussion adds six product candidates: **DataPatch, Agent Crash Lab, LiveOps, SupplyWatch, SpendRail, and CloseProof**. Start with the [experiment portfolio](11-experiment-portfolio.md) for their comparison and the six detailed designs. Convex is a possible foundation across products; WebMCP is used when external agents need to operate the application, not imposed on every candidate.
@@ -39,10 +41,14 @@ Shopping is the initial product example because quantities, stock, deadlines, pr
 | [11 — Experiment portfolio](11-experiment-portfolio.md) | How do six additional product directions compare, and which experiment should we try first? |
 | [12 — TypeScript, Rust, Convex, and WebMCP](12-typescript-rust-convex-webmcp.md) | Which language owns each layer, and how do browser tools, backend state, WASM, and workers connect? |
 | [13 — Past Cal Hacks projects](13-past-cal-hacks-projects.md) | Which earlier award recipients are relevant, what did they build, and how should those precedents sharpen our scope and evidence? |
+| [14 — Personal-agent system variations](14-personal-agent-system-variations.md) | How do browser, persistent, incremental, protocol, commerce, and delegation configurations compare? |
+| [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) | How do saved task specifications, wake-up policies, task runs, memory, adapters, credentials, and delivery fit together? |
 
 Detailed candidate designs: [DataPatch](experiments/datapatch.md), [Agent Crash Lab](experiments/agent-crash-lab.md), [LiveOps](experiments/liveops.md), [SupplyWatch](experiments/supplywatch.md), [SpendRail](experiments/spendrail.md), and [CloseProof](experiments/closeproof.md).
 
 For product discussion, read 01, 02, 07, 11, and 13. For implementation, read 03–05 and 12. Before making performance claims, read 06 and the chosen product's protocol. Before deciding what can be submitted to the event, read 07 and 09.
+
+For the latest personal-agent scope discussion, start with 14, then 15. Source reviews: [Stripe and Sierra/PAP](research/personal-agents-commerce-and-protocols.md), [Decagon/PACT and Profound](research/personal-agents-harness-and-experience.md), and [the X posts and supplied architecture](research/personal-agents-social-and-reference-architecture.md).
 
 ## Agreed direction versus provisional choices
 

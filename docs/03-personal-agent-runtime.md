@@ -6,6 +6,8 @@ This document specifies the recommended runtime. It describes intended contracts
 
 The runtime has four responsibilities: maintain the user's applicable context; determine which decisions remain valid; coordinate authorized execution; and reconcile actual outcomes. Model behavior is specified separately in [04](04-model-and-decision-layer.md).
 
+The proposed [persistent lifecycle extension](15-persistent-agent-runtime-design.md) adds task-specification revisions, wake-up admission, bounded runs, memory maintenance, adapter selection, and result delivery around this mission core. Existing grants, dependency witnesses, and operation records retain their authority.
+
 ## Authority and module boundaries
 
 | Module | Owns | Must not assume |

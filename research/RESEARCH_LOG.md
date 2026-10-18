@@ -28,3 +28,13 @@ Date: 2026-10-17. The rounds below are literature and competitor reviews, not so
 2026-10-17 addition: the user requested a deeper treatment of option 1, emphasizing nonlinear execution and credible evaluation. Narrow the technical research objective to dependency revalidation and incremental repair under changing state, and their benefits relative to strong ReAct and global-replanning baselines; add `TECHNICAL_RUNTIME_EVAL_ZH.md`. Related work such as HyperAgent counters the claim that using a DAG is itself an innovation. The evaluation design requires shared tool protections, independent final-state scoring, held-out tests, and ablations. There is still no implementation or measured result.
 
 This round's field research, candidate comparison, counterevidence review, technical-boundary checks, demonstration plan, and event-time plan are complete. The documents record the subsequent evaluation contract required for formal autoresearch. No competition code was developed, prototype run, or user experiment conducted; no scheduled loop or background automation was created.
+
+## October 18: persistent agents and business-facing protocols
+
+Three parallel source reviews examined the newly supplied Stripe, Decagon, Profound, Sierra, X, and architecture references. The consolidated [system comparison](../docs/14-personal-agent-system-variations.md) separates product responsibility, durable lifecycle, execution channel, and planning policy. It compares six configurations with explicit pros/cons and decisive experiments.
+
+The proposed [persistent runtime](../docs/15-persistent-agent-runtime-design.md) adds task-specification revisions, wake-up admission, bounded runs, delivery state, and optional adapter/credential/sandbox boundaries. This extends the existing mission core rather than treating memory or durable state as wholly absent.
+
+The new prior-art correction is that operation identity, revision-bound approval, and recovery already appear in PAP's published draft extension. Those mechanisms cannot be our novelty claim. The remaining research hypothesis concerns mission-level dependency reuse, shared commitments, and useful recovery under changing conditions against equally equipped baselines.
+
+These are source-review conclusions and proposed experiments. No numeric evaluator exists for this research pass, so no autoresearch optimization loop, keep/discard metric, or performance gain is claimed. The user still plans to decide scope before application implementation.
