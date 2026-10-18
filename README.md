@@ -7,7 +7,7 @@ Product exploration, system designs, deployment plans, sponsor-track research, a
 ## Start here
 
 - [Documentation index](docs/README.md) — the complete English design package.
-- [Editable architecture diagram](docs/diagrams/README.md) — the personal-agent design in Excalidraw, with a PNG preview and an explanation of the feedback loop.
+- [Editable system atlas](docs/diagrams/atlas/README.md) — 11 Excalidraw whiteboards with PNG previews: the full system, six variations, task lifecycles, memory, execution authority, and evaluation.
 - [Personal-agent system variations](docs/14-personal-agent-system-variations.md) — six configurations, explicit pros/cons, and a recommendation informed by Stripe, Decagon, Profound, Sierra, and the supplied engineering references.
 - [Persistent runtime design](docs/15-persistent-agent-runtime-design.md) — task specifications, wake-ups, memory, execution adapters, credentials, delivery, and failure-driven evaluations.
 - [Experiment portfolio](docs/11-experiment-portfolio.md) — compare six product candidates and their first decisive experiments.
@@ -32,7 +32,7 @@ The [original personal-agent design](docs/01-product-and-research-thesis.md) rem
 
 - `docs/` — current English architecture, product, evaluation, and delivery documents.
 - `docs/experiments/` — detailed designs for the six additional product candidates.
-- `docs/diagrams/` — editable Excalidraw architecture and rendered previews.
+- `docs/diagrams/` — the original mission-loop whiteboard and the complete editable system atlas, with rendered previews.
 - `docs/research/` — source-specific findings, integration gates, and qualifications for the current personal-agent ecosystem.
 - `research/` — earlier research notes and discussion history, translated into English and retained for provenance. Legacy `_ZH` filenames remain unchanged to preserve links.
 

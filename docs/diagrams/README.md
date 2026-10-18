@@ -1,4 +1,14 @@
-# Personal-agent architecture — editable whiteboard
+# Personal-agent architecture — editable whiteboards
+
+## Complete system atlas
+
+The [11-view system atlas](atlas/README.md) draws the full persistent architecture, all six personal-agent variations, and detailed views of task lifecycles, memory, execution authority, and evaluation. Each view includes an editable Excalidraw file and a full-resolution PNG.
+
+[Browse every view](atlas/README.md) · [Edit the complete system](atlas/00-persistent-system.excalidraw) · [Full-system PNG](atlas/00-persistent-system.png)
+
+![Complete proposed persistent personal-agent system](atlas/00-persistent-system.png)
+
+## Original mission repair loop
 
 [Open the editable Excalidraw file](personal-agent-architecture.excalidraw) · [Full-resolution PNG](personal-agent-architecture.png)
 

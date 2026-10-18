@@ -2,6 +2,8 @@
 
 **Status: design only, October 18, 2026.** This extends the [existing mission runtime](03-personal-agent-runtime.md) and [system variations](14-personal-agent-system-variations.md). It defines application contracts we would build; these are not claims about Instinct's private implementation. No messaging provider, sandbox, wallet, or company-agent service has been connected.
 
+**Drawn system:** the [editable Excalidraw atlas](diagrams/atlas/README.md) includes the [complete architecture](diagrams/atlas/00-persistent-system.png), [five lifecycles](diagrams/atlas/07-task-lifecycles.png), [memory and correction](diagrams/atlas/08-memory-and-context.png), [execution and authority](diagrams/atlas/09-execution-and-authority.png), and [evaluation design](diagrams/atlas/10-evaluation-design.png). The atlas links each preview to its editable source and also draws all six product/runtime variations.
+
 ## 1. The missing lifecycle
 
 The current design explains how to repair and execute a mission. A continuing personal assistant also needs to decide when to wake, what state to restore, which execution environment can act, and whether a result merits an interruption. Those decisions need persisted records rather than a single conversation buffer.

@@ -25,7 +25,7 @@ The reviewed material comes from different layers. Treating every announcement a
 
 Source-by-source findings and current access limits are in [commerce and protocols](research/personal-agents-commerce-and-protocols.md), [harness and experience](research/personal-agents-harness-and-experience.md), and [social posts and reference architecture](research/personal-agents-social-and-reference-architecture.md). Those notes distinguish source statements from our recommendations.
 
-The existing [Excalidraw diagram](diagrams/README.md) remains the detailed view of the **interactive mission repair and execution loop**. It is not yet a drawing of every persistent service proposed below.
+The [editable system atlas](diagrams/atlas/README.md) now draws the **complete persistent system, all six variations below, and four engineering details**. Each board includes a PNG preview and native Excalidraw source. The [original mission-loop diagram](diagrams/README.md#original-mission-repair-loop) remains a focused view of interactive repair and execution.
 
 ## Separate four decisions
 
@@ -51,6 +51,8 @@ The variations below are useful product configurations assembled from these axes
 
 ## A. Browser-centered personal copilot
 
+[Whiteboard preview](diagrams/atlas/01-browser-copilot.png) · [Editable Excalidraw](diagrams/atlas/01-browser-copilot.excalidraw)
+
 **Build:** a React workspace, one controlled store exposing real WebMCP tools, a browser executor, and Convex mission/command/receipt records. The user can inspect planned actions and edit requirements while work proceeds. A model proposes the next useful action; the checked backend owns the effect.
 
 ```mermaid
@@ -74,6 +76,8 @@ flowchart LR
 **Choose A when:** our first priority is a reliable, comprehensible WebMCP demonstration. This is the execution foundation for other variants, not necessarily the final consumer experience.
 
 ## B. Persistent personal assistant
+
+[Whiteboard preview](diagrams/atlas/02-persistent-assistant.png) · [Editable Excalidraw](diagrams/atlas/02-persistent-assistant.excalidraw)
 
 **Build:** durable task specifications, event ingestion, scheduled wake-ups, task runs, scoped memory, leased execution resources, and an output policy. The conversation is a control surface. A task can be waiting without consuming a model call or keeping a VM alive.
 
@@ -101,6 +105,8 @@ flowchart LR
 
 ## C. Adaptive mission coordinator
 
+[Whiteboard preview](diagrams/atlas/03-adaptive-coordinator.png) · [Editable Excalidraw](diagrams/atlas/03-adaptive-coordinator.excalidraw)
+
 **Build:** B's persistent mission shell plus explicit decision dependencies, scoped facts, shared resources, committed effects, and a planner that repairs affected unfinished work. Revalidation first determines whether an apparent change actually matters. The planner expands its repair scope when dependencies or constraints couple multiple decisions.
 
 **Pros:** closest to our established technical thesis; makes simultaneous missions and live changes visible; produces interpretable repair traces; can reduce repeated reasoning when changes are localized. It offers a natural use for Convex beyond storing chat messages.
@@ -114,6 +120,8 @@ flowchart LR
 **Choose C when:** we want a defensible systems experiment and can invest in the evaluator. If selective repair fails to outperform a simpler policy on the intended workload, retain the persistent product and remove the extra machinery.
 
 ## D. Protocol-first concierge
+
+[Whiteboard preview](diagrams/atlas/04-protocol-concierge.png) · [Editable Excalidraw](diagrams/atlas/04-protocol-concierge.excalidraw)
 
 **Build:** a personal-agent client, an explicitly separate company-agent service, discovery/authentication adapters, an authorization interaction, bounded conversations, and structured operation tracking. Demonstrate a task such as rescheduling a reservation or requesting an exchange with clear company policy and user permission.
 
@@ -144,6 +152,8 @@ sequenceDiagram
 
 ## E. Commerce specialist
 
+[Whiteboard preview](diagrams/atlas/05-commerce-specialist.png) · [Editable Excalidraw](diagrams/atlas/05-commerce-specialist.excalidraw)
+
 **Build:** preference resolution, source-grounded product search, comparison against hard constraints, quote freshness, shared-budget reservations, a payment-provider adapter, merchant outcome reconciliation, and a purchase history view. Post-purchase changes create follow-up missions rather than rewriting the original order.
 
 **Pros:** a user can readily judge whether the system chose an appropriate item and completed the intended purchase; payment recovery is an observable technical problem; repeated purchases create realistic context and changing constraints. The existing camping/grocery scenario can grow into this product.
@@ -157,6 +167,8 @@ sequenceDiagram
 **Choose E when:** consumer shopping is our selected product. Do not combine real banking-data access, multiple merchants, autonomous spending, returns, and general personal assistance in the first scope.
 
 ## F. Delegation and recovery platform
+
+[Whiteboard preview](diagrams/atlas/06-delegation-platform.png) · [Editable Excalidraw](diagrams/atlas/06-delegation-platform.excalidraw)
 
 **Build:** a service other agents call to submit a bounded mission, inspect its status, provide missing authority, and reconcile execution. The service keeps durable task state, adapter capabilities, reservations, operation mappings, and evidence. A WebMCP surface can expose these operations in our app; a server API supports other clients.
 

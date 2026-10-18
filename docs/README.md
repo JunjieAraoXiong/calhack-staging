@@ -6,7 +6,7 @@ This folder consolidates the project discussions into an English design package.
 
 **Evidence review date:** October 17, 2026, America/Los_Angeles.
 
-**October 18 extension:** [14 — Personal-agent system variations](14-personal-agent-system-variations.md) compares six product/runtime configurations using the newly supplied sources. [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) specifies the task, wake-up, memory, execution, and delivery lifecycle. Their source notes have their own review dates; this addition does not silently reverify every older source.
+**October 18 extension:** [14 — Personal-agent system variations](14-personal-agent-system-variations.md) compares six product/runtime configurations using the newly supplied sources. [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) specifies the task, wake-up, memory, execution, and delivery lifecycle. The [system atlas](diagrams/atlas/README.md) draws the full system, all six variations, and four detailed engineering views in editable Excalidraw format. Their source notes have their own review dates; this addition does not silently reverify every older source.
 
 ## Current exploration
 
@@ -60,7 +60,7 @@ The browser host, exact model version, solver implementation, initial real appli
 
 ## Personal-agent architecture at a glance
 
-[View the hand-drawn architecture and download its editable Excalidraw source](diagrams/README.md). It expands the overview below into the repair loop, browser execution boundary, outcome reconciliation, and independent evaluation.
+[Browse the 11-view hand-drawn system atlas](diagrams/atlas/README.md), with editable Excalidraw sources and PNG previews. Start with the [complete persistent system](diagrams/atlas/00-persistent-system.png), compare six configurations, then inspect task lifecycles, memory, execution authority, and evaluation. The [original mission-loop diagram](diagrams/README.md#original-mission-repair-loop) remains available.
 
 ```mermaid
 flowchart LR
