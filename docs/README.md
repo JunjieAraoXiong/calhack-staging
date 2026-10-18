@@ -54,6 +54,8 @@ The browser host, exact model version, solver implementation, initial real appli
 
 ## Personal-agent architecture at a glance
 
+[View the hand-drawn architecture and download its editable Excalidraw source](diagrams/README.md). It expands the overview below into the repair loop, browser execution boundary, outcome reconciliation, and independent evaluation.
+
 ```mermaid
 flowchart LR
     U[User workspace] --> C[Convex state and transactions]

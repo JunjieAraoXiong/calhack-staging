@@ -4,6 +4,8 @@
 
 Read with the [product portfolio](11-experiment-portfolio.md), [runtime contracts](03-personal-agent-runtime.md), and [deployment plan](05-deployment-and-operations.md).
 
+The [editable Excalidraw architecture](diagrams/README.md) illustrates these language and execution boundaries for the personal-agent branch.
+
 ## 1. Recommended language boundary
 
 Use **TypeScript for the web application, WebMCP adapter, and Convex functions**. If Rust is part of the implementation, give it a concrete, bounded responsibility: a deterministic dependency/constraint kernel, compiled to WASM initially. Use an external native Rust worker only when a measured workload or native dependency requires it. DataPatch still has a strong reason to use a separate Python execution layer.
