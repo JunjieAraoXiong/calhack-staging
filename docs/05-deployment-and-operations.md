@@ -46,6 +46,10 @@ The initial checker and bounded catalog search can be ordinary TypeScript. If a 
 
 Send a versioned, immutable problem snapshot with `requestId`, input digest, constraints, objective ordering, seed, and deadline. Return feasibility status, candidate assignments, objective value, any valid bound, solver version, and elapsed time. Independently validate the response, then recheck current dependencies before accepting it. A timeout is neither proof of infeasibility nor proof that the best returned solution is optimal. Give the global and incremental experimental variants equal solver access.
 
+### Optional Rust kernel or worker
+
+Current Convex supports imported WebAssembly modules in its default runtime. A bounded pure Rust validator can compile to WASM and run inside a TypeScript mutation that reads current state and commits conditionally. Native Rust function entrypoints are not implied. Heavy computation can instead use an authenticated external worker with snapshot-bound results. See [language and integration design](12-typescript-rust-convex-webmcp.md) for deployment choices, ABI constraints, and evaluation gates.
+
 ## Environment and configuration matrix
 
 | Environment | Data and credentials | Purpose and exit gate |

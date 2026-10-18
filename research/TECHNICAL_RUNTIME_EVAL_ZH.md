@@ -1,132 +1,132 @@
-# 从意图编译器到可评测的增量 Agent 运行时
+# From an Intent Compiler to an Evaluable Incremental Agent Runtime
 
-日期：2026-10-17。状态：技术方案与实验协议草案；没有产品实现，没有实测性能。此文回应“选项 1 太线性，需要技术差异和可信 eval”，更新之前以记忆修正为中心的建议。
+Date: 2026-10-17. Status: draft technical design and experiment protocol; no product implementation or measured performance. This document responds to the concern that “Option 1 is too linear and needs technical differentiation and credible evaluation,” updating the earlier recommendation centered on memory correction.
 
-后续系统设计见 [Personal Agent 系统架构](./PERSONAL_AGENT_SYSTEM_ZH.md)，进一步定义个人状态、多个任务共享预算、模型接口、执行状态和回执语义；MVP 收窄为一个受控商店与两个任务，第二商店后置。
+See the subsequent [Personal Agent System Architecture](./PERSONAL_AGENT_SYSTEM_ZH.md) for further definitions of personal state, budgets shared across missions, model interfaces, execution states, and receipt semantics. That design narrows the MVP to one controlled store and two missions, deferring the second store.
 
-## 研究命题
+## Research Question
 
-在同一模型、同一工具、同一状态信息和同一执行预算下，网页状态持续变化时，显式依赖与条件重验能否减少重复规划工作，并维持或提高最终任务成功率？
+With the same model, tools, state information, and execution budget, can explicit dependencies and conditional revalidation reduce repeated planning work while maintaining or improving final task success as website state changes continuously?
 
-比较对象必须包括能重试、观察状态并修改计划的强 ReAct，以及带缓存和 warm start 的全局重规划。依赖图、增量计算、乐观并发控制本身不是新发明。HyperAgent 已研究工具 schema 图和动态规划；不能把“使用 DAG”作为研究贡献。[论文](https://arxiv.org/abs/2608.02650)
+Comparisons must include a strong ReAct agent that can retry, observe state, and revise its plan, as well as global replanning with caching and warm starts. Dependency graphs, incremental computation, and optimistic concurrency control are not new inventions. HyperAgent has already investigated tool-schema graphs and dynamic planning; “using a DAG” cannot be the research contribution. [Paper](https://arxiv.org/abs/2608.02650)
 
-## 产品与受控环境
+## Product and Controlled Environment
 
-做一个用户可以在执行期间修改需求的个人采购 Agent，第一版只覆盖两个受控商店视图和一张个人任务板。两个商店可先使用同源页面，以控制浏览器接入成本；它们是测试环境，不宣称真实商家集成。
+Build a personal purchasing agent whose requirements the user can change during execution. The initial version described here covers two controlled store views and one personal task board. The two stores can initially use same-origin pages to contain browser-integration costs; they are test environments, not claimed integrations with real merchants.
 
-示例需求：为六人周末露营准备食品和公共装备，总预算 300 美元，周五前到货，两人素食，已经购买的帐篷不变，家里有炉具。有限商品目录明确标记容量、兼容性、价格、库存、配送与类别。例子用于展示共享预算、分支依赖、替代方案和已完成事实，不以露营领域作为算法新颖性。
+Example request: prepare food and shared equipment for a weekend camping trip for six people, with a total budget of $300, delivery before Friday, two vegetarian participants, an already purchased tent that must remain unchanged, and a stove already available at home. A finite catalog explicitly labels capacity, compatibility, price, inventory, delivery, and category. The example demonstrates shared budgets, branch dependencies, alternatives, and completed facts; the camping domain is not the algorithmic novelty.
 
-执行期间允许：某项缺货、到货承诺改变、用户增加人数或锁定一个选择、成功提交后的响应丢失。目标是连续吸收事件并修复剩余计划，保留仍有效的工作。第一版优先做缺货、用户修改和响应丢失，不同时扩展所有故障。
+During execution, allow an item to go out of stock, a delivery commitment to change, the user to increase attendance or lock a choice, or a response to be lost after a successful commit. The goal is to continuously absorb events and repair the remaining plan while preserving work that is still valid. Prioritize stock changes, user edits, and lost responses in the first version rather than implementing every fault at once.
 
-## 要交付的四个部分
+## Four Deliverables
 
-1. **受控 WebMCP 环境**：查询目录、读取购物车、预留资源、条件提交、查询操作回执；页面供人直接操作。业务状态有版本与事件记录；工具适配器显式声明读写范围、条件与可观察效果。
-2. **运行时**：结构化约束、实际读取产生的依赖记录、失效索引、条件重验、局部修复、已提交/结果未知的状态机。
-3. **对照实验执行器**：固定场景、隔离初始状态、故障注入、三个同模型 Agent、独立终态检查器、JSONL 原始轨迹与指标。
-4. **演示界面**：真实购物车/任务板、活的依赖图、事件控制和实测结果。依赖图来自运行记录，不是预先画好的动画。
+1. **Controlled WebMCP environment:** catalog queries, cart reads, resource reservation, conditional commits, and operation-receipt queries; the page also supports direct human interaction. Business state has versions and event records. Tool adapters explicitly declare read/write scope, conditions, and observable effects.
+2. **Runtime:** structured constraints, dependency records derived from actual reads, an invalidation index, conditional revalidation, local repair, and state machines for committed and unknown outcomes.
+3. **Comparison harness:** fixed scenarios, isolated initial states, fault injection, three agents using the same model, an independent final-state checker, raw JSONL traces, and metrics.
+4. **Demo interface:** real carts and a task board, a live dependency graph, event controls, and measured results. The dependency graph comes from execution records, not a prebuilt animation.
 
-WebMCP 的工具 schema 不等于业务前置条件或副作用语义；这些由适配器提供。`toolchange` 是工具集合变化，不是库存、购物车等业务事件。业务事件通道需要应用自己实现，并向所有实验组提供相同信息。[Chrome 官方 API](https://developer.chrome.com/docs/ai/webmcp/imperative-api)
+A WebMCP tool schema is not a specification of business preconditions or side effects; adapters supply those semantics. `toolchange` indicates a change to the tool collection, not a business event such as stock or cart changes. The application must implement its own business-event channel and give every experimental group the same information. [Official Chrome API](https://developer.chrome.com/docs/ai/webmcp/imperative-api)
 
-## 技术核心
+## Technical Core
 
-### 结构化约束与依赖证据
+### Structured Constraints and Dependency Evidence
 
-模型将自然语言映射到有限的约束语言，例如预算、人数、截止时间、饮食属性与锁定项。模型也可提出候选替代方案。约束检查、金额计算和版本校验由程序执行。依赖由工具读取与约束表达式产生，不能完全相信模型自述“我依赖了什么”。
+The model maps natural language into a finite constraint language, such as budget, attendance, deadlines, dietary attributes, and locked items. It may also propose candidate alternatives. Code performs constraint checking, amount calculations, and version validation. Dependencies come from tool reads and constraint expressions; the model's own account of “what I depended on” is not sufficient.
 
-一个决定至少记录：输入实体及版本、查询集合及版本、使用的约束、输出、前置条件、后续消费者、执行状态和操作 ID。
+Each decision records at least its input entities and versions, query collections and versions, constraints used, output, preconditions, downstream consumers, execution state, and operation ID.
 
-查询集合依赖很重要：“当前最便宜且能按时送达”不仅依赖选中商品，还依赖候选集合。更便宜商品出现、搜索结果从空变非空，都可能影响决定。第一版可采用保守的类别版本，牺牲部分复用率换取不漏失效。
+Query-collection dependencies matter: “the cheapest currently available item that can arrive on time” depends on the candidate collection, not only the selected item. A cheaper item appearing, or an empty search result becoming nonempty, may affect the decision. The first version can conservatively track category versions, sacrificing some reuse to avoid missing invalidations.
 
-### 条件重验与渐进扩大修复范围
+### Conditional Revalidation and Progressive Expansion of Repair Scope
 
-事件发生后：
+After an event:
 
-1. 根据变更键查找可能受影响的决定；标记待重验。
-2. 重验实际用到的条件。版本变化但相关属性未改变，可继续保留；改变了优化候选集合则重新评估对应选择。
-3. 输出失效或变化时，向下游传播。保留无关分支；已经完成的业务操作保留为事实，不能把它从历史中删除。
-4. 先在受影响范围求解，把外部未受影响决定当边界条件。目标采用相同的字典序：满足硬约束、尽量少改动当前承诺、再优化成本和偏好。
-5. 如果共享预算、容量或配送约束无法满足，纳入相连变量后重试；最终回退全局求解。不能宣称第一次找到的局部可行解一定是全局最优。
-6. 提交前由权威服务在同一原子操作里检查必要版本和前置条件，再写入。任何冲突成为新事件，重新进入闭环。
+1. Find potentially affected decisions using the changed keys and mark them for revalidation.
+2. Recheck the conditions actually used. A version change that leaves relevant attributes unchanged can preserve a decision; a change to the optimization candidate collection triggers reassessment of the corresponding choice.
+3. Propagate downstream when an output becomes invalid or changes. Preserve unrelated branches. Completed business operations remain facts and cannot be deleted from history.
+4. Solve within the affected scope first, treating unaffected decisions outside it as boundary conditions. Use the same lexicographic objective: satisfy hard constraints, minimize changes to current commitments, then optimize cost and preferences.
+5. If shared budget, capacity, or delivery constraints cannot be satisfied, include connected variables and retry, eventually falling back to global solving. Do not claim that the first locally feasible solution is necessarily globally optimal.
+6. Before committing, the authoritative service checks necessary versions and preconditions and performs the write in the same atomic operation. Any conflict becomes a new event and reenters the feedback loop.
 
-第一版用简单可解释的扩展规则；不要为宣传“最小切片”实现无法验证的复杂算法。报告实际重算范围、运行成本和全局最优差距。
+Use simple, explainable expansion rules initially; do not implement an unverifiable complex algorithm merely to advertise a “minimal slice.” Report actual recomputation scope, execution cost, and the gap from the global optimum.
 
-### 副作用与不确定性
+### Side Effects and Uncertainty
 
-动作至少区分 pending、running、committed、unknown、invalid。请求超时但服务可能已提交时进入 unknown，查询操作 ID 的回执后才能决定继续或重试。
+Actions distinguish at least pending, running, committed, unknown, and invalid. If a request times out but the service may have committed it, enter unknown and query the operation ID's receipt before deciding whether to proceed or retry.
 
-服务器原子校验、幂等和操作回执是所有实验组的共同基础设施。它们证明系统可正确执行，但不能被单独计成增量算法的优势。两个外部商家之间没有自动全局事务；没有服务端条件写入或回执能力的站点不在这套保证范围。
+Atomic server validation, idempotency, and operation receipts are shared infrastructure for every experimental group. They demonstrate correct system execution but cannot independently count as an advantage of the incremental algorithm. Two external merchants do not automatically share a global transaction; sites without server-side conditional writes or receipts are outside these guarantees.
 
-## Eval：先锁定协议，再优化实现
+## Evaluation: Freeze the Protocol Before Optimizing the Implementation
 
-### 比较组
+### Comparison Groups
 
-| 系统 | 必备能力 |
+| System | Required capabilities |
 |---|---|
-| 强 ReAct | 最新状态/状态差异、历史动作、版本、回执；允许重试和重规划；合理调优提示 |
-| 全局重规划 | 与增量组相同的结构化规划器、约束、已完成记录和缓存；允许 warm start；每次实质变化重求剩余整体 |
-| 增量运行时 | 同样的规划和执行能力，额外使用依赖定位、条件重验与范围扩展 |
+| Strong ReAct | Current state/state deltas, action history, versions, and receipts; retries and replanning allowed; reasonably tuned prompts |
+| Global replanning | The same structured planner, constraints, completed-operation records, and cache as the incremental group; warm starts allowed; resolve the entire remaining plan after each material change |
+| Incremental runtime | The same planning and execution capabilities, plus dependency-based localization, conditional revalidation, and scope expansion |
 
-额外在结构化输入层比较确定性规则/全局求解器。如果无需语言理解的层面简单方法已经解决问题，应把结果如实报告，而不是强行加入模型。
+Also compare deterministic rules or a global solver at the structured-input layer. If a simple method already solves the problem where language understanding is unnecessary, report that honestly instead of forcing a model into the design.
 
-同模型版本、推理配置、工具契约、可见事件、总 token/时间上限与初始状态。计入全部辅助模型调用、图维护、工具读取、失败重试与提交校验成本。基线也可并行无冲突任务。
+Use the same model version, reasoning configuration, tool contracts, visible events, total token/time limits, and initial state. Include all auxiliary model calls, graph maintenance, tool reads, failed retries, and commit-validation costs. Baselines may also run nonconflicting tasks in parallel.
 
-### 场景与预算
+### Scenarios and Budget
 
-先用 12 个开发场景调试基线和执行器。锁定实验协议后，计划用 48 个保留场景、每场景每组 3 次运行，共 432 个端到端 episode。实际模型预算不足时，在看测试结果前统一缩减重复数或场景数，并公开缩减；不能只保留有利结果。
+First use 12 development scenarios to debug the baselines and harness. After freezing the protocol, plan 48 held-out scenarios with three runs per scenario per group, for 432 end-to-end episodes. If the available model budget is insufficient, uniformly reduce the repetition or scenario count before inspecting test results and disclose that reduction; do not retain only favorable outcomes.
 
-保留场景覆盖六类：无变化、无关/局部变化、共享资源变化、全局约束变化、提交竞态、提交结果不明。每类覆盖不同依赖结构、商品组合与可行性。测试集包含不可行实例，其正确输出是明确冲突与不越权，而不是强造方案。
+The held-out scenarios cover six categories: no change, unrelated/local changes, shared-resource changes, global-constraint changes, commit races, and uncertain commit outcomes. Each category includes different dependency structures, product combinations, and feasibility conditions. Include infeasible instances, where the correct result is an explicit conflict without exceeding authority, rather than an invented plan.
 
-事件按共同语义屏障触发，例如“第一次提交前”或“一个购买已完成后”，不是各组第 N 次工具调用。没有到达屏障的轨迹也保留并报告。连续墙钟事件另作压力实验，避免与控制实验混成一个数字。
+Trigger events at shared semantic barriers, such as “before the first commit” or “after one purchase completes,” rather than at each group's Nth tool call. Retain and report traces that never reach the barrier. Evaluate continuous wall-clock events separately as a stress test instead of combining them with controlled experiments in one number.
 
-开发/测试分开保存；不只是换随机 seed，还应保留部分共享资源拓扑、约束组合和事件组合。看到保留测试结果后继续调参，则该批测试转为开发数据，另留测试集。
+Keep development and test sets separate. Go beyond changing random seeds by holding out some shared-resource topologies, constraint combinations, and event combinations. If tuning continues after inspecting held-out results, reclassify that batch as development data and reserve a new test set.
 
-### 独立判分
+### Independent Scoring
 
-检查器直接读取最终世界状态和不可改写的操作日志，检查人数/容量、预算、截止日、用户锁定项和重复提交。不能让 Agent 自评，不能只相信“工具调用成功”，也不能复用运行时的依赖图来证明运行时正确。
+The checker reads final world state and immutable operation logs directly, checking attendance/capacity, budget, deadlines, user locks, and duplicate commits. Do not let the agent score itself, rely only on a “tool call succeeded” response, or reuse the runtime's dependency graph to prove that the runtime is correct.
 
-小规模目录另写穷举检查器，得出可行性和最优目标值。大的压力实例只检查独立约束和求解界，不把未证实的 solver 解叫作最优。
+For small catalogs, implement a separate exhaustive checker to establish feasibility and the optimal objective value. For large stress instances, check independent constraints and solution bounds; do not call an unproven solver output optimal.
 
-τ-bench 使用终态数据库与目标对比的思路值得借鉴，但这里是新定义的动态 WebMCP 环境，不能把分数称为 τ-bench 官方分数。[论文](https://arxiv.org/abs/2406.12045)
+The idea of comparing a final database state with a target in τ-bench is useful, but this is a newly defined dynamic WebMCP environment. Its scores cannot be presented as official τ-bench scores. [Paper](https://arxiv.org/abs/2406.12045)
 
-### 必须展示的指标
+### Required Metrics
 
-主指标是固定预算内的最终合法任务完成率，不可行实例另报正确拒绝/冲突识别率。
+The primary metric is final valid task-completion rate within a fixed budget. Report correct rejection/conflict-identification rate separately for infeasible instances.
 
-其余报告：总模型 token、总工具调用、事件后恢复延迟、重复业务副作用、不必要改动、最终成本/偏好与全局解的差距。成本统计覆盖所有 episode，包括失败和超时；成功对之间的成本比较单列，不能只展示我方成功的子集。报告各故障类别的原始分子分母和按场景配对的不确定区间。
+Also report total model tokens, total tool calls, post-event recovery latency, duplicate business side effects, unnecessary changes, and the final cost/preference gap from the global solution. Cost statistics cover all episodes, including failures and timeouts. Present cost comparisons between paired successful runs separately; do not show only the subset where our method succeeds. Report raw numerators and denominators by fault category and uncertainty intervals paired by scenario.
 
-推荐三张实测图：
+Three recommended measured plots:
 
-- 成功率对 token/时间预算：同预算完成更多，还是只是花费更多。
-- 恢复成本对受影响任务比例：局部变化是否受益、全局变化何时失去优势。
-- 消融对比：移除依赖选择；移除条件重验。两者仍共用提交保护。
+- Success rate versus token/time budget: does the method complete more at the same budget, or merely spend more?
+- Recovery cost versus the proportion of affected tasks: do local changes help, and when do global changes eliminate the advantage?
+- Ablation comparison: remove dependency selection; remove conditional revalidation. Both variants retain the same commit protections.
 
-无变化开销与全局变化负结果必须保留。评测目标可以预设为“局部变化下明显降低总成本，最终成功率与方案质量不下降”；任何 20% 或 30% 等数字都只能是待验证产品门槛。小样本不能证明严格非劣效或普遍优越。
+Retain no-change overhead and negative results under global changes. A prospective evaluation target can be “substantially lower total cost under local changes without reducing final success or plan quality”; numbers such as 20% or 30% are only product thresholds awaiting validation. Small samples cannot establish strict noninferiority or universal superiority.
 
-## 对外基准与相关工作
+## External Benchmarks and Related Work
 
-ToolMaze 研究工具故障、DAG 拓扑与重规划，可参考其扰动分类。只读核查其公开代码后发现：有 Source/Processor/Action 工具分类，但未见统一的资源级读写集和版本提交契约；主要扰动是在调用时替换结果，执行器逐项执行工具调用；抽样的预订工具返回模拟结果。因此它可作为工具失败恢复的外部辅测，不能直接验证并发写入或重复下单安全。[论文](https://arxiv.org/abs/2606.05806)、[执行器](https://github.com/Zhudongsheng75/ToolMaze/blob/main/evaluation/core/sandbox.py)
+ToolMaze studies tool failures, DAG topology, and replanning; its perturbation categories are useful references. A read-only review of its public code found Source/Processor/Action tool categories, but no unified resource-level read/write sets or versioned commit contract. Its main perturbations replace results at invocation, its executor processes tool calls individually, and sampled booking tools return simulated results. It can therefore provide a supplementary external test of tool-failure recovery, but cannot directly validate concurrent writes or duplicate-order safety. [Paper](https://arxiv.org/abs/2606.05806), [executor](https://github.com/Zhudongsheng75/ToolMaze/blob/main/evaluation/core/sandbox.py)
 
-只增加 Agent adapter、保留原任务/工具/扰动/判分时，可单列原环境下的结果；如果为其新增状态版本或并发事件，就必须标为自定义扩展，不能冒充官方分数。不能向规划器暴露 valid_paths、真实 DAG 或预定故障位置。还应记录故障实际命中率，因为缓存绕开了故障不等于经历故障后成功恢复。本轮未安装或执行 ToolMaze。
+When adding only an agent adapter while retaining the original tasks, tools, perturbations, and scoring, report results in the original environment separately. If adding state versions or concurrent events, label the result a custom extension rather than an official score. Do not expose valid_paths, the true DAG, or predetermined fault locations to the planner. Also record how often faults actually occur: bypassing a fault through caching is not the same as recovering after experiencing it. ToolMaze was not installed or executed in this research round.
 
-已有 WebMCP 项目包括状态修复、回执和跨站补偿，因此产品表述应围绕可复现的测量结果。没有运行实验之前，不能宣称新的算法、最可靠 Agent 或优于现有全部系统。
+Existing WebMCP projects already include state repair, receipts, and cross-site compensation, so product claims should center on reproducible measurements. Before running experiments, do not claim a new algorithm, the most reliable agent, or superiority over every existing system.
 
-## 分阶段实现与验收
+## Staged Implementation and Acceptance
 
-用户明确撤销 36 小时总开发量的假设，期望先完成主要系统，再在现场精修。以下按成熟度推进，不再按现场小时数压缩核心。参赛时间规则单独记录在研究协议中，本阶段安排不表示赛前代码已获得本届使用许可。
+The user explicitly removed the assumption that all development must fit into 36 hours, preferring to complete the main system before refining it onsite. The following stages follow maturity rather than compressing the core into event hours. Competition timing rules are recorded separately in the research protocol; this schedule does not imply that pre-event code is approved for use in this edition.
 
-| 阶段 | 交付物 | 进入下一阶段的依据 |
+| Stage | Deliverables | Evidence required to advance |
 |---|---|---|
-| 核心闭环 | 个人状态、任务、工具契约、Convex 状态转换、浏览器命令与回执、独立检查器 | 从真实工具读取到终态验证能够重复运行；进程/页面重启不丢失已确认结果 |
-| 技术验证 | 依赖重验、局部修复、跨任务资源预留、强基线、故障注入与轨迹导出 | 在开发场景中定位收益和反例；确认未靠信息不对称或更弱基线制造优势 |
-| 结果固化 | 冻结的评测协议与版本、保留场景、消融、性能曲线、失败分析 | 有可复现的结果支持精确主张；未看到足够证据时继续修正方法或缩窄主张 |
-| 集成与现场精修 | 真实使用反馈、赞助技术展示、交互打磨、环境适配与演示备份 | 新改动有针对性回归；不依赖临场发明核心算法或临时编造评测结论 |
+| Core feedback loop | Personal state, missions, tool contracts, Convex state transitions, browser commands and receipts, independent checker | Repeatable execution from real tool reads to final-state validation; process/page restarts preserve confirmed outcomes |
+| Technical validation | Dependency revalidation, local repair, resource reservation across missions, strong baselines, fault injection, trace export | Identify benefits and counterexamples in development scenarios; confirm the advantage does not come from information asymmetry or weaker baselines |
+| Result finalization | Frozen evaluation protocol and versions, held-out scenarios, ablations, performance curves, failure analysis | Reproducible results supporting precise claims; otherwise continue revising the method or narrowing the claim |
+| Integration and onsite refinement | Real usage feedback, sponsor-technology demonstrations, interaction polish, environment compatibility, demo backups | Targeted regression checks for new changes; no dependence on inventing the core algorithm onsite or fabricating evaluation conclusions |
 
-更多开发时间优先用于正确性、基线质量、故障恢复和可解释实验，而不是默认增加领域、微服务或模型角色。两个任务共享资源是系统验收内容；多个网站作为可扩展性测试逐步加入。
+Prioritize correctness, baseline quality, fault recovery, and interpretable experiments when more development time is available, rather than automatically adding domains, microservices, or model roles. Shared resources across two missions are part of system acceptance; add multiple websites incrementally as a scalability test.
 
-如果增量组不能超过带缓存的全局重规划，核心主张不成立；若仅胜过 ReAct，可定位为结构化执行的工程收益。如果小问题中维护图更贵，就报告适用规模，或放弃复杂图设计。不要用更多 Agent、RAG、向量数据库掩盖零收益。
+If the incremental group cannot outperform cached global replanning, the core claim does not hold. If it only beats ReAct, position the result as an engineering benefit of structured execution. If graph maintenance costs more on small problems, report the applicable scale or abandon the complex graph design. Do not use more agents, RAG, or a vector database to conceal a lack of benefit.
 
-## 三分钟展示
+## Three-Minute Demonstration
 
-提出具体个人任务并开始真实执行；评委在执行中改人数、制造缺货或锁定一项选择。依赖图从实时记录显示哪些决定被重验、保留、替换。展示最终购物车满足限制，随后打开同一条件下三个系统的完整实测对比与一个失败案例。
+State a concrete personal task and start real execution. During execution, let the judges change attendance, make an item unavailable, or lock a choice. The dependency graph uses live records to show which decisions were revalidated, retained, or replaced. Show that the final cart satisfies the constraints, then open the full measured comparison of all three systems under the same conditions and one failure case.
 
-赞助商关联仍可保持：采购产品叙事对应 Visa shopping 主题，Convex 或 SpacetimeDB 支撑共享状态，Gemini 支撑语义理解。具体参赛资格以各赛道规则为准；不能为了多挂 logo 增加与实验无关的模块。
+Sponsor connections can remain: the purchasing product narrative aligns with Visa's shopping theme, Convex or SpacetimeDB supports shared state, and Gemini supports semantic understanding. Eligibility depends on each track's rules; do not add modules unrelated to the experiment merely to display more logos.

@@ -1,185 +1,185 @@
-# Personal Agent 系统设计：Convex + WebMCP + 增量修复
+# Personal Agent System Design: Convex + WebMCP + Incremental Repair
 
-日期：2026-10-17。状态：可实现的架构设计，尚无产品代码或实测结果。延续个人 Agent、Cal Hacks、Convex 赛道和固定 eval 的目标。使用 agent-designer 的职责、状态、工具契约和评估框架审阅。
+Date: 2026-10-17. Status: implementable architecture design, with no product code or measured results yet. This continues the goals of a personal agent, Cal Hacks, the Convex track, and a fixed evaluation protocol. The design was reviewed using agent-designer's framework for responsibilities, state, tool contracts, and evaluation.
 
-开发节奏更新：用户计划先完成核心，再到现场精修。此设计不再以 36 小时作为总开发上限；“第一版”表示验证顺序，不表示最终能力上限。依赖修复、多个任务共享资源、持久恢复与独立评测均保留为核心目标。比赛对赛前产物的具体使用边界单列于研究协议，不据此缩减系统架构。
+Development schedule update: the user plans to complete the core before refining it onsite. This design no longer treats 36 hours as the total development limit; “first version” describes the validation sequence, not the ultimate capability ceiling. Dependency repair, resources shared across missions, durable recovery, and independent evaluation remain core goals. The competition's specific rules for pre-event work are recorded separately in the research protocol and are not used to reduce the system architecture.
 
-## 1. 最终架构决策
+## 1. Final Architecture Decisions
 
-- 每个用户有一个逻辑上的个人 Agent；模型按事件被调用，不是永久运行一个推理进程。
-- 一个 Agent 可管理多个长期任务（mission）。模型服务共享，用户数据、任务和授权隔离。
-- 模型负责理解、候选生成和语义修复；确定性运行时负责状态、依赖、约束、调度、预算与提交。
-- Convex 是权威状态、函数与持久工作流所在。浏览器执行真实 WebMCP；离线时保存进度并等待。
-- 第一版：个人工作台 + 一个受控商店页面、两个可共享预算的任务、一个写执行器。第二商店与更多执行器后置。
-- 第一种领域是采购。任务引擎通过领域契约扩展，但不在 hackathon 同时实现旅行、邮件和日历。
+- Each user has one logical personal agent. The model is invoked in response to events rather than running a permanent inference process.
+- One agent can manage multiple long-lived missions. Model services are shared; user data, missions, and grants are isolated.
+- The model handles interpretation, candidate generation, and semantic repair. The deterministic runtime handles state, dependencies, constraints, scheduling, budgets, and commits.
+- Convex hosts authoritative state, functions, and durable workflows. The browser executes real WebMCP tools; when offline, the system preserves progress and waits.
+- First version: a personal workspace, one controlled store page, two missions that can share a budget, and one write executor. Defer the second store and additional executors.
+- Purchasing is the first domain. Domain contracts make the mission engine extensible, but the hackathon implementation does not simultaneously cover travel, email, and calendars.
 
 ```mermaid
 flowchart TD
-  UI[个人工作台：任务、偏好、审批、结果] --> API[Convex mutations：业务状态入口]
-  API --> STATE[(事实、任务、资源、决策、命令、回执)]
-  API --> EVENT[持久事件与修复调度]
-  EVENT --> CTRL[任务控制器]
-  STATE --> CTX[作用域解析与上下文组装]
+  UI[Personal workspace: missions, preferences, approvals, results] --> API[Convex mutations: business-state entry points]
+  API --> STATE[(Facts, missions, resources, decisions, commands, receipts)]
+  API --> EVENT[Durable events and repair scheduling]
+  EVENT --> CTRL[Mission controller]
+  STATE --> CTX[Scope resolution and context assembly]
   CTX --> CTRL
-  CTRL -->|需要语义推理| LLM[模型 action]
-  LLM -->|候选计划或补丁| CHECK[契约与约束检查器]
-  CTRL -->|已知规则可处理| CHECK
+  CTRL -->|Semantic reasoning needed| LLM[Model action]
+  LLM -->|Candidate plan or patch| CHECK[Contract and constraint checker]
+  CTRL -->|Known rules suffice| CHECK
   CHECK --> API
-  STATE -->|命令订阅与领取| HOST[浏览器 WebMCP 执行器]
-  HOST --> SITE[受控商店工具]
-  SITE -->|业务提交与权威回执| API
-  STATE -->|实时 query| UI
-  STATE --> EVAL[独立终态检查与轨迹导出]
+  STATE -->|Command subscription and claim| HOST[Browser WebMCP executor]
+  HOST --> SITE[Controlled store tools]
+  SITE -->|Business commit and authoritative receipt| API
+  STATE -->|Realtime query| UI
+  STATE --> EVAL[Independent final-state checking and trace export]
 ```
 
-这些是逻辑模块，不需要拆成微服务。领域逻辑尽量写成纯 TypeScript 函数，便于对三种规划策略公平复用。
+These are logical modules, not services that must be deployed separately. Implement domain logic as pure TypeScript functions where possible so all three planning strategies can reuse it fairly.
 
-## 2. 个人状态模型
+## 2. Personal State Model
 
-| 状态类型 | 例子 | 处理规则 |
+| State type | Example | Handling rule |
 |---|---|---|
-| 用户明确事实 | 平时一个人住 | 有主体、作用域、来源、有效期；可被明确纠正 |
-| 推断偏好 | 可能偏爱某品牌 | 仅作软偏好，不自动成为事实或授权 |
-| 任务要求 | 周五聚餐四人、这次预算 80 | 仅用于对应任务/活动 |
-| 外部观察 | 库存 3、价格 12、周五到货 | 记录 observedAt 和来源版本，必要时重新读取 |
-| 承诺与完成事实 | 已锁定选择、已购买两件 | 保存为约束和真实历史；后续修复不能抹除 |
-| 授权 | 可改购物车；可按批准方案购买 | 独立校验，不从偏好或聊天猜测权限 |
+| Explicit user fact | Usually lives alone | Has a subject, scope, source, and validity period; can be explicitly corrected |
+| Inferred preference | May prefer a particular brand | A soft preference only; does not automatically become a fact or grant |
+| Mission requirement | Dinner for four on Friday, with a budget of 80 for this event | Applies only to the corresponding mission/event |
+| External observation | Stock of 3, price of 12, arrival on Friday | Record observedAt and source version; read again when necessary |
+| Commitments and completed facts | A locked choice; two items already purchased | Preserve as constraints and actual history; later repair cannot erase them |
+| Authorization | May modify the cart; may purchase according to the approved proposal | Validate independently; do not infer authority from preferences or conversation |
 
-事实记录包含 subjectId、scope、key、value、sourceRef、assertedBy、validFrom/validUntil、status、revision。置信度不是事实真假的证明，也不是购买权限。
+Fact records contain subjectId, scope, key, value, sourceRef, assertedBy, validFrom/validUntil, status, and revision. Confidence is neither proof that a fact is true nor permission to purchase.
 
-解析上下文时先比较主体、作用域和时间，再处理来源与纠正关系。“本人一人居住”与“周五四人聚餐”可以同时成立。两条同范围明确要求冲突且无纠正关系时，形成待澄清项，只阻塞依赖该项的动作。
+When resolving context, compare subject, scope, and time first, then handle source and correction relationships. “I live alone” and “dinner for four on Friday” can both be true. If two explicit requirements in the same scope conflict without a correction relationship, create an item requiring clarification and block only actions that depend on it.
 
-第一版按用户、scope、key 和有效期查询相关记录，不先引入向量数据库。以后向量搜索也只负责召回候选；适用性、权限和最终取值仍由结构化规则检查。
+Initially, query relevant records by user, scope, key, and validity period rather than introducing a vector database. If vector search is added later, it only retrieves candidates; structured rules still check applicability, permission, and the final resolved value.
 
-上下文组装器输出 resolvedValues、sourceRefs、hardConstraints、softPreferences、commitments、resourceReservations、availableTools。模型只收到与当前任务相关的个人信息。
+The context assembler outputs resolvedValues, sourceRefs, hardConstraints, softPreferences, commitments, resourceReservations, and availableTools. The model receives only personal information relevant to the current mission.
 
-## 3. 模型接口与工具契约
+## 3. Model Interfaces and Tool Contracts
 
-同一模型承担三个按需调用的角色，不创建互相聊天的独立角色系统：
+The same model serves three roles invoked as needed, rather than a system of separate roles talking to one another:
 
-- interpret：把用户输入转成事实/任务变更候选，明确主体和作用域。
-- plan：根据解析后的上下文与已发现工具，生成有限的决策图候选。
-- repair：接收变化、失效范围、仍有效边界和错误反馈，生成图补丁。
+- interpret: convert user input into candidate fact/mission changes with explicit subjects and scopes.
+- plan: generate a bounded candidate decision graph from resolved context and discovered tools.
+- repair: receive changes, invalidated scope, still-valid boundaries, and error feedback, then generate a graph patch.
 
-计划是受限的 JSON 结构，不执行模型生成的任意 JavaScript。节点引用已注册的动作类型，参数可使用前序结果的类型化引用。
+A plan is a restricted JSON structure; the system does not execute arbitrary model-generated JavaScript. Nodes reference registered action types, and arguments may use typed references to earlier results.
 
-运行时独立检查：工具在授权目录中、参数类型正确、引用存在、图无环、条件可以求值、金额/单位合法、作用域合法、约束满足。领域插件定义约束与动作语义；模型不能发明自己的 effects 或决定只记录有利依赖。
+The runtime independently checks that tools belong to the authorized catalog, argument types are correct, references exist, the graph is acyclic, conditions can be evaluated, amounts/units are valid, scopes are permitted, and constraints are satisfied. Domain plugins define constraints and action semantics; the model cannot invent its own effects or record only convenient dependencies.
 
-Decision 的主要字段：missionId、nodeId、nodeRevision、operator、args、dependsOn、readRefs、queryRefs、constraintRefs、outputRef、validity。
+The main Decision fields are missionId, nodeId, nodeRevision, operator, args, dependsOn, readRefs, queryRefs, constraintRefs, outputRef, and validity.
 
-依赖来自领域表达式及真实工具读取。无法精确追踪的模型选择，保守依赖其全部输入快照。查询集合也必须追踪：新增更便宜候选可以改变最优选择，即使原商品没变。
+Dependencies come from domain expressions and actual tool reads. When a model choice cannot be traced precisely, conservatively depend on its entire input snapshot. Track query collections as well: a new cheaper candidate can change the optimal choice even if the original item has not changed.
 
-ToolContract 至少绑定 origin、name、schemaDigest、contractVersion、inputSchema、reads、writes、preconditions、observableEffects、retrySemantics。网站可用工具来自浏览器实际发现，读写语义由已知适配器补充。
+ToolContract binds at least origin, name, schemaDigest, contractVersion, inputSchema, reads, writes, preconditions, observableEffects, and retrySemantics. Available website tools come from actual browser discovery; known adapters supply their read/write semantics.
 
-WebMCP 当前文档提供 document.modelContext 的发现与执行接口；普通页面默认限同源 frame tree，跨源需要显式许可。MVP 使用受控同源页面，不声称支持任意标签页或任意网站。[官方 API](https://developer.chrome.com/docs/ai/webmcp/imperative-api)
+Current WebMCP documentation provides discovery and execution interfaces through document.modelContext. Ordinary pages default to the same-origin frame tree; cross-origin use requires explicit permission. The MVP uses controlled same-origin pages and does not claim arbitrary-tab or arbitrary-site support. [Official API](https://developer.chrome.com/docs/ai/webmcp/imperative-api)
 
-## 4. 事件驱动任务控制器
+## 4. Event-Driven Mission Controller
 
-事件：UserRequest、FactChanged、ResourceChanged、ToolsetChanged、CommandSettled、ExecutorAvailable、AuthorizationChanged、CancellationRequested。
+Events: UserRequest, FactChanged, ResourceChanged, ToolsetChanged, CommandSettled, ExecutorAvailable, AuthorizationChanged, CancellationRequested.
 
-每次业务 mutation 写状态和事件，并显式安排控制器。实时 query 用于通知最新状态，不能充当可靠事件日志。事件持久化，消费者保存游标；断线后可补读。
+Each business mutation writes state and events, then explicitly schedules the controller. Realtime queries notify clients of current state; they are not a reliable event log. Persist events and consumer cursors so disconnected consumers can catch up.
 
-控制器每次只推进有限工作：
+The controller advances only bounded work per invocation:
 
-1. 读取未处理事件和当前权威状态；按事件 ID 去重。
-2. 对事实/资源变化解析有效值，查找相关决策。
-3. 重验条件，只有输出或相关要求变化才向下游传播；已知条件可以直接处理。
-4. 需要语义决策时调用模型；否则保留节点或运行同一确定性求解器。
-5. 从局部开始修复，硬约束冲突时扩大范围，最终可退回全局求解。
-6. 发布通过验证的补丁；确定可执行节点，创建持久命令。
-7. 若还有未处理变化，继续调度；否则等待事件。
+1. Read unprocessed events and current authoritative state; deduplicate by event ID.
+2. Resolve effective values for fact/resource changes and find relevant decisions.
+3. Revalidate conditions, propagating downstream only when outputs or relevant requirements change; handle known conditions directly.
+4. Call the model when a semantic decision is needed; otherwise retain nodes or run the same deterministic solver.
+5. Repair locally first, expanding the scope when hard constraints conflict and eventually falling back to global solving if necessary.
+6. Publish a validated patch, identify executable nodes, and create durable commands.
+7. Schedule further work if unprocessed changes remain; otherwise wait for events.
 
-合并短时间内的重复状态变化，降低修复风暴，但不能丢弃用户授权/取消、执行回执等必须逐条处理的事实。自己的 UI/进度写入不应被当成新的业务变化递归启动规划。
+Coalesce repeated state changes over short intervals to reduce repair storms, but do not discard facts that require individual processing, such as user grants/cancellations and execution receipts. The system's own UI/progress writes should not recursively trigger planning as new business changes.
 
-MVP 每个 mission 同时一个规划尝试；多个任务可并行读取和规划，共享资源的预留/提交必须通过事务。修复次数和模型预算有界，用尽时保留合法状态并显示具体阻塞原因。
+The MVP permits one planning attempt at a time per mission. Multiple missions may read and plan concurrently, but shared-resource reservation/commit must go through transactions. Bound repair attempts and model budgets; when exhausted, preserve valid state and show the specific blocking reason.
 
-## 5. 三种版本用途分开
+## 5. Keep Three Uses of Versions Separate
 
-1. **事实/资源 revision**：按实体、字段或集合判断某个决定是否需要重验。没有一个用户全局 revision 导致所有任务重新规划。
-2. **planningAttemptId**：防止同一任务更早的模型结果覆盖更新的规划尝试。发布时同时校验实际依赖，不能只比较 attemptId。
-3. **nodeRevision、stopEpoch 与执行 fence**：前者使被替换节点的旧命令不能新提交；stopEpoch 用于整个任务取消等全面失效；fence 区分先后领取的执行器。
+1. **Fact/resource revision:** determine whether a decision needs revalidation by entity, field, or collection. Do not use a user-global revision that forces every mission to replan.
+2. **planningAttemptId:** prevent an earlier model result for a mission from overwriting a newer planning attempt. Publication also checks actual dependencies; comparing attemptId alone is insufficient.
+3. **nodeRevision, stopEpoch, and execution fence:** nodeRevision prevents new commits from old commands belonging to replaced nodes; stopEpoch handles broad invalidation such as cancelling an entire mission; the fence distinguishes successive executor claims.
 
-任务事件序号用于游标，不等于每个决定的有效性条件。新发布一个无关节点，不应自动使所有已确认的其他节点失效。
+Mission event sequence numbers are cursors, not validity conditions for every decision. Publishing an unrelated node should not automatically invalidate all other previously accepted nodes.
 
-## 6. 执行状态与计划有效性是两个维度
+## 6. Execution State and Plan Validity Are Separate Dimensions
 
-执行状态：queued → claimed → executing → succeeded / failed / unknown。离线等待是执行器/任务状态，不能把它当作业务执行失败。
+Execution state: queued → claimed → executing → succeeded / failed / unknown. Waiting for an offline executor is an executor/mission state, not a failed business operation.
 
-计划有效性：active / superseded / cancelled。
+Plan validity: active / superseded / cancelled.
 
-旧节点可能出现 succeeded + superseded：需求改变时，其对应下单已被商店接受。迟到成功回执仍须记入实际购买和预算，然后修复当前任务；不能丢弃旧回执，也不能用它继续调度已被替换的旧计划。
+An old node may be succeeded + superseded: its order was accepted by the store while requirements were changing. A late success receipt must still be recorded in actual purchases and the budget, followed by repair of the current mission. Do not discard the old receipt or use it to continue scheduling the replaced plan.
 
-Command 至少记录 operationId、missionId、nodeId、nodeRevision、stopEpoch、toolRef、args、status、leaseOwner、leaseUntil、fenceToken、workflowEventId。operationId 在同一逻辑操作的重试中稳定；真正的新操作使用新 ID。
+Command records at least operationId, missionId, nodeId, nodeRevision, stopEpoch, toolRef, args, status, leaseOwner, leaseUntil, fenceToken, and workflowEventId. operationId stays stable across retries of the same logical operation; a genuinely new operation gets a new ID.
 
-claimCommand mutation 只负责领取并发控制。lease 过期并不证明操作未发生。executing 写操作失联后先进入 unknown，查权威回执；有安全重试语义才允许重新执行。
+The claimCommand mutation handles only concurrency control for claiming work. An expired lease does not prove that the operation did not occur. If an executing write loses contact, first mark its outcome unknown and query the authoritative receipt; re-execute only when safe retry semantics allow it.
 
-自有商店 commitOperation 在同一 mutation 中检查有效命令/授权/资源，修改业务状态并写回执。若 operationId 已有已完成回执，返回原结果；不同参数不能借用相同 operationId。未提交的旧 fence 或已替换节点禁止新写入。
+The controlled store's commitOperation checks the valid command, authorization, and resources, changes business state, and writes a receipt in one mutation. If operationId already has a completed receipt, return the original result; different arguments cannot reuse the same operationId. An old fence or a replaced node cannot authorize a new write that has not yet committed.
 
-对外部网站只能依其幂等、版本与回执接口提供保证；不支持这些能力的写操作不进入本次自动重试范围。取消信号不能撤销已经成功的购买。
+For external sites, guarantees depend on their idempotency, versioning, and receipt interfaces. Writes without those capabilities are outside this design's automatic-retry scope. A cancellation signal cannot reverse an already successful purchase.
 
-Workflow 等待命令事件，onReceipt 在同一个顶层 mutation 中记录结果并调用组件事件 mutation；组件事务可与外层共同提交。[组件事务](https://docs.convex.dev/components/using#transactions)
+Workflow waits for command events. onReceipt records the result and invokes the component's event mutation within the same top-level mutation; component transactions can commit together with the outer transaction. [Component transactions](https://docs.convex.dev/components/using#transactions)
 
-工作流历史步骤的结果可被回放，因此新业务事件必须进入新的检查步骤并读取当前状态，不能误用缓存的旧查询结果。[Workflow](https://github.com/convex/workflow)
+Historical workflow-step results can be replayed. A new business event must therefore enter a new checking step and read current state instead of incorrectly reusing an old cached query result. [Workflow](https://github.com/convex/workflow)
 
-## 7. 多任务共享资源
+## 7. Resources Shared Across Missions
 
-预算不是每个模型各自维护的数字。设用户预算池 limit = 100，两个任务分别想花 70 和 60；必须通过同一个服务端预留入口，不能两个都成功。
+The budget is not a number maintained independently by each model. Suppose the user's budget pool has limit = 100 and two missions want to spend 70 and 60. Both must use the same server-side reservation entry point; both cannot succeed.
 
-available = limit - spent - activeReservations。
+available = limit - spent - activeReservations.
 
-准备执行时建立授权范围内的 reservation；金额调整只增减差额；成功后 reserved 转 spent；确认未执行才释放。unknown 操作保留占用并等待核实，不能一边放款一边重试。MVP 在自有商店同一 Convex 事务内完成相关状态更新。
+Create a reservation within the grant when preparing execution. Adjust amounts by their delta only; after success, convert reserved funds to spent; release them only after confirmed non-execution. Unknown operations retain their allocation pending verification; do not release funds while retrying. In the MVP, the controlled store updates these related states within one Convex transaction.
 
-有剩余额度不等于有购买权限。授权和预算分别检查。个人账户、任务、命令、订阅均在服务端由认证身份校验归属；不能仅相信客户端传来的 ownerId。[Convex 函数认证](https://docs.convex.dev/auth/functions-auth)
+Available funds do not imply permission to purchase. Check authorization and budget separately. The server validates ownership of personal accounts, missions, commands, and subscriptions using authenticated identity; it cannot simply trust an ownerId supplied by the client. [Convex function authentication](https://docs.convex.dev/auth/functions-auth)
 
-## 8. 数据表与服务端接口
+## 8. Tables and Server Interfaces
 
-| 数据组 | 建议内容 |
+| Data group | Suggested contents |
 |---|---|
-| facts | 主体、范围、事实/偏好/观察、来源、版本、有效期 |
-| missions | 目标、约束、软偏好、锁定项、状态、规划尝试、事件游标 |
-| decisions + dependencies | 节点与反向依赖索引；小规模可从明确字段派生索引记录 |
-| commands + receipts | 执行状态、operationId、领取信息、权威结果 |
-| events | 类型、来源、对象版本、关联任务、操作 ID、序号 |
-| budgetPools + reservations | 用户共享额度和执行占用 |
-| grants | 允许的动作、资源范围、金额上限、有效期、撤销状态 |
-| catalog + inventory | 受控商店的领域数据；不与用户的推断事实混用 |
+| facts | Subject, scope, fact/preference/observation, source, version, validity period |
+| missions | Objective, constraints, soft preferences, locks, state, planning attempt, event cursor |
+| decisions + dependencies | Nodes and a reverse dependency index; at small scale, derive index records from explicit fields |
+| commands + receipts | Execution state, operationId, claim information, authoritative result |
+| events | Type, source, object version, associated mission, operation ID, sequence number |
+| budgetPools + reservations | User-level shared allowance and execution allocations |
+| grants | Permitted actions, resource scope, amount cap, validity period, revocation state |
+| catalog + inventory | Domain data for the controlled store; kept separate from inferred user facts |
 
-重要索引：facts by owner/scope/key；dependencies by dependencyKey；commands by executorScope/status；receipts by operationId；events by mission/sequence；reservations by pool/status。索引不是自动唯一约束，业务唯一性通过相应事务查询与写入维护。
+Important indexes: facts by owner/scope/key; dependencies by dependencyKey; commands by executorScope/status; receipts by operationId; events by mission/sequence; reservations by pool/status. An index is not an automatic uniqueness constraint; maintain business uniqueness through the corresponding transactional reads and writes.
 
-建议接口：
+Suggested interfaces:
 
-- submitUserInput：保存输入并安排 interpret。
-- applyContextPatch：验证/应用事实或任务修改，写事件并安排修复。
-- preparePlanningContext：输出当前任务的相关上下文和输入版本。
-- publishPlanPatch：校验候选补丁、依赖、当前规划尝试和约束。
-- reserveResources：原子检查授权及共享额度。
-- claimCommand：原子领取可执行命令。
-- commitOperation：自有工具的最终业务检查、写入与回执。
-- reconcileOperation：确认 unknown 操作真实结果。
-- settleCommand：记录已确认结果、推进当前任务、唤醒工作流。
+- submitUserInput: save input and schedule interpret.
+- applyContextPatch: validate/apply fact or mission changes, write events, and schedule repair.
+- preparePlanningContext: return relevant context and input versions for the current mission.
+- publishPlanPatch: validate the candidate patch, dependencies, current planning attempt, and constraints.
+- reserveResources: atomically check authorization and the shared allowance.
+- claimCommand: atomically claim an executable command.
+- commitOperation: perform final business checks, writes, and receipt creation for controlled tools.
+- reconcileOperation: establish the actual outcome of an unknown operation.
+- settleCommand: record a confirmed outcome, advance the current mission, and wake the workflow.
 
-模型通过 action 调用，业务数据验证与写入由 mutations 承担；不把整个多步骤模型请求当作一个数据库事务。[Convex agent workflows](https://docs.convex.dev/agents/workflows)
+Call models through actions; mutations validate and write business data. Do not treat an entire multistep model request as one database transaction. [Convex agent workflows](https://docs.convex.dev/agents/workflows)
 
-## 9. 用户界面
+## 9. User Interface
 
-主视图以任务卡呈现：目标、当前方案、已完成结果、正在等待的条件、允许修改的部分。用户可直接锁定商品、修改人数/预算、暂停后续执行。
+The main view presents mission cards with the objective, current proposal, completed results, conditions being awaited, and editable parts. Users can directly lock products, change attendance/budgets, and pause subsequent execution.
 
-个人偏好页显示来源、作用域和有效期，区分明确事实与推断。任务页能看到某个选择实际使用了哪些偏好。执行追踪作为可展开面板，不要求普通用户理解 node、epoch、fence 等内部概念。
+The personal-preferences page shows sources, scopes, and validity periods, distinguishing explicit facts from inferences. The mission page shows which preferences a choice actually used. Execution tracing is an expandable panel; ordinary users do not need to understand internal concepts such as node, epoch, or fence.
 
-批准对应具体方案或清晰的动作范围；范围内可以继续处理，不要求每次只读调用都批准。超出范围的写入停在该节点，不阻塞无关的只读准备工作。
+Approval applies to a specific proposal or a clear action scope. Work can continue within that scope without approval for every read-only call. A write outside the scope pauses at that node without blocking unrelated read-only preparation.
 
-## 10. Eval 与实现边界
+## 10. Evaluation and Implementation Boundaries
 
-同一套环境、工具契约、预算预留和原子提交，接入 ReAct、全局重规划、增量修复三种策略。运行时指标包括所有模型/工具调用和维护成本。终态检查器独立于 planner 与依赖图；测试中的正确答案和预定故障对三组都不可见。
+Connect ReAct, global replanning, and incremental repair to the same environment, tool contracts, budget reservations, and atomic commits. Runtime metrics include every model/tool call and maintenance cost. The final-state checker is independent of the planner and dependency graph; correct answers and scheduled faults are hidden from all three groups.
 
-补充个人 Agent 必测项：
+Additional required personal-agent tests:
 
-1. 为朋友安排四人素食聚餐后，本人晚餐任务仍按本人资料处理。
-2. 过期的“这周不安排午餐”不污染下一周；修改无关偏好不重算采购。
-3. 两任务争用预算时不超额；报价变化只修复相关任务。
-4. 旧计划下单成功但回执迟到，真实购买和预算仍被记录。
-5. 浏览器断开后恢复，未知操作先核实，不产生重复下单。
+1. After arranging a vegetarian dinner for four friends, the user's own dinner mission still uses the user's own profile.
+2. An expired “do not schedule lunch this week” instruction does not affect the following week; changing an unrelated preference does not recompute purchasing plans.
+3. Two missions contending for a budget do not exceed it; a quote change repairs only relevant missions.
+4. When an old plan's order succeeds but its receipt arrives late, the actual purchase and budget are still recorded.
+5. After browser disconnection and reconnection, verify unknown operations first and avoid duplicate orders.
 
-实现顺序：先数据类型/领域契约与独立检查器，再单任务闭环，再注入变化和增量修复，再预算共享与断线恢复，最后界面与保留评测。第一版仍需满足 [固定评测协议](./TECHNICAL_RUNTIME_EVAL_ZH.md)。
+Implementation order: data types/domain contracts and an independent checker; a single-mission feedback loop; injected changes and incremental repair; shared budgets and disconnection recovery; then the interface and held-out evaluation. The first version must still satisfy the [fixed evaluation protocol](./TECHNICAL_RUNTIME_EVAL_ZH.md).
 
-不在第一版加入自动训练、通用个人知识图谱、多人家庭权限继承、多个浏览器并发写入或任意网站支持。只有在现有评测暴露了它们能解决的具体问题后再扩大范围。
+Do not add automatic training, a general personal knowledge graph, multi-user household permission inheritance, concurrent writes from multiple browsers, or arbitrary-site support to the first version. Expand only after the existing evaluation exposes a specific problem those capabilities can solve.

@@ -1,30 +1,30 @@
-# 研究判断演变
+# Evolution of Research Judgments
 
-日期：2026-10-17。以下是文献与竞品审阅轮次，不是程序实验次数。没有 metric、Git keep/discard commit 或性能提升。
+Date: 2026-10-17. The rounds below are literature and competitor reviews, not software experiment runs. There are no metrics, Git keep/discard commits, or performance improvements.
 
-| 轮次 | 检验的假设 | 新证据或反驳 | 决定 |
+| Round | Hypothesis examined | New evidence or counterargument | Decision |
 |---|---|---|---|
-| 1 | 个人日程修复能成为 Cal Hacks 的明显差异点 | Reclaim、Motion、Day Canvas；Runline 进一步覆盖扰动、锁定、确认、旧版本和重试 | 原建议降级，停止把通用日程重排当主卖点 |
-| 2 | 在日程上加共享画布、最小变更或多人确认可恢复差异 | Aisle、Runline、Spokes 已有对应机制 | 不继续通过加基础机制包装新颖性 |
-| 3 | 改成售后执行、完成回执与跨商家补偿更有空白 | Accessible Action Mode、ProofDone、RelayPay、Concord；ReturnQueen 的真实物流服务 | 泛售后降级；只在真实受控接入或很具体的用户问题成立时保留 |
-| 4 | 用户可编辑的个人记忆有足够区别 | Mem0、Recall、Waggle；Waggle 还已有精确批准与版本 fingerprint | 记忆库只作组件；不宣称授权、lineage、版本保护是新增创新 |
-| 5 | 把记忆更正传播到已生成的未完成决定，可形成验证性增量 | 与 Waggle 已读范围相比，增量在决定依赖和局部修复；未证明市场空白 | 保留为短时验证假设，非获奖保证 |
-| 6 | 取消素食限制后自动替换餐食是好演示 | 独立审阅指出取消限制不等于相反偏好，原案例会鼓励过度修复 | 丢弃该脚本；改为家庭人数误推断、聚餐例外、已购食材的明确请求 |
-| 7 | 三个站点、多 Agent 能增强技术观感 | 外部接入和跨源成本高，不能证明必要性 | 收窄为同源自有应用、一个 Agent；用真实状态冲突体现工程价值 |
-| 8 | 现在可以宣布最佳选题 | 缺少用户测试、团队接入条件和可运行原型 | 仅给验证优先级、继续/放弃关卡和后续固定评测设计 |
+| 1 | Personal schedule repair could be a clear differentiator at Cal Hacks | Reclaim, Motion, and Day Canvas; Runline additionally covers disruptions, locks, confirmation, old versions, and retries | Downgrade the original recommendation; stop treating general rescheduling as the main selling point |
+| 2 | Adding a shared canvas, minimal changes, or multi-person confirmation could restore differentiation | Aisle, Runline, and Spokes already have corresponding mechanisms | Do not keep adding basic mechanisms to present the concept as novel |
+| 3 | Post-purchase execution, completion receipts, and cross-merchant compensation might offer a less occupied direction | Accessible Action Mode, ProofDone, RelayPay, and Concord; ReturnQueen's real logistics service | Downgrade general post-purchase assistance; retain only where real controlled integrations or a very specific user problem justify it |
+| 4 | User-editable personal memory is sufficiently distinctive | Mem0, Recall, and Waggle; Waggle also already has precise approval and version fingerprints | Treat the memory store as a component; do not claim authorization, lineage, or version protection as new innovations |
+| 5 | Propagating memory corrections into already-generated, unfinished decisions could provide a testable increment | Relative to the reviewed scope of Waggle, the increment lies in decision dependencies and local repair; an unoccupied market has not been established | Retain as a hypothesis for a short validation exercise, not a guarantee of winning |
+| 6 | Automatically replacing meals after removing a vegetarian restriction would make a good demo | Independent review noted that removing a restriction does not establish the opposite preference; the original case would encourage excessive repair | Discard that script; use an explicit request involving an incorrectly inferred household size, a dinner-party exception, and already-purchased ingredients |
+| 7 | Three websites and multiple agents could make the technology look stronger | External integrations and cross-origin operation are costly, and their necessity has not been established | Narrow to owned, same-origin applications and one agent; demonstrate engineering value through real state conflicts |
+| 8 | We can now declare the best topic | User tests, the team's integration conditions, and a runnable prototype are missing | Provide only validation priorities, continue/stop gates, and a future fixed evaluation design |
 
-## 独立审阅修正
+## Corrections from independent review
 
-- 最强反对意见保留在主报告：“是否只是改设置后刷新列表？”若是，则不值得用复杂记忆系统包装。
-- 决定依赖必须在生成时记录；依赖意味着使用过输入，不意味着独占因果；不得在演示前补边来制造追溯效果。
-- 比起修改数量，应该优化正确范围、保留人工编辑和终态约束。
-- 确认两个 Deputy 为同名不同项目，撤回合并实体的中间判断。
-- 将“首选产品”措辞降为“优先进入两小时验证的产品假设”。
+- Retain the strongest objection in the main report: “Is this just changing a setting and refreshing a list?” If so, a complex memory system is not justified.
+- Record decision dependencies when decisions are generated. A dependency means an input was used, not that it is the sole cause; do not add edges just before the demo to manufacture traceability.
+- Optimize for the correct scope, preservation of human edits, and final-state constraints rather than the number of changes.
+- Confirm that the two Deputy references are different projects sharing a name, and withdraw the interim judgment that conflated them.
+- Downgrade the wording from “preferred product” to “product hypothesis to prioritize for a two-hour validation exercise.”
 
-## 完成状态
+## Completion status
 
-2026-10-17 开发节奏修正：用户明确可先完成主要系统，再到现场精修。撤销 36 小时总开发上限，改为核心闭环、技术验证、结果固化、集成精修四个里程碑。保留跨任务资源与持久恢复作为核心能力，更多时间优先用于可复现实验。重新读取本届首页仍有“All work must be done during the hackathon”，未发现已有代码豁免；参赛资格边界与产品架构分别记录，不将该计划误称为已符合本届规则。
+2026-10-17 development-cadence correction: the user explicitly stated that the main system can be completed first and refined at the event. Withdraw the 36-hour total development limit and replace it with four milestones: a complete core workflow, technical validation, finalized evidence, and integration refinement. Keep cross-mission resources and durable recovery as core capabilities; prioritize reproducible experiments with the additional time. A fresh reading of this edition's homepage still found “All work must be done during the hackathon,” with no exemption for existing code. Record eligibility boundaries separately from product architecture, and do not misrepresent this plan as already compliant with this edition's rules.
 
-2026-10-17 追加：用户要求深化选项 1，强调非线性执行与可信 eval。将技术研究目标收窄为动态状态下的依赖重验、增量修复及其相对强 ReAct/全局重规划的收益；新增 `TECHNICAL_RUNTIME_EVAL_ZH.md`。HyperAgent 等相关工作反驳了“使用 DAG 就是创新”；评测方案要求共享工具保护、独立终态判分、保留测试和消融。当前仍无实现和实测结果。
+2026-10-17 addition: the user requested a deeper treatment of option 1, emphasizing nonlinear execution and credible evaluation. Narrow the technical research objective to dependency revalidation and incremental repair under changing state, and their benefits relative to strong ReAct and global-replanning baselines; add `TECHNICAL_RUNTIME_EVAL_ZH.md`. Related work such as HyperAgent counters the claim that using a DAG is itself an innovation. The evaluation design requires shared tool protections, independent final-state scoring, held-out tests, and ablations. There is still no implementation or measured result.
 
-已完成本轮领域调研、候选比较、反证审阅、技术边界核查、演示和赛时计划。已在文档中记录正式 autoresearch 所需的后续评估合同。未开发参赛代码，未运行原型，未进行用户实验，未创建定时循环或后台自动化。
+This round's field research, candidate comparison, counterevidence review, technical-boundary checks, demonstration plan, and event-time plan are complete. The documents record the subsequent evaluation contract required for formal autoresearch. No competition code was developed, prototype run, or user experiment conducted; no scheduled loop or background automation was created.

@@ -4,7 +4,7 @@
 
 **Status:** proposed architecture, reviewed against primary documentation on 2026-10-17. No application, browser integration, benchmark result, or production deployment is verified by this document. The recommendation is conditional on measured results, not an assertion that incremental planning is superior.
 
-Read [the product and research thesis](01-product-and-research-thesis.md) first. Detailed contracts belong in [the runtime](03-personal-agent-runtime.md), model interfaces in [the decision layer](04-model-and-decision-layer.md), and comparisons in [the evaluation protocol](06-evaluation-and-experiments.md). The earlier Chinese system design supersedes its older two-store example: start with **one controlled store, a personal workspace, two missions, and one write executor**. Add the second store after the shared-resource and recovery tests pass.
+Read [the product and research thesis](01-product-and-research-thesis.md) first. Detailed contracts belong in [the runtime](03-personal-agent-runtime.md), model interfaces in [the decision layer](04-model-and-decision-layer.md), and comparisons in [the evaluation protocol](06-evaluation-and-experiments.md). The earlier system design supersedes its older two-store example: start with **one controlled store, a personal workspace, two missions, and one write executor**. Add the second store after the shared-resource and recovery tests pass.
 
 ## Recommendation and the decision being made
 

@@ -1,154 +1,154 @@
-# Personal Agent × WebMCP：Cal Hacks 选题研究
+# Personal Agent × WebMCP: Cal Hacks Project Research
 
-日期：2026-10-17。优先目标：Cal Hacks 获奖与现场演示效果。早期范围假设为 2–4 人、约 36 小时；用户随后明确撤销 36 小时总开发量限制，希望先完成核心再到现场精修。本报告下方旧时间表保留为研究历史，当前以 [系统设计](./PERSONAL_AGENT_SYSTEM_ZH.md) 和 [分阶段技术验证](./TECHNICAL_RUNTIME_EVAL_ZH.md) 为准。团队专长、可用账号与真实用户接入尚未知。所有结论均为选题判断，不是获奖概率或用户研究结论。
+Date: 2026-10-17. Primary goals: winning at Cal Hacks and delivering an effective live demonstration. The early scope assumed a team of 2–4 people and approximately 36 hours; the user later explicitly removed the 36-hour limit on total development, preferring to complete the core first and refine it onsite. The old schedule below is retained as research history; the current references are the [system design](./PERSONAL_AGENT_SYSTEM_ZH.md) and [staged technical validation](./TECHNICAL_RUNTIME_EVAL_ZH.md). Team expertise, available accounts, and access to real users remain unknown. All conclusions are project-selection judgments, not estimates of winning probability or user-research findings.
 
-**结论：方向值得继续，但“个人记忆 + 工具调用 + 共享界面”已十分拥挤。我会撤回把普通日程修复直接作为首选的建议。当前最值得先验证的是“纠正个人记忆后，精确修复已经安排但尚未完成的事情”。它只是一个验证优先级较高的假设，尚不能称为有明显获奖优势的产品。**
+**Conclusion: this direction is worth pursuing, but “personal memory + tool calls + shared interface” is already crowded. I would withdraw the recommendation to make ordinary schedule repair the first choice. The most promising hypothesis to validate next is “after correcting personal memory, precisely repair things already planned but not yet completed.” This is only a higher-priority hypothesis for validation; it cannot yet be described as a product with a clear competitive advantage in winning the hackathon.**
 
-如果团队已经能接入一个真实校园流程、拿到用户和可写的受控系统，解决那个流程的问题可能比下面的通用概念更有说服力。目前没有证据表明团队具有这种接入条件，因此不把它当成已具备的优势。
+If the team already has access to a real campus workflow, its users, and a controlled system it can write to, solving that workflow's problem may be more compelling than the general concept below. We currently have no evidence that the team has such access, so we do not count it as an existing advantage.
 
-本轮产出是研究，不是原型。阅读了赛事、官方技术资料、成熟产品与 WebMCP 项目；未运行这些项目、未访谈用户、未测得性能。方法与证据分别见 [研究约定](./RESEARCH_PROTOCOL.md)、[证据表](./EVIDENCE.md)、[判断演变](./RESEARCH_LOG.md)。
+This round produced research, not a prototype. We reviewed the competition, official technical materials, established products, and WebMCP projects; we did not run those projects, interview users, or measure performance. See the [research protocol](./RESEARCH_PROTOCOL.md), [evidence table](./EVIDENCE.md), and [evolution of judgments](./RESEARCH_LOG.md) for the method and supporting evidence.
 
-## 为什么需要改变原建议
+## Why the original recommendation needs to change
 
-Cal Hacks 看实际用途、设计、可运行性、创意与工程能力，且只有三分钟 pitch。WebMCP Challenge 是另一场已结束的比赛，其作品可以研究，但评审规则不能直接套用。[Cal Hacks](https://cal-hacks-13-0.devpost.com/)、[WebMCP Challenge](https://webmcp.devpost.com/)
+Cal Hacks considers practical application, design, functionality, creativity, and engineering capability, and allows only a three-minute pitch. The WebMCP Challenge is a separate competition that has already ended. Its projects are useful research material, but its judging rules cannot be applied directly. [Cal Hacks](https://cal-hacks-13-0.devpost.com/), [WebMCP Challenge](https://webmcp.devpost.com/)
 
-我们扩大样本后发现，原方案的多个亮点已是现有功能：
+After expanding the sample, we found that several proposed highlights are already existing features:
 
-- 日程重排：Reclaim 和 Motion 已覆盖自动调整；Runline 的作者进一步描述了扰动修复、人工锁定、备选、确认和旧版本保护。仅换成“学生课表”不能建立足够差别。[Reclaim](https://help.reclaim.ai/en/articles/17124978-habit-agent-overview-automate-recurring-routines)、[Runline](https://devpost.com/software/runline)
-- 受控记忆：Waggle 已展示记忆纠正、人工批准、再次召回与修改链；版本保护也已经存在。“用户能编辑 Agent 的记忆”不足以成为新卖点。[Waggle](https://devpost.com/software/waggle-webmcp)
-- 售后执行：Accessible Action Mode 已描述组合退换条件；ProofDone 强调核验最终结果；Concord 强调跨站恢复。不能把回执或撤销本身包装成我们的创新。[Accessible Action Mode](https://devpost.com/software/accessible-action-mode-returns-exchanges)、[ProofDone](https://devpost.com/software/proofdone)、[Concord](https://devpost.com/software/concord-an-agent-that-cannot-overpromise)
+- Schedule rearrangement: Reclaim and Motion already cover automatic adjustment; Runline's authors additionally describe disruption repair, manual locks, alternatives, confirmations, and protection against old versions. Merely changing the setting to “student schedules” does not establish enough differentiation. [Reclaim](https://help.reclaim.ai/en/articles/17124978-habit-agent-overview-automate-recurring-routines), [Runline](https://devpost.com/software/runline)
+- User-controlled memory: Waggle already demonstrates memory correction, human approval, subsequent recall, and a modification trail; version protection also exists. “Users can edit the agent's memory” is insufficient as a new selling point. [Waggle](https://devpost.com/software/waggle-webmcp)
+- Post-purchase execution: Accessible Action Mode already describes combined return/exchange conditions; ProofDone emphasizes verification of final outcomes; Concord emphasizes cross-site recovery. We cannot package receipts or undo functionality themselves as our innovation. [Accessible Action Mode](https://devpost.com/software/accessible-action-mode-returns-exchanges), [ProofDone](https://devpost.com/software/proofdone), [Concord](https://devpost.com/software/concord-an-agent-that-cannot-overpromise)
 
-这些是作者当前页面中的能力描述，可能含赛后更新，也未被我们独立复现。它们足以构成选题反证，不能用来推断确切获奖原因。
+These are capability descriptions from the authors' current pages. They may include post-competition updates and have not been independently reproduced by us. They are sufficient counterevidence for project selection, but cannot establish exactly why a project won.
 
-## 候选方向比较
+## Comparing candidate directions
 
-以下为同一组标准下的定性判断，没有编造官方权重或创意分数。
+The following are qualitative judgments under the same criteria. No official weights or creativity scores have been invented.
 
-| 方向 | 现场吸引力 | 主要困难 | 本轮决定 |
+| Direction | Live-demo appeal | Main difficulty | Decision this round |
 |---|---|---|---|
-| 什么都能做的个人助手 | 功能多但难讲清重点 | 范围过大，闭环弱 | 淘汰本次范围 |
-| 个人日程修复 | 前后变化清晰 | Reclaim、Motion、Runline、Day Canvas 重叠 | 从首选降级 |
-| 可携带的个人记忆库 | 主题契合 | Mem0、Recall、Waggle 已有；价值偏抽象 | 作为组件，不单独立项 |
-| 示范一次生成自动化 | 容易理解 | 既有自动化工具与同类；可靠迁移难 | 暂不优先 |
-| 泛购物 Agent | 商品可视化好展示 | 竞争成熟，支付/商家接入增加风险 | 收窄前不做 |
-| 购后失败学习与补救 | 钱、时间、错买直观 | 退货同类多；容易成为模拟商店 | 有真实受控接入时再优先 |
-| 记忆纠正后的局部计划修复 | 能展示原因、影响、保留与变化 | 容易被看成改设置刷新列表 | 优先进入短时验证关卡 |
-| 一个真实校园办事流程 | 用户和完成结果可信 | 依赖现成接入与权限，当前未知 | 若已有用户和接入，可提高优先级 |
-| 学生搬宿舍清空计划 | 物品卡、时间、运输变化可视化强 | 二手交易/取件渠道接入；本轮竞品覆盖不足 | 备用假设，不宣称空白 |
+| A personal assistant that does everything | Many features, but the central point is hard to communicate | Excessive scope and weak end-to-end completion | Exclude from this scope |
+| Personal schedule repair | Clear before/after change | Overlap with Reclaim, Motion, Runline, and Day Canvas | Downgrade from first choice |
+| Portable personal memory store | Fits the theme | Mem0, Recall, and Waggle already exist; value is relatively abstract | Use as a component, not a standalone project |
+| Generate automation from one demonstration | Easy to understand | Existing automation tools and similar projects; reliable transfer is difficult | Not a priority for now |
+| General shopping agent | Products make a visually clear demonstration | Mature competition; payment and merchant access add risk | Do not pursue before narrowing |
+| Learning and recovery after a failed purchase | Money, time, and mistaken purchases are tangible | Many return-related competitors; can easily become a simulated store | Prioritize only with real, controlled integration access |
+| Local plan repair after memory correction | Can show cause, impact, preservation, and change | May look like refreshing a list after changing a setting | Prioritize for a short validation gate |
+| One real campus administrative workflow | Credible users and completed outcomes | Depends on existing access and permissions, currently unknown | Raise priority if users and access already exist |
+| Student dorm move-out clearance plan | Strong visuals through item cards, timing, and transport changes | Resale/pickup channel integration; insufficient competitor coverage this round | Backup hypothesis; do not claim an unoccupied market |
 
-**不要把“市面已有”理解为项目不能做。** 黑客松仍可以靠问题选择、实际集成与完成度胜出。但要清楚哪些是基础能力，哪些才是团队能现场证明的增量。
+**Do not interpret “already exists” as “the project cannot be built.”** A hackathon entry can still win through problem selection, actual integration, and execution quality. But distinguish baseline capabilities from the additional value the team can demonstrate live.
 
-## 优先验证：记忆纠偏与局部修复
+## Priority hypothesis: memory correction and local repair
 
-一句话：**“AI 误会了我一次，影响了后面的安排；我纠正一次，它找出受影响的未完成事情，只改该改的部分。”**
+In one sentence: **“The AI misunderstood me once, and that affected later plans; I correct it once, and it finds the affected unfinished work and changes only what needs changing.”**
 
-目标用户先限定为使用 Agent 做每周餐食和采购计划的学生。尚未验证这类用户是否频繁遇到问题；须在投入完整开发前验证。
+Initially limit the target users to students who use an agent for weekly meal and shopping plans. We have not validated how often such users encounter this problem; do that before committing to full development.
 
-为了可重复演示，可以把错误记忆作为明确标注的测试输入；但之后的计划应由 Agent 实际读取该输入并生成依赖记录。不能把预先写好的动画称为捕捉到了真实、自然发生的模型错误。
+For a repeatable demonstration, the incorrect memory can be an explicitly labeled test input. However, the agent must actually read that input when generating the subsequent plans and dependency records. A prewritten animation must not be presented as capturing a real, naturally occurring model error.
 
-演示案例：上周聚餐后，Agent 错把用户当作四人家庭，导致本周部分晚餐和待买食材过量。用户说：
+Demo example: after last week's gathering, the agent incorrectly treats the user as a four-person household, causing excessive portions and ingredient quantities for some of this week's dinners. The user says:
 
-> 上周四个人只是来做客，我平时一个人住。把这周剩下的餐食和待买食材调整成一人份；周五聚餐还是四人，已经买好的东西保留。
+> The four people last week were only visiting; I usually live alone. Adjust this week's remaining meals and ingredients still to buy to one-person portions. Friday's gathering is still for four people, and keep what I have already purchased.
 
-界面展示记忆来源、每周餐食与购物清单。系统区分长期居住人数和单次聚餐，找到依赖旧记忆的安排，提出局部变更，并保留人工锁定与已经完成的事项。多道菜共用的食材需要合并计算；已经买好的原料应参与新的安排，而非简单删除。
+The interface shows the memory's source, weekly meals, and shopping list. The system distinguishes the long-term household size from a one-time gathering, finds plans dependent on the old memory, proposes local changes, and preserves manually locked and completed items. Ingredients shared across dishes need to be aggregated; ingredients already purchased should participate in the revised plan rather than simply being deleted.
 
-**与 Waggle 的可辩护差别只有这一层：它的已读页面重在更正记忆并正确召回；本假设要追踪更正前已经生成的应用决定，并修复其后果。** 这是对已读范围的比较，不是“全球首创”结论。
+**The defensible difference from Waggle is limited to this layer: the page we read focuses on correcting memory and recalling it correctly; this hypothesis tracks application decisions generated before the correction and repairs their consequences.** This comparison is limited to the material reviewed, not a claim of being the first in the world.
 
-最强反对意见是：“这不就是把家庭人数从四改成一？”如果最终演示确实只有全局倍数变更，应放弃这个包装。继续的理由必须是同时展示：长期事实与事件例外、用户已经做过的编辑、共享食材依赖、已经完成的动作，以及不应改动的相关对象。自然语言负责表达范围和取舍；数据依赖与约束验证由程序负责。
+The strongest objection is: “Isn't this just changing household size from four to one?” If the final demonstration is only a global multiplier change, abandon that framing. The reason to continue must be a demonstration that simultaneously handles long-term facts and event exceptions, prior user edits, shared ingredient dependencies, completed actions, and related objects that should remain unchanged. Natural language expresses scope and tradeoffs; code handles data dependencies and constraint validation.
 
-另一项必须修正的错误：取消一个限制，不代表相反偏好成立。例如“我不是素食者”不代表应把所有素食换成肉。影响识别首先给出“需重新检查”的集合，是否变更仍取决于明确意图和当前状态。
+Another error that must be corrected: removing a restriction does not establish the opposite preference. For example, “I am not vegetarian” does not mean all vegetarian meals should be replaced with meat. Impact detection first produces a set that needs rechecking; whether anything changes still depends on explicit intent and current state.
 
-## 三分钟演示脚本
+## Three-minute demonstration script
 
-| 时间 | 观众看到什么 | 要证明什么 |
+| Time | What the audience sees | What it should prove |
 |---|---|---|
-| 0:00–0:25 | 一人用户的本周计划却按四人采购；显示一次聚餐被误用为长期事实 | 问题直观，有具体后果 |
-| 0:25–0:50 | 用户输入上述纠正，同时保留周五聚餐与已购食材 | 一句话包含长期修正与例外 |
-| 0:50–1:30 | 两个未完成计划与购物清单出现变更预览；已锁定、已完成的卡片保持 | 局部修复保护用户投入 |
-| 1:30–2:05 | 用户先手动调整一项食材；旧方案提交被拒绝，Agent 读最新状态后重算 | 人和 Agent 可以真正交替操作 |
-| 2:05–2:40 | 应用方案，展示最终清单；新一轮安排使用一人基准但仍识别聚餐例外 | 既处理过去的后果，也纠正之后的行为 |
-| 2:40–3:00 | 用一句话说明差别；展示少量真实工具调用记录 | 操作来自实际 WebMCP，不是预录聊天动画 |
+| 0:00–0:25 | A single user's weekly plan buys for four; a one-time gathering is shown being misused as a long-term fact | An intuitive problem with specific consequences |
+| 0:25–0:50 | The user enters the correction above while preserving Friday's gathering and purchased ingredients | One sentence expresses both a long-term correction and exceptions |
+| 0:50–1:30 | A change preview appears for two unfinished plans and the shopping list; locked and completed cards remain unchanged | Local repair protects the user's prior work |
+| 1:30–2:05 | The user first adjusts one ingredient manually; the old proposal is rejected on submission, and the agent reads current state before recalculating | The human and agent can genuinely take turns operating the system |
+| 2:05–2:40 | Apply the proposal and show the final list; the next planning round uses a one-person baseline while retaining the gathering exception | It addresses past consequences and corrects future behavior |
+| 2:40–3:00 | Explain the distinction in one sentence and show a small number of actual tool-call records | Operations come from actual WebMCP execution, not a prerecorded chat animation |
 
-所有订单和商品如为测试数据，应明确标注。此 demo 完成的是规划与待买清单修改，不声称退款、实际购买或跨商家交易。录屏是失网备份，不能冒充现场执行。
+Clearly label all orders and products that are test data. This demo completes planning and edits to a list of items still to buy; it does not claim refunds, actual purchases, or cross-merchant transactions. A recording is an offline backup and must not be presented as live execution.
 
-## 最小实现边界
+## Minimum implementation boundary
 
-一个自有应用、一个 Agent、同源的三个视图（记忆依据、餐食、购物清单）。第一版不用跨源 iframe，不单独开发浏览器扩展，不加入多 Agent 或通用知识图谱编辑器。
+One owned application, one agent, and three same-origin views: memory evidence, meals, and shopping list. The first version does not use cross-origin iframes, develop a separate browser extension, or add multiple agents or a general knowledge-graph editor.
 
-概念架构：
+Conceptual architecture:
 
 ```text
-用户直接编辑 ─────→ 同一份应用状态 ←──── WebMCP 语义工具 ←──── 浏览器 Agent
-                          │                                   │
-                记忆版本 / 决策输入 / 人工锁定                 模型选择与解释
-                          │
-                   确定性检查与应用结果
+Direct user edits ──→ Shared application state ←── WebMCP semantic tools ←── Browser agent
+                              │                                                 │
+              Memory versions / decision inputs / manual locks        Model choices and explanations
+                              │
+                 Deterministic checks and applied results
 ```
 
-每个决定在生成时就记录实际读取的记忆版本、输入对象及状态，不能演示前手工为结果补上“因果关系”。依赖边表示曾被使用的输入，不保证这个输入是输出的唯一原因。修改时先标记受影响决定，再用当前约束决定是否需要重做。未知依赖要如实显示，不能用模型猜测冒充追溯。
+When each decision is generated, record the memory versions, input objects, and state actually read. Do not manually attach “causal relationships” to results just before the demonstration. A dependency edge records an input that was used; it does not guarantee that the input was the output's sole cause. On a change, first mark affected decisions, then use current constraints to decide whether they need to be redone. Show unknown dependencies honestly; do not present model guesses as traceability.
 
-建议工具职责：读取上下文和决定、提出记忆纠正、查询受影响决定、提出局部修复、应用已审阅方案。领域计算、数量合并、锁定和版本检查用普通代码；模型负责范围理解、提出可行取舍和解释。在应用写入口再次验证，不能只信模型输出。
+Suggested tool responsibilities: read context and decisions, propose memory corrections, query affected decisions, propose local repairs, and apply reviewed proposals. Use ordinary code for domain calculations, quantity aggregation, locks, and version checks; the model handles scope interpretation, proposes feasible tradeoffs, and explains them. Validate again at the application's write boundary rather than trusting model output alone.
 
-工具、UI 与业务逻辑操作同一状态。只允许精确应用用户审阅的方案；若输入版本变动则重算。撤销仅覆盖应用内可逆改动，且不能覆盖之后的人工编辑。
+Tools, UI, and business logic operate on the same state. Allow only the exact proposal reviewed by the user to be applied; recalculate if an input version changes. Undo covers only reversible in-app changes and must not overwrite later manual edits.
 
-当前官方接口以 `document.modelContext` 为准。跨源工具访问需配套授权；持久记忆、后台执行和跨站事务不是协议自动提供的。[Chrome API](https://developer.chrome.com/docs/ai/webmcp/imperative-api)、[规范草案](https://webmachinelearning.github.io/webmcp/)
+The current official interface uses `document.modelContext`. Cross-origin tool access requires the corresponding authorization; persistent memory, background execution, and cross-site transactions are not automatically provided by the protocol. [Chrome API](https://developer.chrome.com/docs/ai/webmcp/imperative-api), [draft specification](https://webmachinelearning.github.io/webmcp/)
 
-赛时开始就验证“工具注册→Agent 发现→调用→UI 终态”的完整链路。GoogleChromeLabs 有可参考的 [扩展示例](https://github.com/GoogleChromeLabs/webmcp-extension) 与 [Page Agent](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos/page-agent)，前者当前要求 Chrome 155+ 和 Node 22.18+，后者有 polyfill 路径。使用示例前锁定版本，并区分原生与兼容路径；本轮未运行它们。
+At the start of the competition, verify the complete “register tool → agent discovers it → invocation → final UI state” path. GoogleChromeLabs provides an [extension example](https://github.com/GoogleChromeLabs/webmcp-extension) and a [Page Agent](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos/page-agent). The former currently requires Chrome 155+ and Node 22.18+; the latter has a polyfill path. Pin versions before using the examples, and distinguish native execution from compatibility paths; neither was run in this research round.
 
-## 继续与放弃的关卡
+## Gates for continuing or stopping
 
-将赛时最前面的两小时作为可行性关卡，不先承诺做满 36 小时：
+Use the first two hours of the competition as a feasibility gate rather than committing to all 36 hours upfront:
 
-- 让三位非队友看 60 秒简化流程，并请其复述问题、结果和为什么不直接重新生成。记录原话，不用诱导问题。本轮尚未做此测试。
-- 至少有一个“有关但不该改”的对象，一个共享依赖需要重算的对象，以及一个已完成不能回写的对象。
-- 测试者临时改变一个输入，Agent 仍能给出不同的合法方案；不依赖固定成功脚本。
-- 能在一句话内说清与已有记忆管理器的差别。
+- Show three non-teammates a simplified 60-second flow and ask them to restate the problem, the result, and why the system should not simply regenerate everything. Record their actual words and avoid leading questions. This test has not yet been performed.
+- Include at least one related object that should not change, one object with a shared dependency that needs recalculation, and one completed object that cannot be rewritten.
+- Let a tester change an input unexpectedly; the agent must still produce a different valid proposal, without relying on a fixed success script.
+- Explain the difference from an existing memory manager in one sentence.
 
-若观众只能理解成调人数、需要大量架构解释、追溯关系是后补的、或系统只能全量重新生成，则停止这条产品假设。若已有真正可用的订单/校园流程接入，可转向其狭窄闭环；否则应重新选具体问题，而不是立即堆功能。
+Stop pursuing this product hypothesis if the audience sees only a headcount adjustment, the explanation requires extensive architecture discussion, traceability is added after the fact, or the system can only regenerate everything. If a genuinely usable order or campus-workflow integration already exists, shift to its narrow end-to-end workflow. Otherwise, choose a new concrete problem instead of immediately adding features.
 
-## 36 小时安排（通过关卡后）
+## 36-hour schedule (after passing the gate)
 
-| 时段 | 产物 |
+| Period | Deliverable |
 |---|---|
-| 0–2 小时 | 上述验证关卡与原生工具链路；不通过就换方向 |
-| 2–6 小时 | 领域数据、状态、决定输入记录、固定验收场景 |
-| 6–14 小时 | 三个共享视图与手动可完成的完整流程 |
-| 14–22 小时 | Agent 读取、局部方案、解释与 WebMCP 执行 |
-| 22–28 小时 | 版本冲突、例外、共享食材、已完成项与重复调用验证 |
-| 28–32 小时 | 非队友试用、修复演示障碍、删掉不服务主线的功能 |
-| 32–36 小时 | 三分钟演练、录屏、提交文字、仓库与环境说明 |
+| Hours 0–2 | The validation gate above and the native tool path; change direction if they fail |
+| Hours 2–6 | Domain data, state, decision-input records, and fixed acceptance scenarios |
+| Hours 6–14 | Three shared views and a complete workflow that can be performed manually |
+| Hours 14–22 | Agent reading, local proposals, explanations, and WebMCP execution |
+| Hours 22–28 | Validation of version conflicts, exceptions, shared ingredients, completed items, and repeated calls |
+| Hours 28–32 | Testing by non-teammates, removing demo obstacles, and deleting features that do not serve the main story |
+| Hours 32–36 | Three-minute rehearsals, recording, submission text, repository, and environment instructions |
 
-四人可按 UI、领域状态与验证、Agent/工具、用户验证与整合分工；人数不足时合并职责。不要牺牲整合时间去接第二个外部服务。
+A four-person team can divide UI, domain state/validation, agent/tools, and user validation/integration; combine responsibilities with fewer people. Do not sacrifice integration time to connect a second external service.
 
-## 后续如何真正使用 autoresearch
+## How to actually use autoresearch later
 
-本轮没有正式优化循环。实现后，再固定一个待优化文件（例如规划策略），固定模型/工具/场景/检查器，以程序读取最终应用状态判定，而不是让写方案的模型给自己打分。
+This round did not run a formal optimization loop. After implementation, fix one file to optimize, such as the planning policy, and fix the model, tools, scenarios, and checker. Judge results by programmatically reading final application state, rather than having the model that wrote the proposal grade itself.
 
-| 固定场景 | 必须满足的终态 |
+| Fixed scenario | Required final state |
 |---|---|
-| 一次聚餐被误当长期家庭人数 | 长期记忆正确，未来本人餐食采用正确范围 |
-| 明确的四人聚餐例外 | 该事件人数与承诺保留 |
-| 用户锁定的菜单 | 原对象不被重写 |
-| 已经买好的食材 | 购买事实保留，不伪称退掉；新方案考虑可用库存 |
-| 多菜共用食材 | 总需求和待买净量正确，不能简单整行删除 |
-| 修复期间人工修改清单 | 旧预览不能覆盖新编辑，重新读取后再提方案 |
-| 仅撤销限制但未要求替换 | 不自动推断相反偏好，不产生无依据的大改 |
-| 记忆无关的计划 | 无误修改 |
-| 同一操作重复调用 | 不重复扣减、创建或应用 |
-| 原生 WebMCP 执行 | 工具结果、UI 与持久状态一致，不把旁路函数调用算协议通过 |
+| A one-time gathering is mistaken for long-term household size | Long-term memory is correct, and future meals for the user use the correct scope |
+| An explicit four-person gathering exception | That event's headcount and commitments are preserved |
+| A menu locked by the user | The original object is not rewritten |
+| Ingredients already purchased | Purchase facts remain, with no false claim of returning them; the new proposal accounts for available inventory |
+| Ingredients shared across multiple dishes | Total demand and net quantity still to buy are correct; do not simply delete an entire row |
+| A manual list edit during repair | The old preview cannot overwrite the new edit; reread before proposing again |
+| A restriction is withdrawn without requesting a replacement | Do not infer the opposite preference or make unsupported broad changes |
+| A plan unrelated to the memory | No erroneous modification |
+| The same operation is called repeatedly | No duplicate deduction, creation, or application |
+| Native WebMCP execution | Tool results, UI, and persistent state agree; a bypass function call does not count as passing the protocol path |
 
-建议主指标为 `scenario_pass_rate`，越高越好；硬性约束是误改锁定/已完成项为零、已知违规写入为零。每例只有全部终态断言通过才算通过；模糊语言解释另行人工记录。重复相同条件的多次运行，报告实际分子分母和失败案例，不只报最好一次。
+The suggested primary metric is `scenario_pass_rate`, higher is better. Hard constraints are zero erroneous modifications to locked/completed items and zero known invalid writes. A case passes only when all final-state assertions pass; record ambiguous language explanations separately through human review. Repeat runs under the same conditions and report actual numerators, denominators, and failures, not just the best run.
 
-基线比较同一模型与同一初始状态下的“全量重新生成”与“追溯依赖后局部修复”。只改变一个策略因素；把延迟、调用数和人工纠正次数作为次要指标。可参考 [WebMCP Evals](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/webmcp-evals)。评测器固定后不可为分数修改；尚未实现之前不编造评测命令或声称跑过实验。
+Compare “full regeneration” against “local repair after tracing dependencies,” using the same model and initial state. Change only one strategy factor; treat latency, call count, and the number of manual corrections as secondary metrics. [WebMCP Evals](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/webmcp-evals) is a possible reference. Once fixed, the evaluator must not be changed to improve the score; before implementation, do not invent evaluation commands or claim that experiments were run.
 
-## 赞助与提交策略
+## Sponsor and submission strategy
 
-补充研究见 [赞助赛道适配方案](./SPONSOR_FIT_ZH.md)：建议购物主题对接 Visa、Convex 或 SpacetimeDB 二选一承担共享状态、Gemini 承担理解与工具调用；具体资格与多赛道申报限制仍须按本届细则确认。
+See the supplementary [sponsor-track fit plan](./SPONSOR_FIT_ZH.md): use the shopping theme for Visa, choose either Convex or SpacetimeDB for shared state, and use Gemini for interpretation and tool calling. Exact eligibility and restrictions on entering multiple tracks still require confirmation against this edition's detailed rules.
 
-先选能完成的用户结果，再选择一个确实使用的赞助能力。当前 [Cal Hacks 奖项页](https://cal-hacks-13-0.devpost.com/)列有 Visa 的 Reimagining Shopping、Fetch.ai、Convex、Figma Agent/Design 等类别。记忆修复未必天然满足其中任何一项；采购清单也不自动等于支付赛道资格。赞助细则、可用账号、具体要求须在确定实现前核实。
+First select a user outcome the team can complete, then choose a sponsor capability it actually uses. The current [Cal Hacks prize page](https://cal-hacks-13-0.devpost.com/) lists Visa's Reimagining Shopping, Fetch.ai, Convex, and Figma Agent/Design categories, among others. Memory repair does not necessarily qualify for any of them, and a shopping list does not automatically establish eligibility for a payment track. Verify sponsor rules, account access, and specific requirements before finalizing the implementation.
 
-没有足够材料支持“某赛道人少更好拿奖”或“接入更多赞助商就更容易赢”。也不应为了宣称多 Agent 而增加无必要的调用。提交材料重点写清楚用户是谁、真实解决了什么、演示中哪里必须由 Agent 决策、WebMCP 实际承担哪一段，以及测试数据和外部集成的边界。
+There is insufficient evidence to claim that “a less crowded track is easier to win” or that “integrating more sponsors makes winning more likely.” Do not add unnecessary calls merely to claim a multi-agent system. Submission materials should explain who the user is, what was actually solved, where the agent must make decisions in the demonstration, which part WebMCP actually handles, and the boundaries of test data and external integrations.
 
-## 当前仍未知
+## What remains unknown
 
-三件事会改变最终选择：团队是否有真实校园/商家系统接入；目标用户是否遇到过记忆错误传播；两小时验证能否让观众理解局部修复的价值。没有这些证据前，本报告建议的是先验证哪一条，而不是宣布某个点子一定能赢。
+Three things could change the final choice: whether the team has real campus/merchant-system access; whether target users have experienced memory errors propagating into later work; and whether the two-hour validation lets an audience understand the value of local repair. Without that evidence, this report recommends what to validate first, rather than declaring that an idea will definitely win.

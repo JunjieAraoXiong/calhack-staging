@@ -57,6 +57,10 @@ Our adapter metadata for reads, writes, preconditions, idempotency, and outcome 
 | [Scheduled functions](https://docs.convex.dev/scheduling/scheduled-functions) | Scheduling from a mutation can share its atomic boundary | A scheduled external action is not an exactly-once external business effect |
 | [Actions](https://docs.convex.dev/functions/actions) | Calls to external services such as model providers | External side effects do not become database transactions |
 | [Function runtimes](https://docs.convex.dev/functions/runtimes) | Supported backend execution environments | Do not assume a Python solver can execute inside a JavaScript/TypeScript function runtime |
+| [Running WebAssembly](https://docs.convex.dev/functions/runtimes#running-webassembly) | Imported WASM can implement bounded computation inside TypeScript function entrypoints, including a mutation | Does not provide native Rust function deployment or a documented general WASI environment |
+| [Convex limits](https://docs.convex.dev/production/state/limits) | Resource constraints for selecting in-function computation versus an external worker | Actual artifacts and workloads must be measured; WASM does not bypass the limits |
+| [Convex Rust client](https://docs.convex.dev/client/rust) | A connection path for a native Rust worker | A client SDK is not a server function runtime |
+| [Rust WASM target](https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html) | Target constraints for a pure Rust kernel | OS-dependent libraries and generated glue are not automatically compatible with the browser or Convex |
 | [Workflow component repository](https://github.com/convex/workflow) | Durable workflow composition, step persistence, waits, and retry configuration | Not a transaction spanning external merchants; retries require effect-aware handling |
 | [Workflow component overview](https://www.convex.dev/components/workflow) | Component integration and use cases | Does not prove our controller or in-flight schema migrations are correct |
 | [Agent overview](https://docs.convex.dev/agents/overview) | Optional conversation, tools, and agent facilities | Conversation storage does not replace authoritative facts, grants, orders, or resource ledgers |
@@ -108,12 +112,12 @@ The resulting recommendation is narrower than claiming a new category: build and
 - [Research protocol](../research/RESEARCH_PROTOCOL.md): goals and evidence discipline.
 - [Evidence notes](../research/EVIDENCE.md): gathered facts and qualifications.
 - [Research log](../research/RESEARCH_LOG.md): evolution of the investigation.
-- [Original landscape synthesis](../research/CALHACKS_WEBMCP_RESEARCH_ZH.md): earlier Chinese research summary.
+- [Original landscape synthesis](../research/CALHACKS_WEBMCP_RESEARCH_ZH.md): earlier research summary, translated into English.
 - [Original sponsor analysis](../research/SPONSOR_FIT_ZH.md): earlier track-fit discussion.
 - [Technical runtime and evaluation notes](../research/TECHNICAL_RUNTIME_EVAL_ZH.md): technical thesis development.
 - [Personal-agent system notes](../research/PERSONAL_AGENT_SYSTEM_ZH.md): system and decision-model discussion.
 
-The English package is the current consolidated recommendation. Earlier notes may contain explored alternatives or superseded assumptions; consult [09](09-decisions-and-open-questions.md) for their current status.
+The `docs/` package is the current consolidated recommendation. All research notes are now in English; legacy `_ZH` filenames are retained to preserve links. Earlier notes may contain explored alternatives or superseded assumptions; consult [09](09-decisions-and-open-questions.md) for their current status.
 
 ## 8. Claims we can and cannot currently make
 

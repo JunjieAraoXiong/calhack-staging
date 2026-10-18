@@ -1,43 +1,43 @@
-# Personal Agent × WebMCP：Cal Hacks 选题研究约定
+# Personal Agent × WebMCP: Cal Hacks Topic Research Protocol
 
-研究日期：2026-10-17（America/Los_Angeles）。用户确认目标：Cal Hacks 获奖与现场演示效果。
+Research date: 2026-10-17 (America/Los_Angeles). User-confirmed objectives: winning at Cal Hacks and delivering an effective live demonstration.
 
-## 范围与方法
+## Scope and method
 
-本次使用 autoresearch-agent 的假设、验证、记录、反驳和保留/淘汰思想，开展领域与选题研究。不是其正式的代码优化循环：初始目录为空，没有目标实现、固定评测命令或 Git 仓库；不会伪造 benchmark、运行次数、性能提升或获奖概率。不会为制造评分而创建自评脚本，也不会运行 git reset。所有输出均为研究文档，不是参赛产品实现。
+This research applies autoresearch-agent's principles of hypothesis formation, verification, logging, counterargument, and retention or rejection to the field and product direction. It is not the skill's formal code-optimization loop: the initial directory was empty, with no target implementation, fixed evaluation command, or Git repository. We will not fabricate benchmarks, run counts, performance improvements, or probabilities of winning. We will not create self-scoring scripts merely to manufacture scores or run git reset. All outputs are research documents, not an implementation of the competition product.
 
-正式量化实验留待赛时具备实现与固定测试集后开展；届时固定 target、evaluate_cmd、metric_direction、预算和 evaluator，再依技能协议执行。
+Formal quantitative experiments are deferred until an implementation and fixed test set are available during the hackathon. At that point, fix the target, evaluate_cmd, metric_direction, budget, and evaluator, then follow the skill's protocol.
 
-## 固定判断标准
+## Fixed assessment criteria
 
-首先参照 Cal Hacks 公布的五项标准：Application、Intentionality、Functionality、Creativity、Technical Complexity。主办方未在已读页面给出权重，研究不虚构官方分数。
+Start with the five criteria published by Cal Hacks: Application, Intentionality, Functionality, Creativity, and Technical Complexity. The organizers did not provide weights on the reviewed pages; this research will not invent official scores.
 
-统一检查每个方向：
+Assess every direction against the same questions:
 
-1. 用户与触发事件：谁在什么情况下遇到可观察的问题？
-2. 三分钟可见结果：状态前后差异与人的介入是否易懂？
-3. 个人 Agent 的必要性：持续偏好或历史是否改变决策？
-4. WebMCP 的必要性：网站语义动作与共享会话状态是否实际被使用？
-5. 既有重叠：最接近的产品或项目是什么？差别能否用演示验证？
-6. 分阶段可交付性：先完成核心，再验证和精修；外部账号、权限、真实交易、数据、浏览器版本等依赖是否可控？用户已明确撤销“所有开发必须压进 36 小时”的技术范围假设。
-7. 工程深度：验证、并发状态、失败恢复、可追溯结果是否解决实际问题？
-8. 赛道适配：只写已核实的奖项名称；未取得细则不宣称有参赛资格。
+1. User and trigger: who encounters an observable problem, and under what circumstances?
+2. Visible result within three minutes: are the before/after state and human intervention easy to understand?
+3. Need for a personal agent: do persistent preferences or history change the decision?
+4. Need for WebMCP: are the website's semantic actions and shared session state actually used?
+5. Existing overlap: what is the closest product or project, and can a demonstration substantiate the difference?
+6. Staged delivery: build the core first, then validate and refine it. Are dependencies such as external accounts, permissions, real transactions, data, and browser versions controllable? The user has explicitly withdrawn the technical-scope assumption that all development must fit into 36 hours.
+7. Engineering depth: do validation, concurrent state, failure recovery, and traceable outcomes solve a real problem?
+8. Track fit: use only verified prize names; do not claim eligibility without obtaining the detailed requirements.
 
-比较结论使用保留、收窄、降级、淘汰及文字理由。它们是研究判断，不是用户测试或程序性能。
+Comparison outcomes use retain, narrow, downgrade, or reject, with written reasons. These are research judgments, not user-test results or software performance measurements.
 
-## 证据纪律
+## Evidence discipline
 
-- 产品能力尽量引用厂商官方资料；技术能力引用规范和浏览器官方文档。
-- Devpost 页面属于作者自述；获奖标记证明获奖，不证明每项性能描述已被独立复现。
-- 对未实际运行的 demo 不写“已验证可用”。
-- 区分标准草案、某一浏览器实现、样例和个人建议。
-- 不把样本中没找到的功能写成“全球首创”或“没有竞品”。
-- 不把赞助商宣传或调查意向写成真实需求验证；不把模型主观打分写成实测。
+- Cite official vendor material for product capabilities where possible, and specifications and official browser documentation for technical capabilities.
+- Devpost pages are author self-reports. A winner label establishes that a project won, not that every performance claim has been independently reproduced.
+- Do not describe a demo as verified to work if it has not actually been run.
+- Distinguish a draft standard, a particular browser implementation, an example, and a personal recommendation.
+- Do not describe a feature absent from the reviewed sample as a world first or as having no competitors.
+- Do not present sponsor marketing or stated survey intentions as validated demand for this product; do not present subjective model scores as measurements.
 
-## 完成条件
+## Completion criteria
 
-完成至少三类证据交叉检查（赛事、技术、竞品），比较至少六个候选方向，记录对原日程修复假设的反证，形成一个条件明确的首选及备选、三分钟演示脚本、分阶段范围、未来固定验收用例与未解决问题。最后由独立代理针对首选做反驳审阅，修正重大缺陷后交付中文报告。
+Cross-check at least three evidence categories (event, technology, and competitors); compare at least six candidate directions; document counterevidence to the original schedule-repair hypothesis; and produce a conditional first choice and alternatives, a three-minute demonstration script, staged scope, future fixed acceptance cases, and unresolved questions. Finally, have an independent agent challenge the first choice, address major flaws, and deliver a report. The original language requirement was Chinese; all research documentation has since been translated into English at the user's request.
 
-## 赛前界限
+## Pre-event boundary
 
-用户希望先完成核心，再在现场精修；产品架构不再受 36 小时总开发量限制。本轮仍为研究与设计，未实现产品。2026-10-17 再次读取本届 Devpost 首页，仍明确写有“All work must be done during the hackathon”；未发现已有核心代码的豁免。因此产品开发阶段规划与本届参赛资格是两个问题，不能把赛前完整开发并现场精修直接表述为已符合规则。已有代码、可复用基础设施与赛前研究的具体参赛边界以主办方明确解释为准，不妨碍继续完成系统设计。
+The user wants to complete the core first and refine it at the event; the product architecture is no longer constrained by a 36-hour total development limit. This round remains research and design, with no product implementation. A fresh reading of this edition's Devpost homepage on 2026-10-17 still explicitly stated, “All work must be done during the hackathon”; no exemption for existing core code was found. Product-development milestones and eligibility for this event are therefore separate questions. Completing the product before the event and refining it on site cannot be presented as already compliant with the rules. The organizers' explicit interpretation governs the submission boundaries for existing code, reusable infrastructure, and pre-event research. This does not prevent continuing the system design.

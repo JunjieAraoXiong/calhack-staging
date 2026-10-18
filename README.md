@@ -9,6 +9,7 @@ Product exploration, system designs, deployment plans, sponsor-track research, a
 - [Documentation index](docs/README.md) — the complete English design package.
 - [Experiment portfolio](docs/11-experiment-portfolio.md) — compare six product candidates and their first decisive experiments.
 - [Sponsor strategy](docs/07-sponsor-track-strategy.md) — verified track names, proposed integrations, and unresolved eligibility requirements.
+- [Language and integration design](docs/12-typescript-rust-convex-webmcp.md) — TypeScript/Rust responsibilities, Convex WASM support, and the two WebMCP execution paths.
 
 ## Product candidates
 
@@ -27,6 +28,6 @@ The [original personal-agent design](docs/01-product-and-research-thesis.md) rem
 
 - `docs/` — current English architecture, product, evaluation, and delivery documents.
 - `docs/experiments/` — detailed designs for the six additional product candidates.
-- `research/` — earlier research notes and Chinese discussion history, retained for provenance.
+- `research/` — earlier research notes and discussion history, translated into English and retained for provenance. Legacy `_ZH` filenames remain unchanged to preserve links.
 
 Consult the [source register](docs/10-sources-and-evidence.md) for evidence boundaries. Proposed capabilities, planned experiments, and unconfirmed sponsor requirements are labeled throughout the documents.

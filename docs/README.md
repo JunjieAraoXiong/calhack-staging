@@ -1,6 +1,6 @@
 # Agent Projects: Product, Architecture, Evaluation, and Sponsor Strategy
 
-This folder consolidates the project discussions into an English design package. It is the current planning reference; the earlier Chinese material in [`research/`](../research/) remains the research history.
+This folder consolidates the project discussions into an English design package. It is the current planning reference; the earlier material in [`research/`](../research/) has also been translated into English and remains the research history. Legacy `_ZH` filenames are retained to preserve links.
 
 **Status:** design and research only. No application, deployed integration, benchmark implementation, measured performance improvement, or confirmed sponsor eligibility has been produced by this documentation task. External capabilities are documented separately from capabilities we propose to build.
 
@@ -37,10 +37,11 @@ Shopping is the initial product example because quantities, stock, deadlines, pr
 | [09 — Decisions and open questions](09-decisions-and-open-questions.md) | What is recommended, provisional, unresolved, or explicitly out of scope? |
 | [10 — Sources and evidence](10-sources-and-evidence.md) | Which claims have primary-source support and which remain hypotheses? |
 | [11 — Experiment portfolio](11-experiment-portfolio.md) | How do six additional product directions compare, and which experiment should we try first? |
+| [12 — TypeScript, Rust, Convex, and WebMCP](12-typescript-rust-convex-webmcp.md) | Which language owns each layer, and how do browser tools, backend state, WASM, and workers connect? |
 
 Detailed candidate designs: [DataPatch](experiments/datapatch.md), [Agent Crash Lab](experiments/agent-crash-lab.md), [LiveOps](experiments/liveops.md), [SupplyWatch](experiments/supplywatch.md), [SpendRail](experiments/spendrail.md), and [CloseProof](experiments/closeproof.md).
 
-For product discussion, read 01, 02, and 07. For implementation, read 03–05. Before making performance claims, read 06. Before deciding what can be submitted to the event, read 07 and 09.
+For product discussion, read 01, 02, 07, and 11. For implementation, read 03–05 and 12. Before making performance claims, read 06 and the chosen product's protocol. Before deciding what can be submitted to the event, read 07 and 09.
 
 ## Agreed direction versus provisional choices
 

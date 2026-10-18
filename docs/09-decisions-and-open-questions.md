@@ -23,6 +23,7 @@ This record distinguishes the user's stated direction from technical recommendat
 | Track submission | Product-dependent and unconfirmed | Convex/Gemini/Visa for the original branch; Factory, Apify, Coinbase, Elastic, Armadin, and Hyphenate considered where the selected product substantively fits |
 | Portfolio priority | Research recommendation | First compare DataPatch, LiveOps, and SupplyWatch; no final pivot or empirical winner selected |
 | WebMCP across candidates | Updated scope | Core to the original browser-agent branch; optional when external agents need an application tool interface |
+| Implementation language | Recommendation, not implementation | TypeScript for web/WebMCP/Convex; optional pure Rust/WASM kernel; native worker only for justified workloads; Python remains natural for DataPatch. See [12](12-typescript-rust-convex-webmcp.md) |
 | Prebuilt implementation eligibility | Unconfirmed and in tension with published rules | Do not treat the user's preferred product schedule as an exception to the event rules |
 | Performance superiority | Unproven | Requires the experiments in [06](06-evaluation-and-experiments.md) |
 
