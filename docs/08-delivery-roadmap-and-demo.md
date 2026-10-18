@@ -96,6 +96,8 @@ Keep the lost-response/reconnect scenario ready for questions. It is a strong co
 
 ## 5. Evidence the demo should carry
 
+The [past Cal Hacks review](13-past-cal-hacks-projects.md) suggests a useful presentation order: recognizable failure or conflict, changed artifact, correctness evidence, then architecture. Keep runtime graphs available to explain the mechanism after the audience understands the result. This is our interpretation of selected precedents, not a finding about judging causality. Any narrower action set used for the demo must be recorded in its manifest and distinguished from broader benchmark claims.
+
 The presentation build should make the following available without exposing credentials or personal data:
 
 - A manifest with code revision, schema and adapter versions, browser build, model ID, fixture version, and deployment identifiers.

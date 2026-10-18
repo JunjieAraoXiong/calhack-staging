@@ -10,6 +10,7 @@ Product exploration, system designs, deployment plans, sponsor-track research, a
 - [Experiment portfolio](docs/11-experiment-portfolio.md) — compare six product candidates and their first decisive experiments.
 - [Sponsor strategy](docs/07-sponsor-track-strategy.md) — verified track names, proposed integrations, and unresolved eligibility requirements.
 - [Language and integration design](docs/12-typescript-rust-convex-webmcp.md) — TypeScript/Rust responsibilities, Convex WASM support, and the two WebMCP execution paths.
+- [Past Cal Hacks projects](docs/13-past-cal-hacks-projects.md) — 13 relevant award recipients from 2023–2025, their technical mechanisms, and implications for our scope.
 
 ## Product candidates
 

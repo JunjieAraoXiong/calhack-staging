@@ -11,6 +11,7 @@ Review date: **October 17, 2026, America/Los_Angeles**. This register records so
 | Proposed | A design or implementation choice for our product |
 | Hypothesis | A comparative claim requiring experiments |
 | Measured | A claim backed by our actual run artifacts; none exists yet |
+| Historical award verified | An event-linked award record or sponsor announcement supports the named recognition; this does not validate the project's performance or explain judging decisions |
 | Unconfirmed requirement | A sponsor or event condition requiring additional current evidence |
 
 The research used official platform documentation, current event pages, original papers and repositories, and project-author submissions. Product overlap findings are directional, not an exhaustive patent, novelty, or market analysis. None establishes a probability of winning.
@@ -160,3 +161,18 @@ The six directions in [11](11-experiment-portfolio.md) were added after the orig
 The current event page was re-fetched for the expanded portfolio. It confirms the additional Apify, Coinbase x402, and Armadin track names now listed in [07](07-sponsor-track-strategy.md). Technical documentation establishes capabilities; only the event's actual requirements can establish eligibility.
 
 Each product page also maintains sources closest to its technical claims, including additional x402 and Elastic references. No live source collection, SDK run, payment, attack, or benchmark execution was performed to write these documents.
+
+## 10. Historical Cal Hacks award recipients
+
+The [past-project review](13-past-cal-hacks-projects.md) contains 13 selected cases, direct project links, exact recognition, bounded author-described mechanisms, and our proposed design implications. It covers the numbered 2023–2025 Cal Hacks events, not the separate Berkeley AI Hackathon. No historical application or benchmark was run.
+
+| Source | What it supports | Boundary |
+|---|---|---|
+| [10.0 gallery](https://cal-hacks-10.devpost.com/project-gallery), [11.0 gallery](https://cal-hacks-11-0.devpost.com/project-gallery), [12.0 gallery](https://cal-hacks-12-0.devpost.com/project-gallery) | Event-specific discovery; each selected project's linked award section establishes its listed recognition | A generic winner badge does not establish placement; the selection is not a complete census |
+| [Elastic's 12.0 retrospective](https://www.elastic.co/search-labs/blog/agent-builder-projects-learnings-cal-hacks-12-0) | Sponsor confirmation of AgentOverflow's first place and its described integration | Not independent repair correctness or current eligibility |
+| [Nexus institutional report](https://engineering.oregonstate.edu/all-stories/oregon-state-team-wins-top-prize-cal-hacks-competition) | Corroboration of first overall at 10.0 | Does not establish why judges selected it |
+| [FaceTimeOS author retrospective](https://blog.dylanlu.com/cal-hacks-12/) | Author-disclosed implementation and demonstration constraints | Later account, not an independent execution audit |
+| [Duck Duck Goose repository](https://github.com/KevinL10/applovin-query) | Inspectable planner description, benchmark interface, and development-validation process | Published measurements were not reproduced; the original challenge contract was not retrieved |
+| [Duck Duck Goose comparison code](https://raw.githubusercontent.com/KevinL10/applovin-query/main/benchmark/run.py) | Direct inspection of numeric normalization and set-based row comparison | Adequacy depends on the task's output semantics; this is not evidence of an erroneous judging result |
+
+Project pages can be updated after an event. The review separates recorded awards, current author descriptions, and our inferences, and does not treat any of them as proof of our novelty, user demand, or chance of winning.

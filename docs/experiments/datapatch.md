@@ -17,6 +17,8 @@ This scope is a product hypothesis, not evidence that analysts will adopt it; in
 
 ## 2. What would make this technically different?
 
+Relevant Cal Hacks precedents already include conflict repair, targeted document edits, and reusable debugging evidence. Compare [merj, GhostWriter, and AgentOverflow](../13-past-cal-hacks-projects.md) before claiming differentiation. DataPatch's proposed additional value must appear in data-specific correctness, independent regression evidence, and ambiguity handling—not merely a model-generated patch.
+
 The hypothesis is that **explicit artifact dependencies and bounded competing repairs improve semantic correctness per unit of computation**, compared with the same coding agent working on the same incident directly.
 The runtime preserves input identities, separates observations from assumptions, and re-executes the affected descendants of a candidate change.
 It can compare two repairs that both pass a visible test, discover a discriminating observation, and abstain if the data cannot establish which interpretation is correct.
@@ -167,6 +169,7 @@ A proposed final set is **48 incidents from eight unseen base pipelines**, with 
 Keep a separate development set; pilot its variance to set the final repetition count before running the held-out set. The number 48 is a proposed design, not a completed sample.
 Some incidents contain compound drift; include clean but genuinely changed business outputs so restoring old totals is penalized when incorrect.
 An independent evaluator owns expected outputs, row-level semantic checks, untouched regression fixtures, and ambiguity labels; none are mounted in agent workers.
+Define output equivalence before writing that evaluator: preserve row multiplicity, enforce order where the contract promises it, distinguish nulls from empty strings and zero, and preserve identifier types and precision. Use exact monetary arithmetic and explicit per-column tolerances for approximate quantities. Seed evaluator checks with a dropped duplicate, a changed join count, and a rounded large identifier; each must fail when it violates the contract. The [Duck Duck Goose case study](../13-past-cal-hacks-projects.md) illustrates why a benchmark's comparison semantics need inspection alongside its timing results.
 All arms receive the same public validator feedback during repair. Hidden tests run only on each arm's frozen final candidate, without feedback-driven retries.
 Owner answers, when allowed, come from the same frozen evidence bundle with equal question limits; unavailable definitions are unavailable to every arm.
 Keep model runs paired by incident and repetition, randomize arm order, and report uncertainty clustered by base pipeline; eight templates limit generalization.

@@ -281,3 +281,14 @@ For Armadin, a conditional Crash Lab variant could test whether an agent follows
 CloseProof has a more direct finance workflow than personal shopping, so Hyphenate is a plausible thematic candidate. Its exact integration, autonomy, and business requirements still need confirmation. Keep the initial product read-only; an investigation does not require writing to the books or moving funds.
 
 The existing work-timing and multi-track questions apply to all six directions. These documents prepare implementation and evidence plans; they do not establish any track's final eligibility.
+
+## 12. What earlier award recipients add to this strategy
+
+The [historical review](13-past-cal-hacks-projects.md) verifies project-specific awards across Cal Hacks 10.0–12.0 and separates them from authors' implementation claims. It supplies design references, not current eligibility rules.
+
+- **Convex:** Nexus is a verified overall winner whose authors used Convex for matching and realtime state. For our product, show shared decisions and concurrent changes through actual application behavior. Do not relabel its overall award as a Convex prize.
+- **Factory:** merj is a useful example of a sponsor capability participating in a repair workflow. Its award was for CodeRabbit; our Factory claim still requires actual Droid SDK use and the current track's requirements.
+- **Elastic:** the sponsor confirms AgentOverflow as its 12.0 first-place entry. Use its evidence-centered workflow as a reference for CloseProof, while keeping our own arithmetic and source-validation obligations explicit.
+- **Technical depth:** Duck Duck Goose provides a concrete optimization-and-evaluation precedent. That does not establish a current AppLovin fit or justify adopting its reported performance numbers.
+
+Historical MCP and agent-framework integrations are not evidence of WebMCP usage. The current track ledger above remains authoritative for this package; older prize names, rankings, and requirements do not carry forward automatically.

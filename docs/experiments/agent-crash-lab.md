@@ -17,6 +17,8 @@ The first release detects failures. A protective gateway is a separate optional 
 
 ## 2. Technical hypothesis and attribution
 
+The [historical project review](../13-past-cal-hacks-projects.md) provides two useful presentation references: Duck Duck Goose for inspectable execution and comparison machinery, and Unreal EngJam for a developer tool with a visible executable result. Crash Lab's corresponding artifact is a minimal failing test plus independently checked history, not only a trace visualization. These are design references, not evidence that our fault model works.
+
 The hypothesis is that **contract-aware exploration and causal schedule minimization discover actionable agent recovery failures faster than equal-budget random fault injection**.
 The model under test may be sophisticated or entirely scripted; the core scheduler and checker should work without another model.
 The hard work is defining observable semantics, representing uncertainty honestly, generating valid concurrent histories, and preserving the same failure while shrinking a trace.

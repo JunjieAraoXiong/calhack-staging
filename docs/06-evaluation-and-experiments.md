@@ -161,6 +161,8 @@ Distinguish **admission violations** from **overcommitment caused by a later use
 
 Efficiency: total input/output tokens, model calls, tool reads/writes, retries, deterministic CPU time, graph-maintenance time, wall-clock time, and reconciliation work. Record provider-reported usage and pricing date for monetary estimates. Include failures and timeouts in cost totals.
 
+Separate preparation, cold-start, and warm-run costs, including context indexing and dependency construction. State the number of missions or events over which any preparation cost is amortized, alongside the total end-to-end cost. All strategies receive equivalent cache and warm-start opportunities. The [Duck Duck Goose historical case](13-past-cal-hacks-projects.md) is a useful reference for inspecting the boundary of a timing claim; its author-reported results are not our target or our measurements.
+
 Recovery: time from injected event to verified legal stable state; record repair-scope expansions, global fallbacks, and valid nodes reused. A run that never recovers is censored at its budget or classified as failed, not assigned zero recovery time. Report tail latency only with sample-size limitations.
 
 Quality: hard-constraint violations, objective vector, gap to a proven optimum where available, unnecessary changes, and unnecessary clarification/approval requests. Do not reward changing fewer nodes when required changes were missed.

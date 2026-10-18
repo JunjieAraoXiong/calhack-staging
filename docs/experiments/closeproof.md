@@ -17,6 +17,8 @@ If the same user's work is already solved by an export, exact joins, and a short
 
 ## 2. Exact product behavior
 
+The [AgentOverflow and SecondSearch precedents](../13-past-cal-hacks-projects.md) reinforce an evidence-first interface: put the calculation and exact supporting records on the shortest review path. Their awards do not validate financial reconciliation or our proposed agent. Keep arithmetic, source completeness, and explanation correctness separately testable.
+
 1. The user imports fixture exports and selects the merchant, review period, cutoff, reporting currency, and known settlement conventions.
 2. CloseProof validates schemas, identifiers, currencies, and completeness declarations, then shows import errors before attempting reconciliation.
 3. A deterministic engine joins explicit references, computes per-currency totals, and creates exception cases; uncertain candidate links remain visibly uncertain.

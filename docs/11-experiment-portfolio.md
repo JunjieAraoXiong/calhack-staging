@@ -17,6 +17,8 @@ This document compares six additional directions and explains how to choose amon
 
 These are proposed initial users. Interviews, adoption, and willingness to pay remain unvalidated. The detailed pages contain their own deployment paths, data contracts, evaluation plans, demos, and stopping criteria.
 
+The [past Cal Hacks review](13-past-cal-hacks-projects.md) adds concrete comparisons from three editions. Study merj and GhostWriter for bounded repair, Duck Duck Goose for inspectable optimization and evaluation, Nexus for shared Convex-backed interactions, and AgentOverflow for reusable evidence. These precedents sharpen the proposed experiments; they do not establish demand, novelty, expected performance, or a new ranking of our products.
+
 ## 2. What is technically distinctive in each direction?
 
 | Candidate | Mechanism worth building and evaluating | What would make it too shallow |
