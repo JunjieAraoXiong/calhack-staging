@@ -1,5 +1,7 @@
 # Model Calls and the Decision Layer
 
+**Current scope — October 22, 2026:** the [travel-agent design](16-travel-agent-system-design.md) applies these model boundaries to one arrival journey and curated local procedures. Start with one configured model behind a typed interface and deterministic timing, authority, and outcome checks. The shopping examples and dedicated repair/routing experiments below are retained reference material; custom training, a solver service, and optimized incremental repair are deferred.
+
 ## Recommendation
 
 Use a model API as a core component. Start with one provider/model configuration behind a small interface. Gemini is a reasonable sponsor-aligned candidate, but the exact model and version should be selected through development-set measurements and then pinned for evaluation.

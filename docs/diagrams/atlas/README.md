@@ -1,5 +1,7 @@
 # Personal-agent system atlas
 
+**Scope note, October 22:** these editable boards describe the October 18 general-runtime alternatives. The current travel topology and its reduced first implementation are specified in [design 16](../../16-travel-agent-system-design.md#3-architecture-and-ownership). These image files have not been redrawn for the travel specialization.
+
 Eleven editable whiteboards cover the complete proposed personal-agent system, six product/runtime variations, and four detailed engineering views. Each board has a native `.excalidraw` file and a matching PNG preview. The hand-drawn style follows the supplied reference; the architecture is our proposed design.
 
 **Status: design only, October 18, 2026.** These are alternatives and contracts for discussion, not deployed integrations or measured results. The six variations are the personal-agent configurations in [document 14](../../14-personal-agent-system-variations.md), rather than the separate product candidates in the [experiment portfolio](../../11-experiment-portfolio.md).

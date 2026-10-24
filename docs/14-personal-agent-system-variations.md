@@ -1,5 +1,7 @@
 # Personal-agent system variations
 
+**October 22 scope update:** the active implementation is [16 — Travel system design](16-travel-agent-system-design.md). It uses the persistent lifecycle here with a simple structured planner, one journey, and two controlled server adapters. The selective-repair/browser-first preference below is an earlier research recommendation, not the current MVP prerequisite.
+
 **Status: research and proposed designs, October 18, 2026.** No product pivot, provider enrollment, production integration, or measured result is implied. This extends the [planning-algorithm alternatives](02-system-design-alternatives.md) with choices about the product, persistent runtime, execution environment, and business-facing interfaces.
 
 ## Recommendation

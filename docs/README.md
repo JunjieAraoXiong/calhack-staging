@@ -1,20 +1,32 @@
-# Agent Projects: Product, Architecture, Evaluation, and Sponsor Strategy
+# Travel Personal Agent: Design, Delivery, and Research
 
 This folder consolidates the project discussions into an English design package. It is the current planning reference; the earlier material in [`research/`](../research/) has also been translated into English and remains the research history. Legacy `_ZH` filenames are retained to preserve links.
 
 **Status:** design and research only. No application, deployed integration, benchmark implementation, measured performance improvement, or confirmed sponsor eligibility has been produced by this documentation task. External capabilities are documented separately from capabilities we propose to build.
 
-**Evidence review date:** October 17, 2026, America/Los_Angeles.
+**Active design update:** October 22, 2026, America/Los_Angeles. Travel sources have their own review record; this update does not reverify all October 17–18 sources.
+
+## Current implementation
+
+The local travel companion is implemented. Read the [verification report](verification-report.md) for test results, live-model/browser evidence, and limits; use the [root README](../README.md) to run it.
+
+## Design and implementation handoff
+
+Start with [16 — Travel system design](16-travel-agent-system-design.md), then [08 — Delivery roadmap and demo](08-delivery-roadmap-and-demo.md). Use the [copy-ready /goal prompt](prompts/travel-agent-goal.md) to give an implementation agent the complete task. Design 16 takes precedence over historical shopping scope, benchmark sizes, incremental-planning priorities, and browser-first requirements.
+
+The active product is one Tokyo arrival journey with imported flight, guest bus, and hotel confirmations. A persistent controller selects sourced local procedures, carries out changes through two controlled provider adapters, and verifies their outcomes. Start with structured replanning and deterministic constraints. Optimized incremental repair, multi-mission resource allocation, and production supplier integrations come later.
+
+The first success condition is confirmed arrival arrangements, not proof that the traveler has physically arrived. Simulated events, inventory, and payments remain clearly labeled. The [travel research](../exa-results/travel-personal-agent-2026-10-22.md) explains the competitive overlap and the narrower hypothesis being tested.
 
 **October 18 extension:** [14 — Personal-agent system variations](14-personal-agent-system-variations.md) compares six product/runtime configurations using the newly supplied sources. [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) specifies the task, wake-up, memory, execution, and delivery lifecycle. The [system atlas](diagrams/atlas/README.md) draws the full system, all six variations, and four detailed engineering views in editable Excalidraw format. Their source notes have their own review dates; this addition does not silently reverify every older source.
 
-## Current exploration
+## Earlier exploration
 
-The latest discussion adds six product candidates: **DataPatch, Agent Crash Lab, LiveOps, SupplyWatch, SpendRail, and CloseProof**. Start with the [experiment portfolio](11-experiment-portfolio.md) for their comparison and the six detailed designs. Convex is a possible foundation across products; WebMCP is used when external agents need to operate the application, not imposed on every candidate.
+The earlier discussion added six product candidates: **DataPatch, Agent Crash Lab, LiveOps, SupplyWatch, SpendRail, and CloseProof**. The [experiment portfolio](11-experiment-portfolio.md) preserves their comparison and detailed designs.
 
-The original personal-agent design below remains a developed option. Its shopping-specific architecture and evaluation are not universal requirements for the new directions. No final product pivot has been selected. For the stated agent/backend/data interests, the proposed discovery order is DataPatch, LiveOps, then SupplyWatch, subject to the evidence from their first experiments.
+The original personal-agent design below remains architectural background. Its shopping-specific architecture and evaluation are not active travel requirements. Earlier portfolio priorities are historical recommendations; the current implementation target is the travel scope in design 16.
 
-## Original personal-agent direction
+## Original personal-agent direction — historical scope
 
 Build a personal agent that maintains several persistent user goals, operates participating websites through WebMCP, and repairs its remaining work when the user or environment changes. Use Convex for authoritative state, transactional updates, and durable coordination. Use a model for interpreting intent, proposing plans, and making ambiguous next-action decisions. Keep execution validity, resource accounting, and outcome verification deterministic.
 
@@ -43,24 +55,26 @@ Shopping is the initial product example because quantities, stock, deadlines, pr
 | [13 — Past Cal Hacks projects](13-past-cal-hacks-projects.md) | Which earlier award recipients are relevant, what did they build, and how should those precedents sharpen our scope and evidence? |
 | [14 — Personal-agent system variations](14-personal-agent-system-variations.md) | How do browser, persistent, incremental, protocol, commerce, and delegation configurations compare? |
 | [15 — Persistent runtime design](15-persistent-agent-runtime-design.md) | How do saved task specifications, wake-up policies, task runs, memory, adapters, credentials, and delivery fit together? |
+| [16 — Travel system design](16-travel-agent-system-design.md) | What exactly should the active arrival companion implement, and which provider outcomes must it verify? |
+| [Implementation /goal prompt](prompts/travel-agent-goal.md) | What complete task should an implementation agent run against this repository? |
 
 Detailed candidate designs: [DataPatch](experiments/datapatch.md), [Agent Crash Lab](experiments/agent-crash-lab.md), [LiveOps](experiments/liveops.md), [SupplyWatch](experiments/supplywatch.md), [SpendRail](experiments/spendrail.md), and [CloseProof](experiments/closeproof.md).
 
-For product discussion, read 01, 02, 07, 11, and 13. For implementation, read 03–05 and 12. Before making performance claims, read 06 and the chosen product's protocol. Before deciding what can be submitted to the event, read 07 and 09.
+For active implementation, read 16 and 08 first, then use 03–05 and 15 for supporting contracts. For historical product alternatives, read 01, 02, 11, and 13. Before making comparative performance claims, define a travel-specific protocol; 06 remains an earlier shopping experiment. Event submissions are a separate concern described in 07 and 09.
 
-For the latest personal-agent scope discussion, start with 14, then 15. Source reviews: [Stripe and Sierra/PAP](research/personal-agents-commerce-and-protocols.md), [Decagon/PACT and Profound](research/personal-agents-harness-and-experience.md), and [the X posts and supplied architecture](research/personal-agents-social-and-reference-architecture.md).
+For the persistent runtime's background, read 14 and 15. Source reviews: [Stripe and Sierra/PAP](research/personal-agents-commerce-and-protocols.md), [Decagon/PACT and Profound](research/personal-agents-harness-and-experience.md), and [the X posts and supplied architecture](research/personal-agents-social-and-reference-architecture.md).
 
 ## Agreed direction versus provisional choices
 
 The user wants a technically substantial personal-agent project, meaningful evaluations, and sponsor relevance. The user explicitly removed the assumption that total development must fit into 36 hours: the intended product process is to establish the core first and refine it later.
 
-Convex is the preferred sponsor-aligned backend for the personal-agent branch and several portfolio candidates. WebMCP remains core to the original branch and optional elsewhere. Within the personal-agent branch, a single logical agent per user with multiple missions is recommended; that does not require a continuously running model process or a separately trained model for each person.
+Convex remains the selected backend in the active travel design. Start with one logical personal agent and one journey controller, with server adapters for two controlled providers. WebMCP can expose the same supported operations on our own pages as a separately tested extension. A continuously running model process is unnecessary.
 
 The browser host, exact model version, solver implementation, initial real application integration, and detailed sponsor eligibility remain choices to validate. References to Gemini or an extension are recommendations, not completed integrations.
 
-## Personal-agent architecture at a glance
+## General-runtime architecture — reference
 
-[Browse the 11-view hand-drawn system atlas](diagrams/atlas/README.md), with editable Excalidraw sources and PNG previews. Start with the [complete persistent system](diagrams/atlas/00-persistent-system.png), compare six configurations, then inspect task lifecycles, memory, execution authority, and evaluation. The [original mission-loop diagram](diagrams/README.md#original-mission-repair-loop) remains available.
+The active travel diagram is in [16](16-travel-agent-system-design.md#3-architecture-and-ownership). The [11-view hand-drawn system atlas](diagrams/atlas/README.md) and diagram below describe the earlier general/browser-centered configurations; they are not updated travel topology or completed integrations.
 
 ```mermaid
 flowchart LR

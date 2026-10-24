@@ -1,0 +1,21 @@
+{
+  "name": "tokyo-arrival-companion",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "backend": "CONVEX_AGENT_MODE=anonymous convex dev",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:live": "tsx scripts/live-acceptance.ts",
+    "test:faults": "tsx scripts/fault-acceptance.ts",
+    "test:restart:prepare": "tsx scripts/restart-acceptance.ts prepare",
+    "test:restart:verify": "tsx scripts/restart-acceptance.ts verify"
+  },
+  "dependencies": {"convex":"latest", "react":"latest", "react-dom":"latest", "lucide-react":"latest"},
+  "devDependencies": {"typescript":"latest", "vite":"latest", "@vitejs/plugin-react":"latest", "@types/node":"latest", "@types/react":"latest", "@types/react-dom":"latest", "vitest":"latest", "convex-test":"latest", "tsx":"latest", "eslint":"latest", "@eslint/js":"latest", "typescript-eslint":"latest", "globals":"latest"}
+}

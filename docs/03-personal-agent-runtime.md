@@ -1,5 +1,7 @@
 # Personal Agent Runtime
 
+**Current scope — October 22, 2026:** use [16 — Travel-agent system design](16-travel-agent-system-design.md) for the active travel domain, schemas, adapter contracts, and acceptance gates. The reusable principles below—scoped context, explicit commitments, guarded execution, operation identity, and reconciliation—still apply. Shopping inventory, two missions sharing funds, and optimized dependency repair describe the original domain and are not required for the first travel flow. This remains design documentation.
+
 ## Scope
 
 This document specifies the recommended runtime. It describes intended contracts, not an implemented or formally proven system. The initial domain is purchasing through a controlled, participating web application. Generalization requires additional adapters and tests.

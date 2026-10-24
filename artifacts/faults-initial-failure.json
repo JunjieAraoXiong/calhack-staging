@@ -1,0 +1,3565 @@
+{
+  "at": "2026-10-23T04:39:57.661Z",
+  "backend": "local Convex",
+  "mode": "replay",
+  "results": [
+    {
+      "name": "pending hotel requires decision; no bus change",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "64d4ec3f-fffb-48a1-a8d1-d56037169bd4",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "pending",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "407af877-97e9-4a9a-b464-6a522318c994/hotel/1/3/1",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "pending"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "407af877-97e9-4a9a-b464-6a522318c994/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision pending; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "407af877-97e9-4a9a-b464-6a522318c994/hotel/1/3/1",
+            "status": "pending",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision pending; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "pending",
+            "operationId": "407af877-97e9-4a9a-b464-6a522318c994/hotel/1/3/1",
+            "outcome": "pending",
+            "provider": "hotel"
+          }
+        ],
+        "scenarioId": "407af877-97e9-4a9a-b464-6a522318c994",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "waiting_for_hotel_decision",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "fixture traveler declaration",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "fixture traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "The hotel request is pending. The bus remains unchanged unless you explicitly authorize transport while hotel acceptance is unresolved.",
+          "mode": "replay",
+          "nextAction": "Review the outstanding hotel decision and the bounded transport option.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 1,
+          "status": "awaiting_decision",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "authorized partial arrangement survives later hotel refusal",
+      "passed": false,
+      "detail": "Error: 6f578f82-a4fd-419a-bfd5-50277e5805e8: timed out at needs_help/no_feasible_proposal: No observed departure satisfies readiness, hotel arrival, capacity, and the remaining additional-cost grant."
+    },
+    {
+      "name": "declined hotel does not create transport effect",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "307f0b56-4e04-498f-903e-8baca0cb81f7",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "declined",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "02531a6f-3abe-45ae-9265-21c7b577dcb0/hotel/1/3/1",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "declined"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "02531a6f-3abe-45ae-9265-21c7b577dcb0/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision declined; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "02531a6f-3abe-45ae-9265-21c7b577dcb0/hotel/1/3/1",
+            "status": "rejected",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision declined; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "declined",
+            "operationId": "02531a6f-3abe-45ae-9265-21c7b577dcb0/hotel/1/3/1",
+            "outcome": "committed",
+            "provider": "hotel"
+          }
+        ],
+        "scenarioId": "02531a6f-3abe-45ae-9265-21c7b577dcb0",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "hotel_declined",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "The hotel declined the late-arrival request. Your original booking is preserved; no bus change was made.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 1,
+          "status": "needs_help",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "lost response retains hold and reconciles after cancellation",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "6ba13b14-fd89-4b44-b95e-8a0dbc2bd1a1",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": 1794679200000,
+            "checkoutAt": 1794711600000,
+            "decision": "accepted",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/hotel/1/3/1",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "accepted"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/hotel/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          },
+          {
+            "args": {
+              "bookingId": "B-001",
+              "expectedRevision": 1,
+              "quote": {
+                "additionalCost": 500,
+                "bookingId": "B-001",
+                "bookingRevision": 1,
+                "expiresAt": 1794663120000,
+                "fare": 3500,
+                "id": "B-001:1:S-target:1:1794663120000",
+                "serviceId": "S-target",
+                "serviceRevision": 1
+              }
+            },
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 500,
+            "intentRevision": 3,
+            "operationId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/transport/1/3/1",
+            "provider": "transport",
+            "reason": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "receiptId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/transport/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "accepted",
+            "operationId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/hotel/1/3/1",
+            "outcome": "committed",
+            "provider": "hotel"
+          },
+          {
+            "additionalCharged": 500,
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "operationId": "3372a9cb-19e4-465b-90e8-087ec54e2ece/transport/1/3/1",
+            "outcome": "committed",
+            "provider": "transport"
+          }
+        ],
+        "scenarioId": "3372a9cb-19e4-465b-90e8-087ec54e2ece",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 1,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794674100000,
+            "departureAt": 1794674400000,
+            "fare": 3500,
+            "hotelArrivalAt": 1794677100000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 2,
+            "serviceDate": "2026-11-15",
+            "serviceId": "S-target"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 500
+        },
+        "trip": {
+          "active": false,
+          "boardingBufferMs": 600000,
+          "charged": 500,
+          "checkpoint": "stopped",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": true,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": false,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 2,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 4,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "Future changes are stopped. Existing bookings and any completed provider effects are preserved.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 4,
+          "status": "needs_help",
+          "stopEpoch": 1,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "revoking grant while prepared blocks new effects",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "6d5af6e5-c90d-4bf9-8ed0-984f47af3d47",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "not_requested",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": null,
+            "requestedUntil": null,
+            "revision": 1,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 0,
+          "responsePolicy": "accepted"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "86fd5c41-2f86-4571-a77b-bbb030a4160f/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Action grant revoked or trip stopped",
+            "receiptId": "86fd5c41-2f86-4571-a77b-bbb030a4160f/hotel/1/3/1",
+            "status": "rejected",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 1,
+            "evidence": "Action grant revoked or trip stopped",
+            "operationId": "86fd5c41-2f86-4571-a77b-bbb030a4160f/hotel/1/3/1",
+            "outcome": "rejected",
+            "provider": "hotel"
+          }
+        ],
+        "scenarioId": "86fd5c41-2f86-4571-a77b-bbb030a4160f",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "stopped",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": false,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 2,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 4,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "Future changes are stopped. Existing bookings and any completed provider effects are preserved.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 4,
+          "status": "needs_help",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "provider unavailable waits without claiming success and resumes",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "2b65b112-cc99-4bb2-9549-c2cbc55faf76",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": 1794679200000,
+            "checkoutAt": 1794711600000,
+            "decision": "accepted",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/hotel/1/3/3",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "accepted"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/hotel/1/3/3",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/hotel/1/3/3",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          },
+          {
+            "args": {
+              "bookingId": "B-001",
+              "expectedRevision": 1,
+              "quote": {
+                "additionalCost": 500,
+                "bookingId": "B-001",
+                "bookingRevision": 1,
+                "expiresAt": 1794663120000,
+                "fare": 3500,
+                "id": "B-001:1:S-target:1:1794663120000",
+                "serviceId": "S-target",
+                "serviceRevision": 1
+              }
+            },
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 500,
+            "intentRevision": 3,
+            "operationId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/transport/1/3/3",
+            "provider": "transport",
+            "reason": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "receiptId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/transport/1/3/3",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "accepted",
+            "operationId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/hotel/1/3/3",
+            "outcome": "committed",
+            "provider": "hotel"
+          },
+          {
+            "additionalCharged": 500,
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "operationId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4/transport/1/3/3",
+            "outcome": "committed",
+            "provider": "transport"
+          }
+        ],
+        "scenarioId": "1fd32a77-1e15-4fb8-b28c-cd07cbda36f4",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 1,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794674100000,
+            "departureAt": 1794674400000,
+            "fare": 3500,
+            "hotelArrivalAt": 1794677100000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 2,
+            "serviceDate": "2026-11-15",
+            "serviceId": "S-target"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 500
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 500,
+          "checkpoint": "arrangements_verified",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "The bus and the hotel arrival window are verified. Your original hotel night is preserved.",
+          "mode": "replay",
+          "nextAction": "After immigration and baggage collection, reach the airport bus stop before the verified departure. Keep the bus ticket and hotel acceptance available.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 3,
+          "status": "arrangements_confirmed",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "missing guest capability prevents new bus effect",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "88b79b12-39b9-4b56-9f01-2b0c294ebab4",
+            "intentRevision": 4,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "not_requested",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": null,
+            "requestedUntil": null,
+            "revision": 1,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 0,
+          "responsePolicy": "accepted"
+        },
+        "operations": [],
+        "receipts": [],
+        "scenarioId": "c3cbd8e7-fe22-4ed0-9e7b-8c2456df8f10",
+        "traces": [],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "access_required",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 4,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "Valid guest management access scoped to B-001 is required before any bus change.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 2,
+          "status": "needs_information",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": false,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794749400000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "dispatch buffer prevents too-late new amendment",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794664471000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "f469b603-cf36-4521-bb5a-5144ac4f154b",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "not_requested",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": null,
+            "requestedUntil": null,
+            "revision": 1,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 0,
+          "responsePolicy": "accepted"
+        },
+        "operations": [],
+        "receipts": [],
+        "scenarioId": "7fd46824-21b9-454e-bc66-2f4389a42541",
+        "traces": [],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "transport_cutoff",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "The bus amendment dispatch window has closed. Existing reservations are preserved; the agent cannot promise a late change.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794664471000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 2,
+          "status": "needs_help",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "removed feasible inventory produces honest unavailable outcome",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "bca5605d-f6e5-47c6-963a-45dbb3cfd835",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": null,
+            "checkoutAt": 1794711600000,
+            "decision": "not_requested",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": null,
+            "requestedUntil": null,
+            "revision": 1,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 0,
+          "responsePolicy": "accepted"
+        },
+        "operations": [],
+        "receipts": [],
+        "scenarioId": "9e410296-a299-40d4-98c5-2f0e68b38daa",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "ask",
+              "reason": "No observed departure satisfies readiness, hotel arrival, capacity, and the remaining additional-cost grant.",
+              "serviceId": null
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 0,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794664500000,
+            "departureAt": 1794664800000,
+            "fare": 3000,
+            "hotelArrivalAt": 1794667500000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 1,
+            "serviceDate": "2026-11-14",
+            "serviceId": "S-original"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 0
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 0,
+          "checkpoint": "no_feasible_proposal",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "No observed departure satisfies readiness, hotel arrival, capacity, and the remaining additional-cost grant.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 1,
+          "status": "needs_help",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "old timer cannot invalidate amended booking; later delay can",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "b76c27b1-b715-4dc1-9a68-90f458422e2d",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          },
+          {
+            "at": 1794663000000,
+            "detail": "Booking revision changed; old timer has no authority.",
+            "eventId": "old-cutoff",
+            "intentRevision": 3,
+            "kind": "deadline",
+            "state": "obsolete"
+          },
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "59e03820-9d8a-46ef-a9f3-eadaa8c1f7e6",
+            "intentRevision": 4,
+            "kind": "later_delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": 1794679200000,
+            "checkoutAt": 1794711600000,
+            "decision": "accepted",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/hotel/1/3/1",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "accepted"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/hotel/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          },
+          {
+            "args": {
+              "bookingId": "B-001",
+              "expectedRevision": 1,
+              "quote": {
+                "additionalCost": 500,
+                "bookingId": "B-001",
+                "bookingRevision": 1,
+                "expiresAt": 1794663120000,
+                "fare": 3500,
+                "id": "B-001:1:S-target:1:1794663120000",
+                "serviceId": "S-target",
+                "serviceRevision": 1
+              }
+            },
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 500,
+            "intentRevision": 3,
+            "operationId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/transport/1/3/1",
+            "provider": "transport",
+            "reason": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "receiptId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/transport/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "accepted",
+            "operationId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/hotel/1/3/1",
+            "outcome": "committed",
+            "provider": "hotel"
+          },
+          {
+            "additionalCharged": 500,
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "operationId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6/transport/1/3/1",
+            "outcome": "committed",
+            "provider": "transport"
+          }
+        ],
+        "scenarioId": "1ce6129b-4ca3-4ca8-a4c4-bc635d9c76f6",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          },
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "ask",
+              "reason": "No observed departure satisfies readiness, hotel arrival, capacity, and the remaining additional-cost grant.",
+              "serviceId": null
+            },
+            "intentRevision": 4,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 1,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794674100000,
+            "departureAt": 1794674400000,
+            "fare": 3500,
+            "hotelArrivalAt": 1794677100000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 2,
+            "serviceDate": "2026-11-15",
+            "serviceId": "S-target"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 500
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 500,
+          "checkpoint": "no_feasible_proposal",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 4,
+          "landingAt": 1794672000000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "No observed departure satisfies readiness, hotel arrival, capacity, and the remaining additional-cost grant.",
+          "mode": "replay",
+          "nextAction": "Keep your existing confirmations available while the unresolved step is handled.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794675600000,
+          "readyTo": 1794677400000,
+          "reconciliationAttempts": 0,
+          "runRevision": 2,
+          "status": "needs_help",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    },
+    {
+      "name": "new scenario reset retains previous provider records",
+      "passed": true,
+      "snapshot": {
+        "events": [
+          {
+            "at": 1794663000000,
+            "detail": "Synthetic event; revalidate current commitments",
+            "eventId": "a5d6e477-d81f-4dd3-9502-98ee85da880f",
+            "intentRevision": 3,
+            "kind": "delay",
+            "state": "admitted"
+          }
+        ],
+        "hotel": {
+          "booking": {
+            "acceptedUntil": 1794679200000,
+            "checkoutAt": 1794711600000,
+            "decision": "accepted",
+            "defaultLatestArrival": 1794672000000,
+            "id": "H-001",
+            "requestId": "eed76c17-850e-41d8-9486-7bb255fa3d93/hotel/1/3/1",
+            "requestedUntil": 1794679200000,
+            "revision": 2,
+            "room": "Standard room · one adult",
+            "serviceNight": "2026-11-14"
+          },
+          "requests": 1,
+          "responsePolicy": "accepted"
+        },
+        "operations": [
+          {
+            "args": {
+              "bookingId": "H-001",
+              "expectedRevision": 1,
+              "latestArrival": 1794679200000
+            },
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 0,
+            "intentRevision": 3,
+            "operationId": "eed76c17-850e-41d8-9486-7bb255fa3d93/hotel/1/3/1",
+            "provider": "hotel",
+            "reason": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "receiptId": "eed76c17-850e-41d8-9486-7bb255fa3d93/hotel/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          },
+          {
+            "args": {
+              "bookingId": "B-001",
+              "expectedRevision": 1,
+              "quote": {
+                "additionalCost": 500,
+                "bookingId": "B-001",
+                "bookingRevision": 1,
+                "expiresAt": 1794663120000,
+                "fare": 3500,
+                "id": "B-001:1:S-target:1:1794663120000",
+                "serviceId": "S-target",
+                "serviceRevision": 1
+              }
+            },
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "createdAt": 1794663000000,
+            "expiresAt": 1794663060000,
+            "grantRevision": 1,
+            "hold": 500,
+            "intentRevision": 3,
+            "operationId": "eed76c17-850e-41d8-9486-7bb255fa3d93/transport/1/3/1",
+            "provider": "transport",
+            "reason": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "receiptId": "eed76c17-850e-41d8-9486-7bb255fa3d93/transport/1/3/1",
+            "status": "confirmed",
+            "stopEpoch": 0,
+            "updatedAt": 1794663000000
+          }
+        ],
+        "receipts": [
+          {
+            "additionalCharged": 0,
+            "argsDigest": "{\"bookingId\":\"H-001\",\"expectedRevision\":1,\"latestArrival\":1794679200000}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Late-arrival request submitted for existing H-001; business decision accepted; original service night 2026-11-14 and checkout retained.",
+            "hotelDecision": "accepted",
+            "operationId": "eed76c17-850e-41d8-9486-7bb255fa3d93/hotel/1/3/1",
+            "outcome": "committed",
+            "provider": "hotel"
+          },
+          {
+            "additionalCharged": 500,
+            "argsDigest": "{\"bookingId\":\"B-001\",\"expectedRevision\":1,\"quote\":{\"additionalCost\":500,\"bookingId\":\"B-001\",\"bookingRevision\":1,\"expiresAt\":1794663120000,\"fare\":3500,\"id\":\"B-001:1:S-target:1:1794663120000\",\"serviceId\":\"S-target\",\"serviceRevision\":1}}",
+            "at": 1794663000000,
+            "bookingRevision": 2,
+            "evidence": "Amended existing B-001 to S-target; one active ticket, fare JPY 3500, incremental simulated charge JPY 500.",
+            "operationId": "eed76c17-850e-41d8-9486-7bb255fa3d93/transport/1/3/1",
+            "outcome": "committed",
+            "provider": "transport"
+          }
+        ],
+        "scenarioId": "eed76c17-850e-41d8-9486-7bb255fa3d93",
+        "traces": [
+          {
+            "at": 1794663000000,
+            "decision": {
+              "action": "arrange",
+              "reason": "Observed departure clears the ready-at-stop interval and boarding buffer, and arrives within the requested hotel window.",
+              "serviceId": "S-target"
+            },
+            "intentRevision": 3,
+            "mode": "replay",
+            "model": "observed-candidate-rule-v1",
+            "provider": "deterministic-replay",
+            "requestId": null
+          }
+        ],
+        "transport": {
+          "amendments": 1,
+          "booking": {
+            "activeTickets": 1,
+            "adults": 1,
+            "bags": 2,
+            "channel": "guest",
+            "cutoff": 1794674100000,
+            "departureAt": 1794674400000,
+            "fare": 3500,
+            "hotelArrivalAt": 1794677100000,
+            "id": "B-001",
+            "priorPaid": 3000,
+            "revision": 2,
+            "serviceDate": "2026-11-15",
+            "serviceId": "S-target"
+          },
+          "services": [
+            {
+              "departureAt": 1794664800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3000,
+              "hotelArrivalAt": 1794667500000,
+              "id": "S-original",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794671400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3200,
+              "hotelArrivalAt": 1794674100000,
+              "id": "S-early",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            },
+            {
+              "departureAt": 1794674400000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3500,
+              "hotelArrivalAt": 1794677100000,
+              "id": "S-target",
+              "maxBags": 2,
+              "revision": 2,
+              "seats": 0
+            },
+            {
+              "departureAt": 1794676800000,
+              "destination": "Fixture Hotel stop",
+              "fare": 3400,
+              "hotelArrivalAt": 1794679500000,
+              "id": "S-late",
+              "maxBags": 2,
+              "revision": 1,
+              "seats": 1
+            }
+          ],
+          "totalAdditionalCharged": 500
+        },
+        "trip": {
+          "active": true,
+          "boardingBufferMs": 600000,
+          "charged": 500,
+          "checkpoint": "arrangements_verified",
+          "delayed": true,
+          "facts": [
+            {
+              "name": "Flight identity",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "F-001",
+              "verified": true
+            },
+            {
+              "name": "Flight landing",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "2026-11-14T21:30:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Flight provider",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Fixture Air",
+              "verified": true
+            },
+            {
+              "name": "Destination timezone",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "Asia/Tokyo",
+              "verified": true
+            },
+            {
+              "name": "Flight channel",
+              "scope": "trip",
+              "source": "supplied synthetic flight confirmation",
+              "value": "airline",
+              "verified": true
+            },
+            {
+              "name": "Bus booking",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "B-001",
+              "verified": true
+            },
+            {
+              "name": "Original channel",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "guest",
+              "verified": true
+            },
+            {
+              "name": "Bus service date",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Bus provider",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "Yoru Test Transport",
+              "verified": true
+            },
+            {
+              "name": "Bus departure",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "2026-11-14T23:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Prior paid fare",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "3000",
+              "verified": true
+            },
+            {
+              "name": "Payment currency",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "JPY",
+              "verified": true
+            },
+            {
+              "name": "Bus access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to B-001",
+              "value": "fixture-guest-capability",
+              "verified": true
+            },
+            {
+              "name": "Adult travelers",
+              "scope": "trip",
+              "source": "controlled transport booking",
+              "value": "1",
+              "verified": true
+            },
+            {
+              "name": "Suitcases",
+              "scope": "trip",
+              "source": "trip-specific traveler declaration",
+              "value": "2",
+              "verified": true
+            },
+            {
+              "name": "Hotel booking",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "H-001",
+              "verified": true
+            },
+            {
+              "name": "Hotel night",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-14",
+              "verified": true
+            },
+            {
+              "name": "Hotel provider",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "Yoru Test Hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel channel",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "hotel",
+              "verified": true
+            },
+            {
+              "name": "Hotel checkout",
+              "scope": "trip",
+              "source": "controlled hotel booking",
+              "value": "2026-11-15T12:00:00+09:00",
+              "verified": true
+            },
+            {
+              "name": "Hotel access",
+              "scope": "trip",
+              "source": "fixture capability reference, scoped to H-001",
+              "value": "fixture-hotel-capability",
+              "verified": true
+            },
+            {
+              "name": "Fewer transfers",
+              "scope": "personal",
+              "source": "explicit fixture traveler preference",
+              "value": "preferred",
+              "verified": true
+            }
+          ],
+          "faults": {
+            "lookupUnavailable": false,
+            "lostTransportResponse": false,
+            "pauseBeforeCommit": false,
+            "providerUnavailable": false
+          },
+          "fixtureVersion": "tokyo-arrival-v1",
+          "flightId": "F-001",
+          "grant": {
+            "active": true,
+            "allowTransportWhileHotelPending": false,
+            "cap": 1000,
+            "hotelBookingId": "H-001",
+            "revision": 1,
+            "transportBookingId": "B-001"
+          },
+          "held": 0,
+          "hotelAccess": {
+            "available": true,
+            "bookingId": "H-001",
+            "channel": "hotel",
+            "expiresAt": 1794754800000
+          },
+          "hotelRequestedUntil": 1794679200000,
+          "importText": "{\n  \"flight\": {\n    \"id\": \"F-001\",\n    \"provider\": \"Fixture Air\",\n    \"landingAt\": \"2026-11-14T21:30:00+09:00\",\n    \"channel\": \"airline\",\n    \"timezone\": \"Asia/Tokyo\"\n  },\n  \"transport\": {\n    \"id\": \"B-001\",\n    \"provider\": \"Yoru Test Transport\",\n    \"channel\": \"guest\",\n    \"serviceDate\": \"2026-11-14\",\n    \"departureAt\": \"2026-11-14T23:00:00+09:00\",\n    \"fare\": 3000,\n    \"currency\": \"JPY\",\n    \"adults\": 1,\n    \"bags\": 2,\n    \"managementAccess\": \"fixture-guest-capability\"\n  },\n  \"hotel\": {\n    \"id\": \"H-001\",\n    \"provider\": \"Yoru Test Hotel\",\n    \"channel\": \"hotel\",\n    \"serviceNight\": \"2026-11-14\",\n    \"checkoutAt\": \"2026-11-15T12:00:00+09:00\",\n    \"managementAccess\": \"fixture-hotel-capability\"\n  }\n}",
+          "imported": true,
+          "intentRevision": 3,
+          "landingAt": 1794667200000,
+          "leaseToken": "",
+          "leaseUntil": 0,
+          "message": "The bus and the hotel arrival window are verified. Your original hotel night is preserved.",
+          "mode": "replay",
+          "nextAction": "After immigration and baggage collection, reach the airport bus stop before the verified departure. Keep the bus ticket and hotel acceptance available.",
+          "now": 1794663000000,
+          "owner": "fixture-traveler",
+          "readyFrom": 1794669900000,
+          "readyTo": 1794672600000,
+          "reconciliationAttempts": 0,
+          "runRevision": 1,
+          "status": "arrangements_confirmed",
+          "stopEpoch": 0,
+          "timezone": "Asia/Tokyo",
+          "transportAccess": {
+            "available": true,
+            "bookingId": "B-001",
+            "channel": "guest",
+            "expiresAt": 1794754800000
+          },
+          "travelerArrived": false,
+          "unresolved": [],
+          "wakeScheduled": false
+        }
+      }
+    }
+  ]
+}

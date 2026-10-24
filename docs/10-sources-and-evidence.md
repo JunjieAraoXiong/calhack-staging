@@ -1,5 +1,7 @@
 # Sources and Evidence Register
 
+**October 22 travel extension:** [travel research](../exa-results/travel-personal-agent-2026-10-22.md), with [consumer-product](../exa-results/notes-consumer-products.md), [execution-competitor](../exa-results/notes-execution-competitors.md), [local-workflow](../exa-results/notes-local-workflows.md), and [platform/access](../exa-results/notes-platforms-demand-and-access.md) evidence, informs the active [travel design](16-travel-agent-system-design.md). The research screened 178 Exa result slots across four workstreams, including duplicates; provider claims were not authenticated product trials. All fixture prices, inventory, hotel rules, and flight events in design 16 are synthetic. No application outcomes or measured advantages are established by that research.
+
 Review date: **October 17, 2026, America/Los_Angeles**. This register records sources consulted during the discussion and this documentation pass. It is not a mirror of the pages or a promise that event requirements and preview APIs will remain unchanged. Recheck relevant current documentation when implementing or submitting.
 
 ## 1. Evidence categories

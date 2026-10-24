@@ -1,5 +1,7 @@
 # Sponsor Track Strategy
 
+**Current scope — October 22, 2026:** the active product plan is the [Tokyo arrival travel agent](16-travel-agent-system-design.md). This October 17 sponsor research is retained with its original review date; shopping/Visa assumptions, native-browser recommendations, track names, and eligibility notes have not been reverified for the travel build. Product implementation follows [08](08-delivery-roadmap-and-demo.md). Submission eligibility and track selection are separate decisions, not prerequisites for developing the independent product. Claim a sponsor integration or submission qualification only after the corresponding evidence exists.
+
 Verified on **2026-10-17, America/Los_Angeles**.
 This is an implementation and submission strategy, not a claim that the project is deployed, eligible, or likely to win.
 Track names below come from this year's sources; technical recommendations are our design choices.

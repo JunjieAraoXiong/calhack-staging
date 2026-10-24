@@ -2,38 +2,61 @@
 
 This record distinguishes the user's stated direction from technical recommendations and unresolved implementation choices. It summarizes the current discussion; it is not a claim of user approval for every proposed component.
 
+**October 22 update:** the user requested updating the system design for the travel use case and preparing a runnable implementation prompt. [16 — Travel system design](16-travel-agent-system-design.md) now defines the active implementation target. Earlier shopping and portfolio choices remain research history. No goal has been launched or application implemented by this documentation update.
+
 ## 1. Decision status
 
 | Topic | Status | Current position |
 |---|---|---|
-| Product field | Expanded user direction | Preserve personal agent plus WebMCP as one option; explore six additional agent/backend/data products in [11](11-experiment-portfolio.md) |
+| Product field | Current design direction | Travel personal agent coordinating existing arrival arrangements; earlier alternatives remain in [11](11-experiment-portfolio.md) |
 | Event objective | User direction | Prioritize Cal Hacks award relevance and a strong live demonstration |
 | Technical depth | User direction | Go beyond a linear workflow; produce credible evaluation evidence |
 | Total engineering time | User direction | Do not impose a 36-hour product-development cap |
 | Documentation | User direction | Detailed English docs with alternative architectures, deployment, and sponsor analysis |
 | Backend | Preferred direction | Convex, with concrete responsibility for shared state and coordination |
-| Primary technical hypothesis | Personal-agent recommendation | Dependency-directed revalidation and incremental repair can reduce work under localized changes; portfolio candidates test different hypotheses |
-| Initial product example | Personal-agent recommendation | Camping and household shopping with scoped preferences and shared resources |
-| Initial breadth | Recommendation | One controlled merchant, two missions, one write executor; expand after correctness |
-| Model provider | Provisional recommendation | Gemini is a plausible sponsor-aligned first provider; exact model is unselected |
-| Agent topology | Recommendation | One logical personal agent with multiple mission controllers and shared state |
+| Primary implementation question | Current travel scope | Can sourced procedures and persistent execution correctly coordinate existing bookings with less user work? Comparative advantage remains unmeasured |
+| Initial product example | Current travel scope | Tokyo arrival: imported flight, guest airport-bus reservation, and hotel reservation |
+| Initial breadth | Current travel scope | One journey, two independent controlled providers, one controller; see canonical fixture in 16 |
+| Model provider | Implementation choice | One configurable real provider/model, using an existing suitable setup where available; record and verify the chosen version |
+| Agent topology | Recommendation | One logical personal agent with one active journey controller; independent read-only subtasks may be delegated |
 | Decision model | Recommendation | Deterministic guards plus model-assisted decisions for ambiguity; no initial custom training |
-| Browser host | Unresolved implementation choice | Validate a controlled page host first; extension or hosted browser only where needed |
-| Planning/solver implementation | Unresolved implementation choice | Typed domain planner initially; evaluate a separate solver service for real combinatorial need |
+| Browser host | Optional adapter choice | Mandatory flow uses server adapters; a WebMCP path must pass separate browser discovery/invocation checks |
+| Planning/solver implementation | Current recommendation | Structured replanning of remaining tasks with deterministic validators; optimized incremental repair and solvers deferred |
 | Track submission | Product-dependent and unconfirmed | Convex/Gemini/Visa for the original branch; Factory, Apify, Coinbase, Elastic, Armadin, and Hyphenate considered where the selected product substantively fits |
-| Portfolio priority | Research recommendation | First compare DataPatch, LiveOps, and SupplyWatch; no final pivot or empirical winner selected |
-| WebMCP across candidates | Updated scope | Core to the original browser-agent branch; optional when external agents need an application tool interface |
+| Portfolio priority | Historical research | DataPatch, LiveOps, and SupplyWatch retain their proposed experiments; travel is the current implementation target, not a measured market winner |
+| WebMCP across candidates | Current scope | Optional verified adapter for the travel prototype; retains historical importance in the original browser-agent branch |
 | Implementation language | Recommendation, not implementation | TypeScript for web/WebMCP/Convex; optional pure Rust/WASM kernel; native worker only for justified workloads; Python remains natural for DataPatch. See [12](12-typescript-rust-convex-webmcp.md) |
 | Prebuilt implementation eligibility | Unconfirmed and in tension with published rules | Do not treat the user's preferred product schedule as an exception to the event rules |
 | Performance superiority | Unproven | Requires the experiments in [06](06-evaluation-and-experiments.md) |
-| Persistent assistant lifecycle | New recommendation, not implementation approval | Put versioned task specs, wake-up admission, bounded runs, and delivery state around the mission core; see [15](15-persistent-agent-runtime-design.md) |
+| Persistent assistant lifecycle | Retained design | Versioned task specs, wake-up admission, bounded runs, and delivery state from [15](15-persistent-agent-runtime-design.md), specialized by 16 |
 | Protocol and wallet integrations | Optional, access unverified | Compare PAP, PACT, Link, and browser adapters without assuming interchangeability, production access, or sponsorship |
-| Product configuration | Open scope discussion | Prefer persistent assistant plus the incremental-repair experiment; browser copilot, protocol concierge, commerce specialist, and delegation platform remain alternatives in [14](14-personal-agent-system-variations.md) |
+| Product configuration | Current design | Persistent arrival companion, curated procedures, independent provider commits, and verified outcomes |
 | Operation-lifecycle novelty | Corrected by new prior art | PAP Operations already specifies operation identity, revision-bound approval, and recovery; evaluate mission-level behavior above the shared substrate |
+| Success boundary | Current design | arrangements_confirmed under current verified conditions; later material events trigger revalidation; physical arrival remains separate |
+| Local procedures | Current design | Curated, sourced and versioned bus/hotel procedures first; autonomous procedure learning deferred |
+| Implementation handoff | Prepared, not started | Copy [the /goal prompt](prompts/travel-agent-goal.md) into an implementation chat; no token budget or model override prescribed |
 
 ## 2. Architecture decision records
 
 ADRs 01–08 were developed for the personal-agent runtime. Their principles can be reused where relevant, but domain-specific contracts and implementation choices for the six alternatives are specified in [11](11-experiment-portfolio.md) and its linked designs.
+
+For the active travel build, ADR-09 and ADR-10 below specialize scope and execution order. ADR-05's multiple-mission ledger and ADR-07's browser-first sequence are historical scale/channel choices, not prerequisites.
+
+### ADR-09: make the arrival workflow the first implementation
+
+**Decision:** implement one imported journey, two curated procedures, and two controlled provider adapters. Start with structured replanning, current-state validation, durable operations, and read-back confirmation.
+
+**Reason:** this finite workflow tests meaningful local procedure selection and cross-provider follow-through without requiring global travel inventory or a complex incremental planner. The competitive research shows that memory, booking, and disruption recovery already have close alternatives.
+
+**Consequence:** design 16's finite fixture and acceptance suite govern the first build. The earlier shopping benchmark and multi-mission optimization remain optional future research, not completion gates.
+
+### ADR-10: separate provider effects, business acceptance, and arrangements status
+
+**Decision:** each provider commits its own effects, with independent receipts and reconciliation. Hotel request delivery, hotel acceptance, confirmed arrangements, and actual traveler arrival are different states.
+
+**Reason:** transport and hotel cannot share an atomic real-world commit. A partial outcome must stay visible, and imported order details do not grant universal modification authority.
+
+**Consequence:** define explicit pending-hotel policy, preserved original accommodation night, additional-cost grants, and post-confirmation revalidation. Controlled fixtures may enforce current admission at commit; production guarantees depend on each actual supplier.
 
 ### ADR-01: keep authoritative task state outside conversation history
 
@@ -101,34 +124,34 @@ ADRs 01–08 were developed for the personal-agent runtime. Their principles can
 
 ## 3. Open questions and how to resolve them
 
-October 18 scope questions: consumer mission service versus business-facing interoperability; one concrete recurring task; supported execution environment; task revision/missed-run policy; memory correction and retention; useful delivery policy; and actual access to any chosen PAP/PACT/Link counterpart. The [six-variation comparison](14-personal-agent-system-variations.md) gives deciding experiments. No final product choice was made by adding that research.
+Current travel questions concern real supplier access, actual demand for arrival coordination, procedure maintenance, model reliability, and which production adapters can support safe reconciliation. The October 18 configuration questions remain historical exploration in [14](14-personal-agent-system-variations.md).
 
 Owners below are responsibilities to assign, not named people or work already delegated to a team member.
 
 | Priority | Question | Evidence needed | Suggested owner |
 |---|---|---|---|
-| Before eligible implementation planning | What preparation and existing code does Cal Hacks permit? | Current organizer interpretation of the published implementation rule, including disclosure requirements | Submission lead |
+| Before event submission | What preparation and existing code does Cal Hacks permit? | Current organizer interpretation of the published implementation rule, including disclosure requirements; separate from ordinary product development | Submission lead |
 | Before claiming a track | What exactly do the chosen product's sponsors require this year, and can one entry target multiple tracks? | Current track instructions or explicit sponsor/organizer answer | Submission lead |
-| Before expanding implementation | Which portfolio candidate passes its minimum decisive experiment? | Working vertical path, credible input data, fair comparison, and useful outcome | Product and evaluation |
-| Before product expansion | Do intended users repeatedly encounter this coordination problem? | Observed task walkthroughs and feedback on the concrete shopping flow | Product lead |
-| M0 | How are mission limits, shared limits, prior purchases, and taxes/shipping counted? | Fixture specification and user-facing accounting rules | Runtime and product |
+| Before product expansion | Does arrival coordination outperform accessible alternatives on the target task? | Observed competitive task audit and a useful working vertical path | Product and evaluation |
+| Before product expansion | Do intended travelers repeatedly encounter and want to delegate this problem? | Observed recent-trip walkthroughs and feedback on the concrete arrival flow | Product lead |
+| M0 | How are prior fares, additional charges, and unknown obligations counted? | Design 16's finite fixture, one journey cap, and independent ledger assertions | Runtime and product |
 | M0 | What events are observable, and how fresh are external observations? | Adapter contract distinguishing event push, polling, and source-side checks | Browser and runtime |
 | M0 | What does an ongoing mission authorize automatically? | Explicit read/repair/write grants, amount limits, expiry, and revocation behavior | Product and runtime |
-| M1 | Which exact browser build and agent host support the required native WebMCP surface? | A reproducible discovery-and-execution smoke test on the deployed origin | Browser lead |
+| Optional browser milestone | Which exact browser build and host support the selected WebMCP surface? | A reproducible discovery-and-execution smoke test, separately labeled from server API execution | Browser lead |
 | M1 | Which exact model and reasoning configuration is usable at acceptable cost and latency? | Small development-set comparison with actual request metadata and provider limits | Planning lead |
-| M1–M3 | Do constraints need a solver service, or is a bounded typed planner sufficient? | Runtime and quality comparison on representative combinatorial cases | Planning lead |
-| Before adding an external merchant adapter | Can the intended real merchant expose idempotency, conditional writes, and outcome lookup? | Actual source API/adapter behavior and failure tests; M2 first validates the controlled store's contract | Integration lead |
+| After M4, if complexity warrants | Do constraints need a solver service beyond the typed planner? | Runtime and quality comparison on representative combinatorial cases | Planning lead |
+| Before adding a production provider | Can the supplier support access, applicable changes, and outcome lookup? | Actual source behavior and failure tests; the MVP first validates controlled transport/hotel contracts | Integration lead |
 | Before test freeze | What cost saving and quality margin would make the added runtime complexity worthwhile? | Predeclared practical thresholds and an agreed statistical protocol | Evaluation lead |
-| M5 | Will judging devices and networks support the chosen browser setup? | Fresh-device rehearsal and event access instructions | Demo lead |
-| M6 | Which second domain tests a genuinely different dependency or execution contract? | Failure/extension analysis from the first domain | Product and evaluation |
+| M4 / before event demonstration | Will demonstration devices and networks support the chosen setup? | Fresh-session rehearsal and any event access instructions | Demo lead |
+| After the arrival prototype | Which second city or provider tests a different procedure or execution contract? | Failure/extension analysis and maintenance effort from the first journey | Product and evaluation |
 
 ## 4. Scope of autonomy
 
 An accepted ongoing mission can authorize continued observation, revalidation, and repair within its declared bounds. The agent should not ask for permission again merely because a fact changed or a model returned a proposal.
 
-Ask when the scope is genuinely unresolved, when hard requirements conflict and the user must choose, or when a proposed effect exceeds the existing grant. For example, an attendance change within an approved shopping mission can trigger quantity repair; buying a substitute above the authorized cap cannot be inferred from a general brand preference.
+Ask when the scope is genuinely unresolved, when hard requirements conflict and the user must choose, or when a proposed effect exceeds the existing grant. For example, a delay can trigger an authorized bus amendment; cancelling the hotel or buying a replacement stay cannot be inferred from a general desire for convenient travel.
 
-This is an application contract to implement and evaluate. It does not imply that the documentation task authorized deploying the product, sending organizer messages, or making purchases.
+This is an application contract to implement and evaluate. Preparing the goal prompt does not start the implementation run or authorize public deployment, real supplier messages, or purchases. Event submission eligibility remains separate from ordinary local product development.
 
 ## 5. Explicit non-goals for the first validation stage
 

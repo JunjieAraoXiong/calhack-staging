@@ -1,5 +1,7 @@
 # System design alternatives
 
+**Current scope — October 22, 2026:** [16 — Travel-agent system design](16-travel-agent-system-design.md) governs the active build. Start with one durable controller and structured replanning of the remaining arrival tasks, preserving existing commitments and checking all writes. Keep explicit dependencies, but defer optimized incremental repair until a larger workload demonstrates value. The shopping-specific recommendations, multi-mission experiment, and native-browser-first sequence below are historical alternatives, not travel MVP requirements.
+
 **Scope:** these alternatives concern the original personal-agent runtime. The [product portfolio](11-experiment-portfolio.md) compares six additional products and links to their product-specific architecture alternatives.
 
 The October 18 [system variations](14-personal-agent-system-variations.md) add an independent comparison of task lifecycle, execution environment, and business interfaces. Its recommendation places the planning policies below inside a persistent task service; it does not treat a cloud browser or protocol adapter as a new planning algorithm.
@@ -8,7 +10,7 @@ The October 18 [system variations](14-personal-agent-system-variations.md) add a
 
 Read [the product and research thesis](01-product-and-research-thesis.md) first. Detailed contracts belong in [the runtime](03-personal-agent-runtime.md), model interfaces in [the decision layer](04-model-and-decision-layer.md), and comparisons in [the evaluation protocol](06-evaluation-and-experiments.md). The earlier system design supersedes its older two-store example: start with **one controlled store, a personal workspace, two missions, and one write executor**. Add the second store after the shared-resource and recovery tests pass.
 
-## Recommendation and the decision being made
+## Original shopping recommendation and the decision being made
 
 Build a **reactive incremental runtime**, while implementing strong ReAct and structured global replanning through the same environment and execution gateway. Keep one logical personal agent per user; invoke a model when interpretation, planning, or semantic repair is needed. A continuously running model process is unnecessary.
 

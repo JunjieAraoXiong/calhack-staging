@@ -1,5 +1,7 @@
 # Persistent personal-agent runtime: proposed extension
 
+**October 22 active specialization:** [16 — Travel system design](16-travel-agent-system-design.md) applies this runtime to one arrival journey and two controlled providers. It selects structured replanning and server adapters first; incremental optimization, general sandboxes, wallets, multiple missions, and native WebMCP are not prerequisites for its initial goal. The [runnable prompt](prompts/travel-agent-goal.md) and [delivery roadmap](08-delivery-roadmap-and-demo.md) define the implementation handoff. The general contracts below remain design references.
+
 **Status: design only, October 18, 2026.** This extends the [existing mission runtime](03-personal-agent-runtime.md) and [system variations](14-personal-agent-system-variations.md). It defines application contracts we would build; these are not claims about Instinct's private implementation. No messaging provider, sandbox, wallet, or company-agent service has been connected.
 
 **Drawn system:** the [editable Excalidraw atlas](diagrams/atlas/README.md) includes the [complete architecture](diagrams/atlas/00-persistent-system.png), [five lifecycles](diagrams/atlas/07-task-lifecycles.png), [memory and correction](diagrams/atlas/08-memory-and-context.png), [execution and authority](diagrams/atlas/09-execution-and-authority.png), and [evaluation design](diagrams/atlas/10-evaluation-design.png). The atlas links each preview to its editable source and also draws all six product/runtime variations.

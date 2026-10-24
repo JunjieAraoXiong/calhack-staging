@@ -1,6 +1,8 @@
 # Product and Research Thesis
 
-**Scope update:** this document specifies the original personal-agent candidate. The latest discussion also explores six different products in the [experiment portfolio](11-experiment-portfolio.md). Those candidates have their own users, architecture, metrics, and optional WebMCP integration; the shopping thesis below has not been imposed on them.
+**Current scope — October 22, 2026:** the active implementation plan is the [travel-agent system design](16-travel-agent-system-design.md): one Tokyo arrival journey, imported flight/bus/hotel commitments, two controlled providers, and verified recovery after a delay. Start there and use the [travel delivery roadmap](08-delivery-roadmap-and-demo.md). This document preserves the original shopping thesis and its research rationale; its two-mission scenario and incremental-planning hypothesis are historical domain choices, not travel MVP prerequisites. All systems remain proposed.
+
+The [experiment portfolio](11-experiment-portfolio.md) retains the other product candidates for reference.
 
 ## The product in one paragraph
 

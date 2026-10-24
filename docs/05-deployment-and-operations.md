@@ -1,5 +1,7 @@
 # Deployment and operations
 
+**Current scope — October 22, 2026:** [16 — Travel-agent system design](16-travel-agent-system-design.md) defines the active deployment: a TypeScript/React workspace, Convex persistent coordination, and two controlled provider boundaries for one arrival journey. The single-store/two-mission topology and native-WebMCP-first milestones below describe the original shopping candidate. Preserve the recovery and access-control principles, but use the travel adapter choice and gates in [08](08-delivery-roadmap-and-demo.md). A closed browser cannot execute page tools; persist waiting state unless a separately implemented available executor can perform the operation. No deployment is claimed.
+
 For the October 18 persistent-assistant expansion, read [15 — Persistent runtime design](15-persistent-agent-runtime-design.md). Hosted execution, credential brokers, and company-agent adapters there are options to validate, not deployments already completed.
 
 **Status:** deployment design and acceptance checklist as of 2026-10-17. No services have been provisioned, no application has been deployed, and no native-browser smoke test or benchmark is claimed. Documented platform behavior is cited; product behavior remains to be implemented and tested. Delivery proceeds by evidence gates, not a fixed 36-hour cap.

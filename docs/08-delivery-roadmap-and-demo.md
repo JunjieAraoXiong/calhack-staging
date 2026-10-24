@@ -1,129 +1,144 @@
-# Delivery Roadmap and Demonstration
+# Travel Agent Delivery Roadmap and Demonstration
 
-**Scope:** these milestones develop the original personal-agent candidate. The [expanded portfolio](11-experiment-portfolio.md) and its six product designs define separate minimum experiments and rollout paths; no choice to implement every candidate has been made.
+**Current scope: October 22, 2026.** Implement the [travel-agent system design](16-travel-agent-system-design.md): one Tokyo arrival journey with imported flight, guest bus, and hotel confirmations; one durable controller; curated local procedures; and two controlled providers with independently verifiable outcomes.
 
-This is a milestone-based product plan, not a 36-hour implementation promise. No milestone below is marked complete by writing these documents. The intended sequence is to establish the core, measure it, and refine the product and presentation. Cal Hacks submission eligibility is a separate constraint: the published event rules do not establish that a prebuilt core is eligible. See [07](07-sponsor-track-strategy.md).
+**Status:** the scoped local implementation is now verified; see the [verification report](verification-report.md) for actual results. The milestones below preserve the delivery plan. The [implementation goal prompt](prompts/travel-agent-goal.md) remains the runnable handoff, and the [demo script](demo-script.md) describes the implemented walkthrough. The earlier shopping roadmap is summarized in the historical appendix below.
 
-## 1. Scope that makes the thesis testable
+This is a milestone-based product plan without an assumed 36-hour engineering cap. Event eligibility and sponsor submission requirements remain separate from independent product development. The older [sponsor research](07-sponsor-track-strategy.md) does not establish eligibility for this travel implementation.
 
-The first integrated system contains a personal workspace, one controlled shopping application, two persistent missions sharing a budget, one browser write executor, one model configuration, and an independent evaluation harness.
+## 1. The first deliverable
 
-The first mission prepares a six-person camping trip for at most $300, with Friday delivery, two vegetarian participants, an owned stove, and an already purchased tent. The second mission buys ordinary groceries from the same configured resource pool. The mission limit and the shared pool limit are separate parameters; the fixture must declare whether existing purchases count toward each limit.
+The product accepts the arrangements a traveler already has, detects an arrival disruption, chooses a supported local procedure, changes the necessary arrangements within the user's bounds, and verifies the resulting provider state.
 
-One store is sufficient to test state changes, conflicting missions, stale plans, interrupted execution, and recovery. A second store tests portability later. A controlled store makes the correctness boundary inspectable; it does not establish compatibility with arbitrary retail websites.
+Build one complete path before adding destinations or service categories:
+
+> Imported flight + guest bus ticket + original hotel night → simulated delay → check feasibility and cutoff → select the guest management procedure → obtain any necessary decision → coordinate bus amendment and hotel late-arrival acceptance → read back both providers → show confirmed and unresolved arrangements.
+
+Use structured replanning of the remaining tasks. Preserve completed effects and user constraints. Keep explicit relationships such as flight arrival → readiness at bus stop → bus departure → hotel arrival, but defer reverse-dependency optimization and the original multi-mission shopping benchmark.
+
+The first product screen should answer what is arranged, what the traveler should do next, and which decision remains. Execution traces belong behind a details view.
 
 ## 2. Milestones and acceptance gates
 
-| Milestone | Deliverable | Gate before expanding scope |
-|---|---|---|
-| M0: executable contracts | Typed facts, missions, tool contracts, event records, command states, and fixture specification | Team can explain the authority and version checked at each write; fixture has independent expected outcomes |
-| M1: one complete path | User request → actual model call → validated plan → real WebMCP invocation → controlled merchant receipt → verified result | A fresh authenticated session completes the path; trace identifies the real model, browser tool, and committed state |
-| M2: persistent personal agent | Scoped facts, two missions, durable controller, resource reservations, grants, cancellation, and reconnect | Concurrent reservations respect admission rules; a lost response does not duplicate a purchase; a late receipt remains visible |
-| M3: incremental repair | Captured dependencies, predicate revalidation, local repair, expansion, and global fallback | Sparse changes preserve valid work; query-set and dense-change cases do not leave invalid decisions active |
-| M4: credible comparison | Strong R/G/I baselines, independent scorer, frozen manifests, and live-model runs | All systems share protections and budgets; raw traces and failures support the reported aggregate results |
-| M5: product and deployment | Accessible workspace, production-like staging, fresh-session onboarding, useful waiting states, sponsor evidence | Another team member can use the deployed system without the author's cookies or manual database fixes |
-| M6: extensions | Second merchant, richer personal context, optional solver service or learned routing | Each addition answers a demonstrated limitation and preserves earlier acceptance gates |
+| Milestone | Deliverable | Gate before moving on |
+| --- | --- | --- |
+| M0: contracts and fixture | Travel commitments, time semantics, action scope, provider capabilities, operation identity, curated procedures, controllable test clock, and independent expected outcomes | Team can explain which service owns each fact, what confirms success, and what happens after an uncertain write; fixture values and simulation boundaries are explicit |
+| M1: one complete vertical flow | Imported confirmations → actual model proposal → deterministic checks → two supported provider interactions → read-back results → arrival card | A fresh demo session completes the happy path using real application state changes; trace links model call, chosen procedure, operations, and resulting provider records |
+| M2: persistent coordination | Stored task/event/operation state, deadline wake-ups, response handling, refresh/reconnect, event deduplication, and current-intent checks | Refresh or replace the controller without losing work; a duplicate event cannot duplicate a commitment; late evidence remains recorded |
+| M3: failure and boundary tests | Lost response, stale proposal, deadline expiry, unavailable seat, hotel pending/refusal, missing guest access, user correction, and executor outage | Independent final-state assertions pass; incomplete arrangements remain visibly incomplete; no unverified success or duplicate side effect |
+| M4: reproducible product demonstration | Clear UI, documented setup/reset, isolated demo data, actual-machine rehearsal, evidence artifacts, and recorded fallback | Another developer can start the system from documented configuration and reproduce the flow and failure cases without the author's private cookies or manual record edits |
+| M5: optional production pilot or comparative research | One separately qualified real provider integration or a frozen paired travel benchmark | Supported access and operational behavior are tested, or comparison conditions and outcome scoring are frozen before reporting results |
 
-M2 and M3 can overlap once M1's contracts are stable. Evaluation harness development starts at M0; it must not be postponed until after the preferred architecture is tuned.
+M0 is the foundation for parallel implementation. UI, planner, and provider work can proceed together once their shared types and ownership contracts are agreed. Test fixtures and the outcome checker begin at M0.
 
-### M0: define the world before optimizing the agent
+### M0: make the domain explicit
 
-Specify a finite catalog with prices, stock, delivery windows, dietary attributes, and item compatibility. Separate authoritative merchant data from the agent's observations. Define which changes produce events and which become visible only through a query.
+Use the authoritative fixture and schemas from [16](16-travel-agent-system-design.md). At minimum, define:
 
-Document hard constraints, soft preferences, commitments, manual locks, and the optimization order. Set rules for a newly lowered budget below existing obligations: show overcommitment, block new inadmissible spending, preserve real purchases, and reconcile uncertain holds. Do not invent a rollback of a completed purchase.
+- The original provider and booking channel, reservation identity, management access, payment state, applicable policy, and latest observation for each commitment.
+- Destination timezone and local calendar date, original hotel service night, a ready-at-the-correct-bus-stop interval, boarding margin, amendment cutoff, and execution buffer.
+- A guest management procedure and a hotel late-arrival procedure, each with source references, applicability, required access, available actions, and completion evidence.
+- Separate controller, transport-provider, and hotel-provider state. They may share deployment infrastructure for the MVP, but each provider owns its business transitions and receipts. The controller cannot claim success by editing its own timeline.
+- Stable operation identity and argument binding; supported idempotent submission and operation lookup in the controlled provider; truthful unknown outcomes where evidence is unavailable.
+- The user's spending and effect scope, including the policy for a pending hotel response near the bus amendment cutoff.
 
-Define the minimum operation contract: a stable logical operation ID, immutable argument digest, source-side checks, an idempotent receipt where supported, and a way to query an uncertain outcome. These definitions make later recovery assertions meaningful.
+All numeric flight, inventory, pricing, readiness, and hotel-policy data are fixture values. Official source rules are scoped to their operator and retrieval date. A historical source extract is not live availability.
 
-### M1: make one vertical path real
+### M1: complete the path before optimizing
 
-Use a simple planner initially. It can replan globally while the shared platform is being established. The first meaningful demo is a correct complete outcome, not a large graph visualization.
+The model should receive the actual current observations, traveler constraints, and supported procedure candidates. It proposes a typed action or remaining plan; application code checks dates, current availability, cutoff, authority, and costs before each effect. Do not hard-code a favorable final answer and present it as model reasoning.
 
-Pin the browser build and actual WebMCP API used. Prove discovery and invocation in that browser. If a polyfill or custom host is needed, identify it in the manifest and UI used for judging. Put model credentials on the backend. Record an actual provider request and a corresponding tool result.
+When feasible, obtain hotel acceptance for a defined latest arrival time before amending the bus, then refresh the bus quote and inventory. A hotel acknowledgment does not hold a seat. If the hotel remains pending near the cutoff, apply the explicit bounded-action policy or present the specific decision to the user. Silence is not approval.
 
-### M2: establish execution correctness
+At completion, read the provider records. There must be one valid amended bus reservation, the original hotel night must remain booked, and the late-arrival condition must be accepted before showing the arrangements as fully confirmed.
 
-Add independent mission state, scoped personal facts, reservations, command claims, and durable waits. Exercise a user edit while a model call is pending, a browser disconnect after a write, duplicate command delivery, cancellation before a new commit, and receipt arrival after cancellation.
+Use one tested execution path per required operation. An API call to a controlled provider is API execution. A WebMCP call requires actual registration, discovery, invocation, and visible provider state change in the chosen browser. If a bridge or polyfill is used, name it. None of these paths establishes access to a real bus company or hotel.
 
-The primary evidence is authoritative state after each test. A green client notification is insufficient. Preserve operation history so a failure can be reconstructed without relying on a model's explanation.
+### M2: preserve progress across interruptions
 
-### M3: earn selective repair
+Persist task revisions, wake events, bounded runs, proposals, operations, and receipts. Use the current task state when resuming; a cached model context is not a fresh provider observation. Accept and reconcile late receipts even after the originating proposal becomes obsolete.
 
-Build reverse dependency lookup and conservative dependency capture. Start with deterministic domain predicates. Treat opaque model choices as depending on all relevant supplied inputs until a narrower contract is justified.
+The mandatory backend/provider path must continue its supported work while the traveler UI is closed and those services remain available. An optional page-bound executor cannot invoke tools after its page closes. For that path, persist waiting-for-executor state and revalidate on reconnect. Backend durability alone is not an always-available browser.
 
-Test insertion into a candidate collection, not just changes to selected items. Test a constraint that connects both missions. If local repair cannot meet constraints or preserve quality, widen the affected scope and allow global replanning. Measure this fallback work; it is part of the algorithm's cost.
+When a provider has committed but its response is lost, query the original operation identity before another write. An old booking snapshot alone does not prove non-execution. Keep the outcome unknown until the adapter's evidence resolves it.
 
-### M4: freeze and measure
+### M3: check the outcomes independently
 
-Tune the baselines and the proposed system on development scenarios. Freeze the held-out protocol and practical success thresholds before reviewing test outcomes. The current plan is 48 held-out scenarios, three trials, and three systems, totaling 432 end-to-end episodes; this is a proposed workload, not completed evidence.
+Tests should exercise meaningful state transitions and externally visible results. They should not merely repeat the planner's implementation or compare its text with a canned answer.
 
-Run the cheaper mechanics suite before paying for all model episodes. Keep deterministic replay and live-model results separate. Publish success, cost, quality, exposure to faults, and uncertainty together. See [06](06-evaluation-and-experiments.md) for the authoritative protocol.
+| Case | Independent assertion |
+| --- | --- |
+| Normal imported journey | Provider identities, original channels, hotel service night, and traveler constraints are preserved |
+| Delay across midnight | The replacement bus uses the correct next calendar date and is feasible under the declared readiness interval and boarding margin |
+| Guest versus member access | The selected procedure matches the original booking channel and available management capability |
+| Cutoff or stale proposal | No controlled amendment commits after its deadline or against superseded authority/constraints |
+| Replacement becomes unavailable | Stale inventory cannot create a confirmed ticket; remaining work is replanned or shown unresolved |
+| Response lost after commit | Reconciliation finds the original result without creating a second logical amendment or ticket |
+| Duplicate event or resumed run | Repeated processing cannot duplicate provider effects or user notifications |
+| Hotel pending or declined | Transport may be confirmed while hotel acceptance remains unresolved; no invented acceptance or automatic rollback |
+| User changes spending or transfer requirement | Current constraints govern future actions; already completed effects remain recorded |
+| Executor unavailable | State survives and accurately describes waiting; reconnect does not replay an uncertain write blindly |
+| Material event after confirmation | Revalidate the active trip, downgrade arrangements status when infeasible, and resume bounded work |
 
-### M5: make the product legible
+Also assert that extra charges remain within the applicable authorization, provider ownership/access checks hold, and late evidence cannot overwrite newer intent. Fixture outcomes must be scored from the controlled providers and declared constraints, not from the agent's self-report.
 
-The main interface should answer: what is the goal, what has happened, what changed, what is still needed, and why is the agent waiting? Put graph details and request traces behind an explanation view. A customer should not need to interpret fencing tokens.
+A live-model integration run and deterministic failure tests answer different questions. Keep their artifacts and reported results distinct. Without model credentials or a configured backend, finish the independently runnable pieces and report the exact remaining integration gate; do not mark the live path complete.
 
-Deploy the shared workspace and merchant fixture over HTTPS. Verify production-origin authentication, browser tool exposure, server configuration, and a fresh user's permissions. Preserve a known demo fixture and a reset operation isolated from other users' data. See [05](05-deployment-and-operations.md).
+### M4: make the run reproducible
 
-## 3. Parallel workstreams
+Document configuration, installation, local startup, provider seed/reset, the chosen model adapter, and the test commands. Provide an isolated scenario reset that cannot touch production or another user's data.
 
-These are ownership boundaries, not a requirement for a particular team size. One person can own more than one stream.
+Capture at least one successful complete run and one contained failure. The UI should label simulated providers, events, inventory, and payment. It should identify actual live model execution versus replay.
+
+If a native WebMCP path is included, pin and record the browser/host assumptions and test them on the demonstration machine. A simpler supported API path can still validate the travel workflow; do not make native-browser status ambiguous.
+
+M5 adds a production supplier only after access, quoting, writes, and outcome reconciliation are separately tested. A real public source read or route query improves grounding but is not production booking access.
+
+## 3. Parallel implementation responsibilities
 
 | Stream | Owns | Integration contract |
-|---|---|---|
-| Runtime and data | Convex schema, transactions, events, reservations, commands, receipts | Typed state transitions and authoritative APIs |
-| Browser and product | Workspace, controlled store, WebMCP registration, command bridge | Versioned tool schemas, effect semantics, user controls |
-| Planning and decisions | Intent extraction, constraints, global and local planning, routing | Validated structured proposals and full cost accounting |
-| Evaluation and evidence | Fixtures, fault injection, independent oracle, result aggregation | Frozen scenario manifest, trace schema, reproducible scorer |
+| --- | --- | --- |
+| Runtime and state | Trip/task records, wake admission, proposals, authorization, operation lifecycle, receipts | Versioned types and checked transitions |
+| Provider fixtures and procedures | Transport/hotel records, guest access, supported actions, policy sources, deterministic fault controls | Typed operation requests, provider receipts, and queryable outcomes |
+| Product and planner | Confirmation import, traveler constraints, model interface, arrival card, decision UI, trace details | Typed candidate facts/actions; no direct provider record mutation |
+| Verification and delivery | Independent outcome scorer, failure cases, setup/reset instructions, demonstration evidence | Reproducible fixtures and artifacts tied to code/configuration versions |
 
-Agree on interface changes before editing both sides. Keep scorer logic independent from planner logic: sharing a type definition is useful, sharing the planner's own claim that its answer is correct is not. The evaluator owner should be able to reject a favorable-looking result when the final state is wrong.
+These are ownership boundaries, not a requirement for four autonomous agents or four services. Independent work may be delegated after agreeing contracts; effect admission remains centralized per mission.
 
-## 4. Live demonstration: one story, visible consequences
+## 4. Proposed three-minute demonstration
 
-The [current event page](https://cal-hacks-13-0.devpost.com/) specifies a three-minute pitch and two minutes of questions. The following is a proposed script, not a claim that the application or timings have been tested.
+The timings below are presentation targets, not measured runtime or a current event-rule claim.
 
-| Time | Action | What the audience should understand |
-|---|---|---|
-| 0:00–0:25 | Show the camping mission, personal constraints, completed tent purchase, and smaller grocery mission | This is persistent work with shared resources and real commitments |
-| 0:25–0:50 | Change attendance from six to four; show an unavailable food item | The world changes after planning; the user does not restart the task |
-| 0:50–1:20 | Show quantities and dependent choices being reconsidered while the stove, purchase, and valid choices remain | The runtime knows which work is affected |
-| 1:20–1:50 | Apply a user lock while a deliberately delayed old proposal is pending | A stale proposal cannot overwrite current intent |
-| 1:50–2:20 | Execute an authorized bounded write and verify the resulting basket/order in the controlled store | The model's suggestion becomes an inspectable application outcome |
-| 2:20–3:00 | Show a concise measured comparison and state the limitation of the result | The technical claim has evidence beyond this selected example |
+| Time | Action | Audience takeaway |
+| --- | --- | --- |
+| 0:00–0:25 | Show the traveler's existing flight, guest bus ticket, hotel night, luggage preference, and action limits | The assistant can start from arrangements the traveler already made |
+| 0:25–0:50 | Inject the visibly simulated delay; highlight endangered bus cutoff and late hotel arrival | A changing fact creates concrete downstream work |
+| 0:50–1:20 | Select the guest management path and a feasible next-day departure; surface any required decision | Local procedure, booking channel, and traveler constraints affect execution |
+| 1:20–2:10 | Execute against the controlled providers and inspect both authoritative results | The assistant changes application state and obtains evidence |
+| 2:10–2:40 | Show the arrival card with correct dates, original hotel night, confirmations, and next step | The traveler sees what is actually arranged |
+| 2:40–3:00 | Reveal a dropped response or duplicate event and its reconciliation | Recovery preserves one real result and avoids duplicate commitments |
 
-If benchmark runs are incomplete, replace the comparison with clearly labeled acceptance-test results and say the comparative hypothesis is unproven. Never fill the presentation with invented percentages.
+Keep hotel refusal and executor-disconnection cases ready for questions. A recorded real run is a useful fallback; label it as recorded. A replay or unavailable live dependency must not be disguised as a live result.
 
-Keep the lost-response/reconnect scenario ready for questions. It is a strong correctness demonstration, but forcing every edge case into three minutes can obscure the user benefit. A recorded clip may illustrate a real run; label it as recorded rather than live.
+“Arrival arrangements confirmed” is the first milestone's user-visible outcome. It does not prove the traveler physically arrived. While the trip is active, a later material event must revalidate the arrangements and reopen work if necessary. A production flight feed and physical-arrival tracking are optional later integrations.
 
-## 5. Evidence the demo should carry
+## 5. Evidence and final handoff
 
-The [past Cal Hacks review](13-past-cal-hacks-projects.md) suggests a useful presentation order: recognizable failure or conflict, changed artifact, correctness evidence, then architecture. Keep runtime graphs available to explain the mechanism after the audience understands the result. This is our interpretation of selected precedents, not a finding about judging causality. Any narrower action set used for the demo must be recorded in its manifest and distinguished from broader benchmark claims.
+The implementation handoff should include:
 
-The presentation build should make the following available without exposing credentials or personal data:
+- Working source, setup/run instructions, required configuration names, and isolated fixture reset.
+- Actual test results and commands, with failures and unrun checks clearly identified.
+- A trace linking input/event, current facts, procedure/version, model proposal, checked operation, and provider read-back.
+- Two provider receipts and final-state assertions, including the no-duplicate and hotel-night invariants.
+- A concise demonstration script and a labeled recorded fallback when available.
+- Remaining production integration and user-validation gaps.
 
-- A manifest with code revision, schema and adapter versions, browser build, model ID, fixture version, and deployment identifiers.
-- A trace linking a user change to dependency revalidation, the accepted proposal, actual tool invocation, and final-state verification.
-- The declared budget and permission scope used for the action.
-- A small comparison chart whose source is the frozen run artifacts, including failures and sample sizes.
-- Clear labels for the controlled store, seeded prices, simulated payment, native WebMCP versus an adapter, and live versus replayed model calls.
-- Sponsor-specific evidence: actual Convex state transitions, actual Gemini requests if chosen, and any separately verified Visa integration.
+Do not require a favorable incremental-planning benchmark to ship this first path. A later comparison should use the same model, information, tools, authority, execution protections, and outcome scorer. Measure confirmed completion and user coordination effort before model/tool efficiency. No synthetic improvement percentages belong in the demo.
 
-A controlled merchant order can demonstrate real application state changes while payment is simulated. Describe those two facts precisely. Do not call a cart estimate money saved or imply a live financial transaction occurred.
+The task is complete only when the stated implementation goal's required gates are met. Documentation, mock screens, a seeded “success” card, or a deterministic replay alone do not complete the live agent path.
 
-## 6. Rehearsal and failure handling
+## 6. Historical shopping roadmap
 
-Rehearse from a new browser session and a reset fixture. Test the deployed origin and the intended network conditions. Keep a locally stored recording of a complete successful run, as requested by the event, and disclose when it is used.
+The previous roadmap developed camping procurement plus groceries through one controlled store, two missions, and a shared budget. Its sequence was contracts → a browser purchase path → multi-mission durability → incremental repair → comparative evaluation → product deployment. Its proposed 432-episode workload and native-WebMCP-first gate belonged to that shopping experiment and remain unrun.
 
-If the model provider is unavailable, show the recorded run or an explicitly labeled deterministic replay. If the browser disconnects, show the durable waiting state and reconnect. If a write is uncertain, demonstrate reconciliation instead of manually marking it successful. A legitimate failure that is clearly contained is more defensible than a fabricated success.
-
-Do not reset a real account, release an unknown financial hold, or force a receipt into existence to rescue a live presentation. Demo reset applies only to the isolated fixture and must itself leave a clear boundary in the evidence.
-
-## 7. Decisions that stop or narrow expansion
-
-- If global replanning is equally successful and cheaper, ship it and narrow the incremental claim to any demonstrated operating range.
-- If dependency capture remains unsound, use conservative invalidation rather than displaying unsupported precision.
-- If model-assisted routing adds cost without benefit, keep deterministic routing and use the model where it improves interpretation or planning.
-- If real merchant contracts cannot support the required reconciliation, keep that adapter read-only or preparation-only and disclose the boundary.
-- If a sponsor's requirements do not fit the implementation, omit that track rather than redesigning the product around an unverified prize assumption.
-- If pre-event implementation is disallowed, maintain a truthful separation between the independent product effort and any eligible event submission.
-
-The next concrete deliverable after this documentation package is M0's executable contract and fixture specification, followed by M1's real vertical path. No app code or deployment is implied by this roadmap.
+The historical domain and rationale remain in [01](01-product-and-research-thesis.md), architecture alternatives in [02](02-system-design-alternatives.md), runtime contracts in [03](03-personal-agent-runtime.md), deployment topology in [05](05-deployment-and-operations.md), and planned experiments in [06](06-evaluation-and-experiments.md). Earlier versions of this file remain in Git history. Reusable recovery, authorization, and independent-verification principles carry forward; the historical scope does not expand the active travel MVP.
